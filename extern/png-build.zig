@@ -13,7 +13,7 @@ pub const src = .{
     "extern/libpng/pngrtran.c",
     "extern/libpng/pngrutil.c",
     "extern/libpng/pngset.c",
-    "extern/libpng/pngtest.c",
+    // "extern/libpng/pngtest.c",
     "extern/libpng/pngtrans.c",
     "extern/libpng/pngwio.c",
     "extern/libpng/pngwrite.c",

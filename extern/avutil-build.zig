@@ -83,6 +83,18 @@ pub const src = .{
     "extern/ffmpeg/libavutil/video_enc_params.c",
     "extern/ffmpeg/libavutil/xga_font_data.c",
     "extern/ffmpeg/libavutil/xtea.c",
+    "extern/ffmpeg/libavutil/x86/cpu.c",
+    "extern/ffmpeg/libavutil/x86/cpuid.asm",
+    "extern/ffmpeg/libavutil/x86/fixed_dsp.asm",
+    "extern/ffmpeg/libavutil/x86/fixed_dsp_init.c",
+    "extern/ffmpeg/libavutil/x86/float_dsp.asm",
+    "extern/ffmpeg/libavutil/x86/float_dsp_init.c",
+    "extern/ffmpeg/libavutil/x86/imgutils.asm",
+    "extern/ffmpeg/libavutil/x86/imgutils_init.c",
+    "extern/ffmpeg/libavutil/x86/lls.asm",
+    "extern/ffmpeg/libavutil/x86/lls_init.c",
+    "extern/ffmpeg/libavutil/x86/tx_float.asm",
+    "extern/ffmpeg/libavutil/x86/tx_float_init.c",
 };
 pub const include = .{
     "extern/ffmpeg",
@@ -92,6 +104,3 @@ pub const define = .{
     .av_restrict = "restrict",
 };
 pub const c_std = "gnu17";
-// pub const flags = .{
-//     "-Wno-shift-op-parentheses",
-// };

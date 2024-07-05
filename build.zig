@@ -1516,6 +1516,7 @@ pub fn build(b: *std.Build) !void {
         lib.addConfigHeader(ffmpeg_config_hdr);
         lib.addConfigHeader(ffmpeg_components_hdr);
     }
+    exe.addIncludePath(b.path("src"));
 
     _ = helper.makeLib(@import("extern/tommath-build.zig"));
     _ = helper.makeLib(@import("extern/tomcrypt-build.zig"));
@@ -1536,10 +1537,36 @@ pub fn build(b: *std.Build) !void {
     exe.root_module.addCMacro("UNIX", "");
     // Not sure why this isn't working in config.hpp
     exe.root_module.addCMacro("HAVE_FCNTL_H", "1");
-    exe.addIncludePath(b.path("src"));
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/gtk-3.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/pango-1.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/cairo" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/gdk-pixbuf-2.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/atk-1.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/freetype2" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/glib-2.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/lib/glib-2.0/include" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/harfbuzz" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/libmount" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/blkid" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/libpng16" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/pixman-1" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/cloudproviders" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/at-spi2-atk/2.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/at-spi-2.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/dbus-1.0" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/lib/dbus-1.0/include" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/fribidi" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/sysprof-6" });
+    exe.addIncludePath(.{ .cwd_relative = "/usr/include/gio-unix-2.0" });
 
-    exe.linkSystemLibrary("GL");
-    exe.linkSystemLibrary("X11");
+    exe.linkSystemLibrary("gl");
+    exe.linkSystemLibrary("glu");
+    exe.linkSystemLibrary("x11");
+    exe.linkSystemLibrary("xext");
+    exe.linkSystemLibrary("xrandr");
+    exe.linkSystemLibrary("libudev");
+    exe.linkSystemLibrary("libusb");
+    exe.linkSystemLibrary("gtk+-3.0");
     exe.linkLibC();
     exe.linkLibCpp();
 

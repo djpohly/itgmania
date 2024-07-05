@@ -161,3 +161,6 @@ pub const src = .{
 pub const include = .{
     "extern/libtommath",
 };
+// pub const define = .{
+//     .MP_PRNG_ENABLE_LTM_RNG = "1",
+// };

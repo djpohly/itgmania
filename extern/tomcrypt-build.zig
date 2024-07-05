@@ -195,7 +195,7 @@ pub const src = .{
     "extern/libtomcrypt/src/misc/crypt/crypt_hash_descriptor.c",
     "extern/libtomcrypt/src/misc/crypt/crypt_hash_is_valid.c",
     "extern/libtomcrypt/src/misc/crypt/crypt_inits.c",
-    "extern/libtomcrypt/src/misc/crypt/crypt_ltc_mp_descriptor.c",
+    // "extern/libtomcrypt/src/misc/crypt/crypt_ltc_mp_descriptor.c",
     "extern/libtomcrypt/src/misc/crypt/crypt_prng_descriptor.c",
     "extern/libtomcrypt/src/misc/crypt/crypt_prng_is_valid.c",
     "extern/libtomcrypt/src/misc/crypt/crypt_prng_rng_descriptor.c",

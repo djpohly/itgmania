@@ -1,8 +1,8 @@
 pub const name = "jpeg";
 pub const config = "extern/config.jpeg.in.h";
 pub const src = .{
-    "extern/libjpeg/cjpegalt.c",
-    "extern/libjpeg/djpegalt.c",
+    // "extern/libjpeg/cjpegalt.c",
+    // "extern/libjpeg/djpegalt.c",
     "extern/libjpeg/jaricom.c",
     "extern/libjpeg/jcapimin.c",
     "extern/libjpeg/jcapistd.c",
@@ -51,7 +51,7 @@ pub const src = .{
     "extern/libjpeg/rdbmp.c",
     "extern/libjpeg/rdcolmap.c",
     "extern/libjpeg/rdgif.c",
-    "extern/libjpeg/rdjpgcom.c",
+    // "extern/libjpeg/rdjpgcom.c",
     "extern/libjpeg/rdppm.c",
     "extern/libjpeg/rdrle.c",
     "extern/libjpeg/rdswitch.c",
@@ -59,7 +59,7 @@ pub const src = .{
     "extern/libjpeg/transupp.c",
     "extern/libjpeg/wrbmp.c",
     "extern/libjpeg/wrgif.c",
-    "extern/libjpeg/wrjpgcom.c",
+    // "extern/libjpeg/wrjpgcom.c",
     "extern/libjpeg/wrppm.c",
     "extern/libjpeg/wrrle.c",
     "extern/libjpeg/wrtarga.c",
