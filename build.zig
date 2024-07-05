@@ -1028,6 +1028,7 @@ const ffmpeg_config = .{
     .HAVE_MMX2 = "HAVE_MMXEXT",
     .SWS_MAX_FILTER_SIZE = 256,
     .ARCH_X86 = 1,
+    .ARCH_X86_32 = 0,
     .ARCH_X86_64 = 1,
     .HAVE_AESNI = 1,
     .HAVE_AMD3DNOW = 1,
@@ -1048,6 +1049,7 @@ const ffmpeg_config = .{
     .HAVE_SSE42 = 1,
     .HAVE_SSSE3 = 1,
     .HAVE_XOP = 1,
+    .HAVE_CPUNOP = 0,
     .HAVE_I686 = 1,
     .HAVE_AESNI_EXTERNAL = 1,
     .HAVE_AMD3DNOW_EXTERNAL = 1,
@@ -1317,39 +1319,21 @@ const ffmpeg_config = .{
     .HAVE_DOS_PATHS = 0,
 };
 
-fn comptimeCountLines(comptime str: []const u8) usize {
-    @setEvalBranchQuota(1000000);
-    var it = std.mem.splitScalar(u8, str, '\n');
-    var lines: usize = 0;
-    while (it.next()) |line| {
-        if (line.len > 0 and line[0] != '#') {
-            lines += 1;
-        }
-    }
-    return lines;
-}
-
-fn comptimeSplitLines(comptime str: []const u8) [comptimeCountLines(str)][]const u8 {
-    var lines: [comptimeCountLines(str)][]const u8 = undefined;
-    var it = std.mem.splitScalar(u8, str, '\n');
-    var i: usize = 0;
-    while (it.next()) |line| {
-        if (line.len > 0 and line[0] != '#') {
-            lines[i] = line;
-            i += 1;
-        }
-    }
-    return lines;
-}
-
 const Helper = struct {
     b: *std.Build,
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
     exe: *std.Build.Step.Compile,
+    nasm: ?NasmInfo,
+
+    const NasmInfo = struct {
+        exe: *std.Build.Step.Compile,
+        config: std.Build.LazyPath,
+    };
 
     fn makeLib(self: Helper, comptime libconfig: anytype) *std.Build.Step.Compile {
-        const lib = self.b.addStaticLibrary(.{
+        const b = self.b;
+        const lib = b.addStaticLibrary(.{
             .name = libconfig.name,
             .target = self.target,
             .optimize = self.optimize,
@@ -1358,11 +1342,11 @@ const Helper = struct {
         });
 
         if (@hasDecl(libconfig, "copyfrom")) {
-            const wf = self.b.addWriteFiles();
+            const wf = b.addWriteFiles();
             inline for (std.meta.fields(@TypeOf(libconfig.copyfrom))) |f| {
                 const dest = f.name;
                 const src = @field(libconfig.copyfrom, f.name);
-                wf.addCopyFileToSource(self.b.path(src), dest);
+                wf.addCopyFileToSource(b.path(src), dest);
             }
             lib.step.dependOn(&wf.step);
         }
@@ -1381,16 +1365,16 @@ const Helper = struct {
         }
 
         if (@hasDecl(libconfig, "config")) {
-            const hdr = self.b.addConfigHeader(std.Build.Step.ConfigHeader.Options{
-                .style = .{ .cmake = self.b.path(libconfig.config) },
+            const hdr = b.addConfigHeader(std.Build.Step.ConfigHeader.Options{
+                .style = .{ .cmake = b.path(libconfig.config) },
             }, global_config);
             lib.addConfigHeader(hdr);
         }
 
         if (@hasDecl(libconfig, "include")) {
             inline for (libconfig.include) |path| {
-                lib.addIncludePath(self.b.path(path));
-                self.exe.addIncludePath(self.b.path(path));
+                lib.addIncludePath(b.path(path));
+                self.exe.addIncludePath(b.path(path));
             }
         }
 
@@ -1418,7 +1402,35 @@ const Helper = struct {
             }
         };
 
-        lib.addCSourceFiles(.{ .files = &libconfig.src, .flags = flags });
+        inline for (libconfig.src) |path| {
+            if (std.mem.endsWith(u8, path, ".asm")) {
+                const nasm = self.nasm orelse @panic("Nasm is required to assemble source");
+
+                const basename = std.fs.path.basename(path);
+                const outfile = b.fmt("{s}.o", .{ basename[0 .. basename.len - ".asm".len] });
+
+                const nasm_run = b.addRunArtifact(nasm.exe);
+                nasm_run.addArgs(&.{
+                    "-f", "elf64",
+                    "-g",
+                    "-F", "dwarf",
+                    "-Iextern/ffmpeg/",
+                    b.fmt("-I{s}/", .{ std.fs.path.dirname(path).? }),
+                });
+                nasm_run.addArgs(&.{ "--include" });
+                nasm_run.addFileArg(nasm.config);
+
+                nasm_run.addArgs(&.{ "-o" });
+                lib.addObjectFile(nasm_run.addOutputFileArg(outfile));
+
+                nasm_run.addFileArg(b.path(path));
+            } else {
+                lib.addCSourceFile(.{
+                    .file = b.path(path),
+                    .flags = flags,
+                });
+            }
+        }
 
         self.exe.linkLibrary(lib);
         return lib;
@@ -1459,11 +1471,29 @@ pub fn build(b: *std.Build) !void {
         },
     });
 
+    const nasm = switch (target.result.cpu.arch) {
+        .x86, .x86_64 => blk: {
+            const nasm_step = b.dependency("nasm", .{
+                .optimize = .ReleaseFast,
+            });
+            const nasm_config_step = b.addConfigHeader(.{
+                .style = .nasm,
+                .include_path = "config.asm",
+            }, ffmpeg_config);
+            break :blk Helper.NasmInfo{
+                .exe = nasm_step.artifact("nasm"),
+                .config = nasm_config_step.getOutput(),
+            };
+        },
+        else => null,
+    };
+
     const helper = Helper{
         .b = b,
         .target = target,
         .optimize = optimize,
         .exe = exe,
+        .nasm = nasm,
     };
 
     const ffmpeg_config_hdr = b.addConfigHeader(std.Build.Step.ConfigHeader.Options{
@@ -1504,6 +1534,8 @@ pub fn build(b: *std.Build) !void {
     _ = helper.makeLib(@import("extern/zlib-build.zig"));
 
     exe.root_module.addCMacro("UNIX", "");
+    // Not sure why this isn't working in config.hpp
+    exe.root_module.addCMacro("HAVE_FCNTL_H", "1");
     exe.addIncludePath(b.path("src"));
 
     exe.linkSystemLibrary("GL");
