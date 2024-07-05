@@ -1,6 +1,7 @@
 #ifndef MEMORY_CARD_DRIVER_H
 #define MEMORY_CARD_DRIVER_H
 
+#include "global.h"
 #include <vector>
 
 

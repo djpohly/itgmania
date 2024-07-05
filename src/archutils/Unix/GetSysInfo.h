@@ -1,5 +1,7 @@
 #ifndef GET_SYS_INFO_H
 
+#include "global.h"
+
 void GetKernel( RString &sys, int &vers );
 
 #endif

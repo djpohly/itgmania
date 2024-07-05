@@ -1,6 +1,8 @@
 #ifndef SpecialDirs_H
 #define SpecialDirs_H
 
+#include "global.h"
+
 namespace SpecialDirs
 {
 	RString GetDesktopDir();

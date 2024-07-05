@@ -1,6 +1,7 @@
 #ifndef RAGE_FILE_MANAGER_H
 #define RAGE_FILE_MANAGER_H
 
+#include "global.h"
 #include <unordered_set>
 #include <vector>
 

@@ -3,6 +3,8 @@
 #ifndef RAGE_UTIL_AUTO_PTR_H
 #define RAGE_UTIL_AUTO_PTR_H
 
+#include "global.h"
+
 /*
  * This is a simple copy-on-write refcounted smart pointer.  Once constructed, all read-only
  * access to the object is made without extra copying.  If you need read-write access, you
