@@ -208,7 +208,7 @@ float ScreenRanking::SetPage( const PageToShow &pts )
 
 	// init page
 	StepsType st = pts.aTypes.front().second;
-	m_textStepsType.SetText( GAMEMAN->GetStepsTypeInfo(st).GetLocalizedString() );
+	m_textStepsType.SetText( GameManager::GetStepsTypeInfo(st).GetLocalizedString() );
 
 
 	bool bShowScores = false;

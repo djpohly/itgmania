@@ -1451,7 +1451,7 @@ public:
 		m_Def.m_vsChoices.clear();
 		for (StepsType const &st : m_vStepsTypesToShow)
 		{
-			RString s = GAMEMAN->GetStepsTypeInfo( st ).GetLocalizedString();
+			RString s = GameManager::GetStepsTypeInfo( st ).GetLocalizedString();
 			m_Def.m_vsChoices.push_back( s );
 		}
 

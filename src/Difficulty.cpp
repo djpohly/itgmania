@@ -95,7 +95,7 @@ static ThemeMetric<RString> NAMES("CustomDifficulty","Names");
 
 RString GetCustomDifficulty( StepsType st, Difficulty dc, CourseType ct )
 {
-	/* XXX GAMEMAN->GetStepsTypeInfo( StepsType_Invalid ) will crash. I'm not
+	/* XXX GameManager::GetStepsTypeInfo( StepsType_Invalid ) will crash. I'm not
 	 * sure what the correct behavior in this case should be. Should we still
 	 * allow custom difficulties? Why do we not allow custom difficulties for
 	 * Edit? - Steve */
