@@ -289,7 +289,7 @@ int RageFileObj::Flush()
 void RageFileObj::EnableReadBuffering()
 {
 	if( m_pReadBuffer == nullptr )
-		m_pReadBuffer = new char[BSIZE];
+		m_pReadBuf = m_pReadBuffer = new char[BSIZE];
 }
 
 void RageFileObj::EnableWriteBuffering( int iBytes )
