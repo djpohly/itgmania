@@ -142,6 +142,7 @@ ThreadedMemoryCardWorker::ThreadedMemoryCardWorker():
 	RageWorkerThread("MemoryCardWorker"),
 	UsbStorageDevicesMutex("UsbStorageDevicesMutex")
 {
+	m_bUsbStorageDevicesChanged = false;
 	if( g_bMemoryCards )
 		m_pDriver = MemoryCardDriver::Create();
 	else
