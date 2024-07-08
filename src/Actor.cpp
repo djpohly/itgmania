@@ -235,6 +235,7 @@ Actor::Actor( const Actor &cpy ):
 	CPY(m_effect_period);
 	CPY( m_fEffectOffset );
 	CPY( m_EffectClock );
+	CPY(m_tween_uses_effect_delta);
 
 	CPY( m_effectColor1 );
 	CPY( m_effectColor2 );
@@ -307,6 +308,7 @@ Actor &Actor::operator=(Actor other)
 	SWAP(m_effect_period);
 	SWAP( m_fEffectOffset );
 	SWAP( m_EffectClock );
+	SWAP(m_tween_uses_effect_delta);
 
 	SWAP( m_effectColor1 );
 	SWAP( m_effectColor2 );
