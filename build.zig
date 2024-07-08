@@ -1567,6 +1567,8 @@ pub fn build(b: *std.Build) !void {
     exe.linkSystemLibrary("libudev");
     exe.linkSystemLibrary("libusb");
     exe.linkSystemLibrary("gtk+-3.0");
+    exe.linkSystemLibrary("libpulse");
+    exe.linkSystemLibrary("jack");
     exe.linkLibC();
     exe.linkLibCpp();
 
