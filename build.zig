@@ -302,30 +302,15 @@ pub fn build(b: *std.Build) !void {
     // Not sure why this isn't working in config.hpp
     exe.root_module.addCMacro("HAVE_FCNTL_H", "1");
 
-    exe.addIncludePath(.{ .cwd_relative = "/usr/include/gtk-3.0" });
-    exe.addIncludePath(.{ .cwd_relative = "/usr/include/gdk-pixbuf-2.0" });
-    exe.addIncludePath(.{ .cwd_relative = "/usr/include/glib-2.0" });
-    exe.addIncludePath(.{ .cwd_relative = "/usr/lib/glib-2.0/include" });
-    exe.addIncludePath(.{ .cwd_relative = "/usr/include/sysprof-6" });
-    exe.addIncludePath(.{ .cwd_relative = "/usr/include/gio-unix-2.0" });
-
-    const opts = .{ .use_pkg_config = .no };
-    exe.linkSystemLibrary2("GL", opts);
-    exe.linkSystemLibrary2("GLU", opts);
-    exe.linkSystemLibrary2("X11", opts);
-    exe.linkSystemLibrary2("Xext", opts);
-    exe.linkSystemLibrary2("Xrandr", opts);
-    exe.linkSystemLibrary2("udev", opts);
-    exe.linkSystemLibrary2("usb", opts);
-    exe.linkSystemLibrary2("gtk-3", opts);
-    exe.linkSystemLibrary2("gdk_pixbuf-2.0", opts);
-    exe.linkSystemLibrary2("gobject-2.0", opts);
-    exe.linkSystemLibrary2("ffi", opts);
-    exe.linkSystemLibrary2("glib-2.0", opts);
-    exe.linkSystemLibrary2("pcre2-8", opts);
-    exe.linkSystemLibrary2("sysprof-capture-4", opts);
-    exe.linkSystemLibrary2("pulse", opts);
-    exe.linkSystemLibrary2("jack", opts);
+    exe.linkSystemLibrary("GL");
+    exe.linkSystemLibrary("GLU");
+    exe.linkSystemLibrary("x11");
+    exe.linkSystemLibrary("xext");
+    exe.linkSystemLibrary("xrandr");
+    exe.linkSystemLibrary("libudev");
+    exe.linkSystemLibrary("libusb");
+    exe.linkSystemLibrary("libpulse");
+    exe.linkSystemLibrary("jack");
     exe.linkLibC();
     exe.linkLibCpp();
 

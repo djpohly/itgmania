@@ -378,7 +378,7 @@ pub const src = .{
     "src/arch/Lights/LightsDriver_SextetStream.cpp",
     "src/arch/Lights/LightsDriver_SystemMessage.cpp",
     "src/arch/LoadingWindow/LoadingWindow.cpp",
-    "src/arch/LoadingWindow/LoadingWindow_Gtk.cpp",
+    // "src/arch/LoadingWindow/LoadingWindow_Gtk.cpp",
     "src/arch/LowLevelWindow/LowLevelWindow.cpp",
     "src/arch/LowLevelWindow/LowLevelWindow_X11.cpp",
     "src/arch/MemoryCard/MemoryCardDriver.cpp",
