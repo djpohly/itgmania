@@ -22,6 +22,7 @@ pub const src = .{
 };
 pub const include = .{
     "extern/libpng",
+    "extern/zlib",
 };
 pub const define = .{
     .PNG_ARM_NEON_OPT = "0",

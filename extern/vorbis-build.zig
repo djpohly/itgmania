@@ -1,4 +1,7 @@
 pub const name = "vorbis";
+pub const config = .{
+    .@"ogg/config_types.h" = "extern/config.ogg.types.in.h",
+};
 pub const src = .{
     "extern/vorbis/lib/analysis.c",
     "extern/vorbis/lib/bitrate.c",
@@ -24,4 +27,5 @@ pub const src = .{
 };
 pub const include = .{
     "extern/vorbis/lib",
+    "extern/ogg/include",
 };

@@ -1,5 +1,7 @@
 pub const name = "mad";
-pub const config = "extern/config.mad.in.h";
+pub const config = .{
+    .@"config.h" = "extern/config.mad.in.h",
+};
 pub const src = .{
     "extern/libmad/bit.c",
     "extern/libmad/decoder.c",
