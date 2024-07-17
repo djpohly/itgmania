@@ -1,6 +1,6 @@
 pub const name = "png";
-pub const copyfrom = .{
-    .@"extern/libpng/pnglibconf.h" = "extern/libpng/scripts/pnglibconf.h.prebuilt",
+pub const config = .{
+    .@"pnglibconf.h" = "extern/libpng/scripts/pnglibconf.h.prebuilt",
 };
 pub const src = .{
     "extern/libpng/png.c",

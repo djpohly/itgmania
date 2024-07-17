@@ -1,7 +1,9 @@
 pub const name = "pcre";
+pub const config = .{
+    .@"config.h" = "extern/config.pcre.in.h",
+    .@"pcre.h" = "extern/pcre/pcre.h.generic",
+};
 pub const copyfrom = .{
-    .@"extern/pcre/config.h" = "extern/config.pcre.in.h",
-    .@"extern/pcre/pcre.h" = "extern/pcre/pcre.h.generic",
     .@"extern/pcre/pcre_chartables.c" = "extern/pcre/pcre_chartables.c.dist",
 };
 pub const src = .{

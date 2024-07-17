@@ -95,13 +95,13 @@ const Helper = struct {
         });
 
         if (@hasDecl(libconfig, "copyfrom")) {
-            const wf = b.addWriteFiles();
+            const usf = b.addUpdateSourceFiles();
             inline for (std.meta.fields(@TypeOf(libconfig.copyfrom))) |f| {
                 const dest = f.name;
                 const src = @field(libconfig.copyfrom, f.name);
-                wf.addCopyFileToSource(b.path(src), dest);
+                usf.addCopyFileToSource(b.path(src), dest);
             }
-            lib.step.dependOn(&wf.step);
+            lib.step.dependOn(&usf.step);
         }
 
         if (@hasDecl(libconfig, "define")) {
@@ -144,21 +144,9 @@ const Helper = struct {
             lib.linkLibCpp();
         }
 
-        const flags: []const []const u8 = blk: {
-            if (@hasDecl(libconfig, "flags")) {
-                if (@hasDecl(libconfig, "c_std")) {
-                    break :blk &(libconfig.flags ++ .{ "-std=" ++ libconfig.c_std });
-                } else {
-                    break :blk &libconfig.flags;
-                }
-            } else {
-                if (@hasDecl(libconfig, "c_std")) {
-                    break :blk &.{ "-std=" ++ libconfig.c_std };
-                } else {
-                    break :blk &.{};
-                }
-            }
-        };
+        const flags = @as([]const []const u8, &.{}) ++
+            (if (@hasDecl(libconfig, "c_std")) .{ "-std=" ++ libconfig.c_std } else .{}) ++
+            (if (@hasDecl(libconfig, "flags")) libconfig.flags else .{});
 
         inline for (libconfig.src) |path| {
             if (std.mem.endsWith(u8, path, ".asm")) {
