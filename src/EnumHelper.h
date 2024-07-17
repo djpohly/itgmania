@@ -16,8 +16,10 @@ extern "C"
 
 /** @brief A general foreach loop for enumerators, going up to a max value. */
 #define FOREACH_ENUM_N( e, max, var )	for( e var=(e)0; var<max; enum_add<e>( var, +1 ) )
+/** @brief A general foreach loop for enumerators, starting at a certain value. */
+#define FOREACH_ENUM_FROM( e, start, var )	for( e var=(e)start; var<NUM_##e; enum_add<e>( var, +1 ) )
 /** @brief A general foreach loop for enumerators. */
-#define FOREACH_ENUM( e, var )	for( e var=(e)0; var<NUM_##e; enum_add<e>( var, +1 ) )
+#define FOREACH_ENUM( e, var )	FOREACH_ENUM_FROM( e, 0, var )
 
 int CheckEnum(lua_State *L,
 	      LuaReference &table,

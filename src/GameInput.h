@@ -59,7 +59,8 @@ RString GameButtonToLocalizedString( const InputScheme* pInputs, GameButton i );
 GameButton StringToGameButton( const InputScheme* pInputs, const RString& s );
 
 /** @brief A special way to loop through each game button. */
-#define FOREACH_GameButton_Custom( gb ) for( GameButton gb=GAME_BUTTON_CUSTOM_01; gb<NUM_GameButton; enum_add(gb, +1) )
+#define FOREACH_GameButton_Custom( gb ) FOREACH_ENUM_FROM( GameButton, GAME_BUTTON_CUSTOM_01, gb )
+
 
 #define GAME_BUTTON_NEXT		GAME_BUTTON_CUSTOM_01
 

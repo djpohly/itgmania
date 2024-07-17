@@ -2685,48 +2685,6 @@ Profile* GameState::GetEditLocalProfile()
 }
 
 
-PlayerNumber GetNextHumanPlayer( PlayerNumber pn )
-{
-	for( enum_add(pn, 1); pn < NUM_PLAYERS; enum_add(pn, 1) )
-		if( GAMESTATE->IsHumanPlayer(pn) )
-			return pn;
-	return PLAYER_INVALID;
-}
-
-PlayerNumber GetNextEnabledPlayer( PlayerNumber pn )
-{
-	for( enum_add(pn, 1); pn < NUM_PLAYERS; enum_add(pn, 1) )
-		if( GAMESTATE->IsPlayerEnabled(pn) )
-			return pn;
-	return PLAYER_INVALID;
-}
-
-PlayerNumber GetNextCpuPlayer( PlayerNumber pn )
-{
-	for( enum_add(pn, 1); pn < NUM_PLAYERS; enum_add(pn, 1) )
-		if( GAMESTATE->IsCpuPlayer(pn) )
-			return pn;
-	return PLAYER_INVALID;
-}
-
-PlayerNumber GetNextPotentialCpuPlayer( PlayerNumber pn )
-{
-	for( enum_add(pn, 1); pn < NUM_PLAYERS; enum_add(pn, 1) )
-		if( !GAMESTATE->IsHumanPlayer(pn) )
-			return pn;
-	return PLAYER_INVALID;
-}
-
-MultiPlayer GetNextEnabledMultiPlayer( MultiPlayer mp )
-{
-	for( enum_add(mp, 1); mp < NUM_MultiPlayer; enum_add(mp, 1) )
-		if( GAMESTATE->IsMultiPlayerEnabled(mp) )
-			return mp;
-	return MultiPlayer_Invalid;
-}
-
-
-
 // lua start
 #include "LuaBinding.h"
 #include "Game.h"

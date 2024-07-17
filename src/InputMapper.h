@@ -121,7 +121,9 @@ public:
 	const char *GetGameButtonName( GameButton gb ) const;
 };
 /** @brief A special foreach loop to handle the various GameButtons. */
-#define FOREACH_GameButtonInScheme( s, var )	for( GameButton var=(GameButton)0; var<s->m_iButtonsPerController; enum_add<GameButton>( var, +1 ) )
+#define FOREACH_GameButtonInScheme( s, var ) \
+	FOREACH_ENUM( GameButton, var ) \
+		if( var < s->m_iButtonsPerController )
 
 class InputMappings
 {

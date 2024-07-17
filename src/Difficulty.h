@@ -28,12 +28,10 @@ typedef Difficulty CourseDifficulty;
 const int NUM_CourseDifficulty = NUM_Difficulty;
 /** @brief Loop through the shown course difficulties. */
 #define FOREACH_ShownCourseDifficulty( cd ) \
-for( Difficulty cd=GetNextShownCourseDifficulty((CourseDifficulty)-1); \
-	cd!=Difficulty_Invalid; cd=GetNextShownCourseDifficulty(cd) )
+	FOREACH_ENUM( Difficulty, cd ) \
+		if( GAMESTATE->IsCourseDifficultyShown(cd) )
 
 const RString& CourseDifficultyToLocalizedString( Difficulty dc );
-
-Difficulty GetNextShownCourseDifficulty( Difficulty pn );
 
 
 // CustomDifficulty is a themeable difficulty name based on Difficulty, string matching on StepsType, and CourseType.

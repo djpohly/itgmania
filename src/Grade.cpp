@@ -11,16 +11,6 @@ LuaXType( Grade );
 /** @brief The current number of grade tiers being used. */
 ThemeMetric<int> NUM_GRADE_TIERS_USED("PlayerStageStats","NumGradeTiersUsed");
 
-Grade GetNextPossibleGrade( Grade g )
-{
-	if( g < NUM_GRADE_TIERS_USED - 1 )
-		return (Grade)(g+1);
-	else if( g == NUM_GRADE_TIERS_USED - 1 )
-		return Grade_Failed;
-	else
-		return Grade_Invalid;
-}
-
 
 RString GradeToLocalizedString( Grade g )
 {

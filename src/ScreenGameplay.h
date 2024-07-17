@@ -333,22 +333,26 @@ protected:
 	bool m_delaying_ready_announce;
 };
 
-std::vector<PlayerInfo>::iterator GetNextEnabledPlayerInfo		( std::vector<PlayerInfo>::iterator iter, std::vector<PlayerInfo> &v );
-std::vector<PlayerInfo>::iterator GetNextEnabledPlayerInfoNotDummy	( std::vector<PlayerInfo>::iterator iter, std::vector<PlayerInfo> &v );
-std::vector<PlayerInfo>::iterator GetNextEnabledPlayerNumberInfo	( std::vector<PlayerInfo>::iterator iter, std::vector<PlayerInfo> &v );
-std::vector<PlayerInfo>::iterator GetNextPlayerNumberInfo		( std::vector<PlayerInfo>::iterator iter, std::vector<PlayerInfo> &v );
-std::vector<PlayerInfo>::iterator GetNextVisiblePlayerInfo		( std::vector<PlayerInfo>::iterator iter, std::vector<PlayerInfo> &v );
-
 /** @brief Get each enabled Player's info. */
-#define FOREACH_EnabledPlayerInfo( v, pi )		for( std::vector<PlayerInfo>::iterator pi = GetNextEnabledPlayerInfo		(v.begin(),v);	pi != v.end(); pi = GetNextEnabledPlayerInfo(++pi,v) )
+#define FOREACH_EnabledPlayerInfo( v, pi ) \
+	for( std::vector<PlayerInfo>::iterator pi = v.begin(); pi != v.end(); ++pi ) \
+		if( pi->m_bPlayerEnabled )
 /** @brief Get each enabled Player's info as long as it's not a dummy player. */
-#define FOREACH_EnabledPlayerInfoNotDummy( v, pi )	for( std::vector<PlayerInfo>::iterator pi = GetNextEnabledPlayerInfoNotDummy	(v.begin(),v);	pi != v.end(); pi = GetNextEnabledPlayerInfoNotDummy(++pi,v) )
+#define FOREACH_EnabledPlayerInfoNotDummy( v, pi ) \
+	for( std::vector<PlayerInfo>::iterator pi = v.begin(); pi != v.end(); ++pi ) \
+		if( !pi->m_bIsDummy && pi->m_bPlayerEnabled )
 /** @brief Get each enabled Player Number's info. */
-#define FOREACH_EnabledPlayerNumberInfo( v, pi )	for( std::vector<PlayerInfo>::iterator pi = GetNextEnabledPlayerNumberInfo	(v.begin(),v);	pi != v.end(); pi = GetNextEnabledPlayerNumberInfo(++pi,v) )
+#define FOREACH_EnabledPlayerNumberInfo( v, pi ) \
+	for( std::vector<PlayerInfo>::iterator pi = v.begin(); pi != v.end(); ++pi ) \
+		if( !pi->m_bIsDummy && pi->m_bPlayerEnabled && pi->m_mp == MultiPlayer_Invalid )
 /** @brief Get each Player Number's info, regardless of whether it's enabled or not. */
-#define FOREACH_PlayerNumberInfo( v, pi )		for( std::vector<PlayerInfo>::iterator pi = GetNextPlayerNumberInfo		(v.begin(),v);	pi != v.end(); pi = GetNextPlayerNumberInfo(++pi,v) )
+#define FOREACH_PlayerNumberInfo( v, pi ) \
+	for( std::vector<PlayerInfo>::iterator pi = v.begin(); pi != v.end(); ++pi ) \
+		if( !pi->m_bIsDummy && pi->m_pn != PLAYER_INVALID )
 /** @brief Get each visible Player's info. */
-#define FOREACH_VisiblePlayerInfo( v, pi )		for( std::vector<PlayerInfo>::iterator pi = GetNextVisiblePlayerInfo		(v.begin(),v);	pi != v.end(); pi = GetNextVisiblePlayerInfo(++pi,v) )
+#define FOREACH_VisiblePlayerInfo( v, pi ) \
+	for( std::vector<PlayerInfo>::iterator pi = v.begin(); pi != v.end(); ++pi ) \
+		if( pi->m_pPlayer->HasVisibleParts() )
 
 
 #endif

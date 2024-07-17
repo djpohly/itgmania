@@ -441,22 +441,16 @@ private:
 
 };
 
-PlayerNumber GetNextHumanPlayer( PlayerNumber pn );
-PlayerNumber GetNextEnabledPlayer( PlayerNumber pn );
-PlayerNumber GetNextCpuPlayer( PlayerNumber pn );
-PlayerNumber GetNextPotentialCpuPlayer( PlayerNumber pn );
-MultiPlayer GetNextEnabledMultiPlayer( MultiPlayer mp );
-
 /** @brief A foreach loop to act on each human Player. */
-#define FOREACH_HumanPlayer( pn ) for( PlayerNumber pn=GetNextHumanPlayer((PlayerNumber)-1); pn!=PLAYER_INVALID; pn=GetNextHumanPlayer(pn) )
+#define FOREACH_HumanPlayer( pn ) FOREACH_ENUM( PlayerNumber, pn ) if( GAMESTATE->IsHumanPlayer(pn) )
 /** @brief A foreach loop to act on each enabled Player. */
-#define FOREACH_EnabledPlayer( pn ) for( PlayerNumber pn=GetNextEnabledPlayer((PlayerNumber)-1); pn!=PLAYER_INVALID; pn=GetNextEnabledPlayer(pn) )
+#define FOREACH_EnabledPlayer( pn ) FOREACH_ENUM( PlayerNumber, pn ) if( GAMESTATE->IsPlayerEnabled(pn) )
 /** @brief A foreach loop to act on each CPU Player. */
-#define FOREACH_CpuPlayer( pn ) for( PlayerNumber pn=GetNextCpuPlayer((PlayerNumber)-1); pn!=PLAYER_INVALID; pn=GetNextCpuPlayer(pn) )
+#define FOREACH_CpuPlayer( pn ) FOREACH_ENUM( PlayerNumber, pn ) if( GAMESTATE->IsCpuPlayer(pn) )
 /** @brief A foreach loop to act on each potential CPU Player. */
-#define FOREACH_PotentialCpuPlayer( pn ) for( PlayerNumber pn=GetNextPotentialCpuPlayer((PlayerNumber)-1); pn!=PLAYER_INVALID; pn=GetNextPotentialCpuPlayer(pn) )
+#define FOREACH_PotentialCpuPlayer( pn ) FOREACH_ENUM( PlayerNumber, pn ) if( !GAMESTATE->IsHumanPlayer(pn) )
 /** @brief A foreach loop to act on each Player in MultiPlayer. */
-#define FOREACH_EnabledMultiPlayer( mp ) for( MultiPlayer mp=GetNextEnabledMultiPlayer((MultiPlayer)-1); mp!=MultiPlayer_Invalid; mp=GetNextEnabledMultiPlayer(mp) )
+#define FOREACH_EnabledMultiPlayer( mp ) FOREACH_ENUM( MultiPlayer, mp ) if( GAMESTATE->IsMultiPlayerEnabled(mp) )
 
 
 
