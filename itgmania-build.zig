@@ -1,5 +1,4 @@
 pub const name = "itgmania";
-pub const c_std = "gnu++17";
 pub const src = .{
     "Build/generated/src/verstub.cpp",
     "src/ActiveAttackList.cpp",

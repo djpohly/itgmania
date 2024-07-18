@@ -213,12 +213,7 @@ pub fn build(b: *std.Build) !void {
         .style = .{ .cmake = b.path("src/config.in.hpp") },
         .include_path = "config.hpp",
     }, global_config));
-    exe.addCSourceFiles(.{
-        .files = &itgm_config.src,
-        .flags = &.{
-            "-std=" ++ itgm_config.c_std,
-        },
-    });
+    exe.addCSourceFiles(.{ .files = &itgm_config.src });
 
     const nasm = switch (target.result.cpu.arch) {
         .x86, .x86_64 => blk: {
