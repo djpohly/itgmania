@@ -175,6 +175,7 @@ struct MapEditToDI
 {
 	DeviceInput button[NUM_EditButton][NUM_EDIT_TO_DEVICE_SLOTS];
 	DeviceInput hold[NUM_EditButton][NUM_EDIT_TO_DEVICE_SLOTS];
+	MapEditToDI() { Clear(); }
 	void Clear()
 	{
 		FOREACH_EditButton(e)
@@ -192,6 +193,7 @@ struct MapEditToDI
 struct MapEditButtonToMenuButton
 {
 	GameButton button[NUM_EditButton][NUM_EDIT_TO_MENU_SLOTS];
+	MapEditButtonToMenuButton() { Clear(); }
 	void Clear()
 	{
 		FOREACH_EditButton(e)

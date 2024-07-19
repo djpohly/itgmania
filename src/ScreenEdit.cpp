@@ -1569,8 +1569,8 @@ void ScreenEdit::Init()
 	m_AutoKeysounds.FinishLoading();
 	m_pSoundMusic = m_AutoKeysounds.GetSound();
 
-	this->HandleScreenMessage( SM_UpdateTextInfo );
 	m_bTextInfoNeedsUpdate = true;
+	this->HandleScreenMessage( SM_UpdateTextInfo );
 
 	SubscribeToMessage( Message_SongModified );
 }

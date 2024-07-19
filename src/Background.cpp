@@ -156,6 +156,7 @@ BackgroundImpl::BackgroundImpl()
 	m_bInitted = false;
 	m_pDancingCharacters = nullptr;
 	m_pSong = nullptr;
+	m_bDangerAllWasVisible = false;
 }
 
 BackgroundImpl::Layer::Layer()
