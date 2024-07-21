@@ -2050,12 +2050,12 @@ bool ScreenSelectMusic::can_open_options_list(PlayerNumber pn)
 class LunaScreenSelectMusic: public Luna<ScreenSelectMusic>
 {
 public:
-	static int GetGoToOptions( T* p, lua_State *L ) { lua_pushboolean( L, p->GetGoToOptions() ); return 1; }
-	static int GetMusicWheel( T* p, lua_State *L ) {
+	LUA_METHOD(GetGoToOptions)( T* p, lua_State *L ) { lua_pushboolean( L, p->GetGoToOptions() ); return 1; }
+	LUA_METHOD(GetMusicWheel)( T* p, lua_State *L ) {
 		p->GetMusicWheel()->PushSelf(L);
 		return 1;
 	}
-	static int OpenOptionsList( T* p, lua_State *L )
+	LUA_METHOD(OpenOptionsList)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		if(p->can_open_options_list(pn))
@@ -2064,19 +2064,11 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int CanOpenOptionsList( T* p, lua_State *L )
+	LUA_METHOD(CanOpenOptionsList)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		lua_pushboolean(L, p->can_open_options_list(pn));
 		return 1;
-	}
-
-	LunaScreenSelectMusic()
-	{
-  		ADD_METHOD( GetGoToOptions );
-		ADD_METHOD( GetMusicWheel );
-		ADD_METHOD( OpenOptionsList );
-		ADD_METHOD( CanOpenOptionsList );
 	}
 };
 

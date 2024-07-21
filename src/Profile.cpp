@@ -2551,7 +2551,7 @@ RString Profile::MakeFileNameNoExtension( RString sFileNameBeginning, int iIndex
 class LunaProfile: public Luna<Profile>
 {
 public:
-	static int AddScreenshot( T* p, lua_State *L )
+	LUA_METHOD(AddScreenshot)( T* p, lua_State *L )
 	{
 		HighScore* hs= Luna<HighScore>::check(L, 1);
 		RString filename= SArg(2);
@@ -2562,22 +2562,22 @@ public:
 		p->AddScreenshot(screenshot);
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(GetType, m_Type);
-	DEFINE_METHOD(GetPriority, m_ListPriority);
+	LUA_DEFINE_METHOD(GetType, m_Type);
+	LUA_DEFINE_METHOD(GetPriority, m_ListPriority);
 
-	static int GetDisplayName( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sDisplayName ); return 1; }
-	static int SetDisplayName( T* p, lua_State *L )
+	LUA_METHOD(GetDisplayName)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sDisplayName ); return 1; }
+	LUA_METHOD(SetDisplayName)( T* p, lua_State *L )
 	{
 		p->m_sDisplayName= SArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int GetLastUsedHighScoreName( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sLastUsedHighScoreName ); return 1; }
-	static int SetLastUsedHighScoreName( T* p, lua_State *L )
+	LUA_METHOD(GetLastUsedHighScoreName)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sLastUsedHighScoreName ); return 1; }
+	LUA_METHOD(SetLastUsedHighScoreName)( T* p, lua_State *L )
 	{
 		p->m_sLastUsedHighScoreName= SArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int GetHighScoreList( T* p, lua_State *L )
+	LUA_METHOD(GetHighScoreList)( T* p, lua_State *L )
 	{
 		if( LuaBinding::CheckLuaObjectType(L, 1, "Song") )
 		{
@@ -2599,7 +2599,7 @@ public:
 		luaL_typerror( L, 1, "Song or Course" );
 		COMMON_RETURN_SELF;
 	}
-	static int GetCategoryHighScoreList( T* p, lua_State *L )
+	LUA_METHOD(GetCategoryHighScoreList)( T* p, lua_State *L )
 	{
 		StepsType pStepsType = Enum::Check<StepsType>(L, 1);
 		RankingCategory pRankCat = Enum::Check<RankingCategory>(L, 2);
@@ -2608,7 +2608,7 @@ public:
 		return 1;
 	}
 
-	static int GetHighScoreListIfExists( T* p, lua_State *L )
+	LUA_METHOD(GetHighScoreListIfExists)( T* p, lua_State *L )
 	{
 #define GET_IF_EXISTS(arga_type, argb_type) \
 		const arga_type *parga = Luna<arga_type>::check(L, 1); \
@@ -2647,7 +2647,7 @@ public:
 #undef GET_IF_EXISTS
 	}
 
-	static int GetAllUsedHighScoreNames( T* p, lua_State *L )
+	LUA_METHOD(GetAllUsedHighScoreNames)( T* p, lua_State *L )
 	{
 		std::set<RString> names;
 		p->GetAllUsedHighScoreNames(names);
@@ -2663,66 +2663,66 @@ public:
 		return 1;
 	}
 
-	static int GetCharacter( T* p, lua_State *L )			{ p->GetCharacter()->PushSelf(L); return 1; }
-	static int SetCharacter( T* p, lua_State *L )			{ p->SetCharacter(SArg(1)); COMMON_RETURN_SELF; }
-	static int GetWeightPounds( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iWeightPounds ); return 1; }
-	static int SetWeightPounds( T* p, lua_State *L )		{ p->m_iWeightPounds = IArg(1); COMMON_RETURN_SELF; }
-	DEFINE_METHOD(GetVoomax, m_Voomax);
-	DEFINE_METHOD(GetAge, GetAge());
-	DEFINE_METHOD(GetBirthYear, m_BirthYear);
-	DEFINE_METHOD(GetIgnoreStepCountCalories, m_IgnoreStepCountCalories);
-	DEFINE_METHOD(GetIsMale, m_IsMale);
-	static int SetVoomax( T* p, lua_State *L )
+	LUA_METHOD(GetCharacter)( T* p, lua_State *L )			{ p->GetCharacter()->PushSelf(L); return 1; }
+	LUA_METHOD(SetCharacter)( T* p, lua_State *L )			{ p->SetCharacter(SArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetWeightPounds)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iWeightPounds ); return 1; }
+	LUA_METHOD(SetWeightPounds)( T* p, lua_State *L )		{ p->m_iWeightPounds = IArg(1); COMMON_RETURN_SELF; }
+	LUA_DEFINE_METHOD(GetVoomax, m_Voomax);
+	LUA_DEFINE_METHOD(GetAge, GetAge());
+	LUA_DEFINE_METHOD(GetBirthYear, m_BirthYear);
+	LUA_DEFINE_METHOD(GetIgnoreStepCountCalories, m_IgnoreStepCountCalories);
+	LUA_DEFINE_METHOD(GetIsMale, m_IsMale);
+	LUA_METHOD(SetVoomax)( T* p, lua_State *L )
 	{
 		p->m_Voomax= FArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int SetBirthYear( T* p, lua_State *L )
+	LUA_METHOD(SetBirthYear)( T* p, lua_State *L )
 	{
 		p->m_BirthYear= IArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int SetIgnoreStepCountCalories( T* p, lua_State *L )
+	LUA_METHOD(SetIgnoreStepCountCalories)( T* p, lua_State *L )
 	{
 		p->m_IgnoreStepCountCalories= BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int SetIsMale( T* p, lua_State *L )
+	LUA_METHOD(SetIsMale)( T* p, lua_State *L )
 	{
 		p->m_IsMale= BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int AddCaloriesToDailyTotal( T* p, lua_State *L )
+	LUA_METHOD(AddCaloriesToDailyTotal)( T* p, lua_State *L )
 	{
 		p->AddCaloriesToDailyTotal(FArg(1));
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(CalculateCaloriesFromHeartRate, CalculateCaloriesFromHeartRate(FArg(1), FArg(2)));
-	static int GetGoalType( T* p, lua_State *L )			{ lua_pushnumber(L, p->m_GoalType ); return 1; }
-	static int SetGoalType( T* p, lua_State *L )			{ p->m_GoalType = Enum::Check<GoalType>(L, 1); COMMON_RETURN_SELF; }
-	static int GetGoalCalories( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iGoalCalories ); return 1; }
-	static int SetGoalCalories( T* p, lua_State *L )		{ p->m_iGoalCalories = IArg(1); COMMON_RETURN_SELF; }
-	static int GetGoalSeconds( T* p, lua_State *L )			{ lua_pushnumber(L, p->m_iGoalSeconds ); return 1; }
-	static int SetGoalSeconds( T* p, lua_State *L )			{ p->m_iGoalSeconds = IArg(1); COMMON_RETURN_SELF; }
-	static int GetCaloriesBurnedToday( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetCaloriesBurnedToday() ); return 1; }
-	static int GetTotalNumSongsPlayed( T* p, lua_State *L )	{ lua_pushnumber(L, p->m_iNumTotalSongsPlayed ); return 1; }
-	static int IsCodeUnlocked( T* p, lua_State *L )			{ lua_pushboolean(L, p->IsCodeUnlocked(SArg(1)) ); return 1; }
-	static int GetSongsActual( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetSongsActual(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
-	static int GetCoursesActual( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetCoursesActual(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
-	static int GetSongsPossible( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetSongsPossible(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
-	static int GetCoursesPossible( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetCoursesPossible(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
-	static int GetSongsPercentComplete( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetSongsPercentComplete(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
-	static int GetCoursesPercentComplete( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetCoursesPercentComplete(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
-	static int GetTotalStepsWithTopGrade( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetTotalStepsWithTopGrade(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2),Enum::Check<Grade>(L, 3)) ); return 1; }
-	static int GetTotalTrailsWithTopGrade( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetTotalTrailsWithTopGrade(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2),Enum::Check<Grade>(L, 3)) ); return 1; }
-	static int GetNumTotalSongsPlayed( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iNumTotalSongsPlayed ); return 1; }
-	static int GetTotalSessions( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalSessions ); return 1; }
-	static int GetTotalSessionSeconds( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalSessionSeconds ); return 1; }
-	static int GetTotalGameplaySeconds( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalGameplaySeconds ); return 1; }
-	static int GetSongsAndCoursesPercentCompleteAllDifficulties( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetSongsAndCoursesPercentCompleteAllDifficulties(Enum::Check<StepsType>(L, 1)) ); return 1; }
-	static int GetTotalCaloriesBurned( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_fTotalCaloriesBurned ); return 1; }
-	static int GetDisplayTotalCaloriesBurned( T* p, lua_State *L )	{ lua_pushstring(L, p->GetDisplayTotalCaloriesBurned() ); return 1; }
-	static int GetMostPopularSong( T* p, lua_State *L )
+	LUA_DEFINE_METHOD(CalculateCaloriesFromHeartRate, CalculateCaloriesFromHeartRate(FArg(1), FArg(2)));
+	LUA_METHOD(GetGoalType)( T* p, lua_State *L )			{ lua_pushnumber(L, p->m_GoalType ); return 1; }
+	LUA_METHOD(SetGoalType)( T* p, lua_State *L )			{ p->m_GoalType = Enum::Check<GoalType>(L, 1); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetGoalCalories)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iGoalCalories ); return 1; }
+	LUA_METHOD(SetGoalCalories)( T* p, lua_State *L )		{ p->m_iGoalCalories = IArg(1); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetGoalSeconds)( T* p, lua_State *L )			{ lua_pushnumber(L, p->m_iGoalSeconds ); return 1; }
+	LUA_METHOD(SetGoalSeconds)( T* p, lua_State *L )			{ p->m_iGoalSeconds = IArg(1); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetCaloriesBurnedToday)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetCaloriesBurnedToday() ); return 1; }
+	LUA_METHOD(GetTotalNumSongsPlayed)( T* p, lua_State *L )	{ lua_pushnumber(L, p->m_iNumTotalSongsPlayed ); return 1; }
+	LUA_METHOD(IsCodeUnlocked)( T* p, lua_State *L )			{ lua_pushboolean(L, p->IsCodeUnlocked(SArg(1)) ); return 1; }
+	LUA_METHOD(GetSongsActual)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetSongsActual(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
+	LUA_METHOD(GetCoursesActual)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetCoursesActual(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
+	LUA_METHOD(GetSongsPossible)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetSongsPossible(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
+	LUA_METHOD(GetCoursesPossible)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetCoursesPossible(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
+	LUA_METHOD(GetSongsPercentComplete)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetSongsPercentComplete(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
+	LUA_METHOD(GetCoursesPercentComplete)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetCoursesPercentComplete(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
+	LUA_METHOD(GetTotalStepsWithTopGrade)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetTotalStepsWithTopGrade(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2),Enum::Check<Grade>(L, 3)) ); return 1; }
+	LUA_METHOD(GetTotalTrailsWithTopGrade)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetTotalTrailsWithTopGrade(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2),Enum::Check<Grade>(L, 3)) ); return 1; }
+	LUA_METHOD(GetNumTotalSongsPlayed)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iNumTotalSongsPlayed ); return 1; }
+	LUA_METHOD(GetTotalSessions)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalSessions ); return 1; }
+	LUA_METHOD(GetTotalSessionSeconds)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalSessionSeconds ); return 1; }
+	LUA_METHOD(GetTotalGameplaySeconds)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalGameplaySeconds ); return 1; }
+	LUA_METHOD(GetSongsAndCoursesPercentCompleteAllDifficulties)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetSongsAndCoursesPercentCompleteAllDifficulties(Enum::Check<StepsType>(L, 1)) ); return 1; }
+	LUA_METHOD(GetTotalCaloriesBurned)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_fTotalCaloriesBurned ); return 1; }
+	LUA_METHOD(GetDisplayTotalCaloriesBurned)( T* p, lua_State *L )	{ lua_pushstring(L, p->GetDisplayTotalCaloriesBurned() ); return 1; }
+	LUA_METHOD(GetMostPopularSong)( T* p, lua_State *L )
 	{
 		Song *p2 = p->GetMostPopularSong();
 		if( p2 )
@@ -2731,7 +2731,7 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	static int GetMostPopularCourse( T* p, lua_State *L )
+	LUA_METHOD(GetMostPopularCourse)( T* p, lua_State *L )
 	{
 		Course *p2 = p->GetMostPopularCourse();
 		if( p2 )
@@ -2740,31 +2740,31 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	static int GetSongNumTimesPlayed( T* p, lua_State *L )
+	LUA_METHOD(GetSongNumTimesPlayed)( T* p, lua_State *L )
 	{
 		ASSERT( !lua_isnil(L,1) );
 		Song *pS = Luna<Song>::check(L,1);
 		lua_pushnumber( L, p->GetSongNumTimesPlayed(pS) );
 		return 1;
 	}
-	static int HasPassedAnyStepsInSong( T* p, lua_State *L )
+	LUA_METHOD(HasPassedAnyStepsInSong)( T* p, lua_State *L )
 	{
 		ASSERT( !lua_isnil(L,1) );
 		Song *pS = Luna<Song>::check(L,1);
 		lua_pushboolean( L, p->HasPassedAnyStepsInSong(pS) );
 		return 1;
 	}
-	static int GetNumToasties( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iNumToasties ); return 1; }
-	static int GetTotalTapsAndHolds( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalTapsAndHolds ); return 1; }
-	static int GetTotalJumps( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalJumps ); return 1; }
-	static int GetTotalHolds( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalHolds ); return 1; }
-	static int GetTotalRolls( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalRolls ); return 1; }
-	static int GetTotalMines( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalMines ); return 1; }
-	static int GetTotalHands( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalHands ); return 1; }
-	static int GetTotalLifts( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalLifts ); return 1; }
-	DEFINE_METHOD(GetTotalDancePoints, m_iTotalDancePoints);
-	static int GetUserTable( T* p, lua_State *L )		{ p->m_UserTable.PushSelf(L); return 1; }
-	static int GetLastPlayedSong( T* p, lua_State *L )
+	LUA_METHOD(GetNumToasties)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iNumToasties ); return 1; }
+	LUA_METHOD(GetTotalTapsAndHolds)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalTapsAndHolds ); return 1; }
+	LUA_METHOD(GetTotalJumps)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalJumps ); return 1; }
+	LUA_METHOD(GetTotalHolds)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalHolds ); return 1; }
+	LUA_METHOD(GetTotalRolls)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalRolls ); return 1; }
+	LUA_METHOD(GetTotalMines)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalMines ); return 1; }
+	LUA_METHOD(GetTotalHands)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalHands ); return 1; }
+	LUA_METHOD(GetTotalLifts)( T* p, lua_State *L )		{ lua_pushnumber(L, p->m_iTotalLifts ); return 1; }
+	LUA_DEFINE_METHOD(GetTotalDancePoints, m_iTotalDancePoints);
+	LUA_METHOD(GetUserTable)( T* p, lua_State *L )		{ p->m_UserTable.PushSelf(L); return 1; }
+	LUA_METHOD(GetLastPlayedSong)( T* p, lua_State *L )
 	{
 		Song *pS = p->m_lastSong.ToSong();
 		if( pS )
@@ -2773,7 +2773,7 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	static int GetLastPlayedCourse( T* p, lua_State *L )
+	LUA_METHOD(GetLastPlayedCourse)( T* p, lua_State *L )
 	{
 		Course *pC = p->m_lastCourse.ToCourse();
 		if( pC )
@@ -2782,8 +2782,8 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	DEFINE_METHOD( GetGUID,		m_sGuid );
-	static int get_songs(T* p, lua_State* L)
+	LUA_DEFINE_METHOD( GetGUID,		m_sGuid );
+	LUA_METHOD(get_songs)(T* p, lua_State* L)
 	{
 		lua_createtable(L, p->m_songs.size(), 0);
 		int song_tab= lua_gettop(L);
@@ -2793,77 +2793,6 @@ public:
 			lua_rawseti(L, song_tab, i+1);
 		}
 		return 1;
-	}
-	LunaProfile()
-	{
-		ADD_METHOD( AddScreenshot );
-		ADD_METHOD( GetType );
-		ADD_METHOD( GetPriority );
-		ADD_METHOD( GetDisplayName );
-		ADD_METHOD( SetDisplayName );
-		ADD_METHOD( GetLastUsedHighScoreName );
-		ADD_METHOD( SetLastUsedHighScoreName );
-		ADD_METHOD( GetAllUsedHighScoreNames );
-		ADD_METHOD( GetHighScoreListIfExists );
-		ADD_METHOD( GetHighScoreList );
-		ADD_METHOD( GetCategoryHighScoreList );
-		ADD_METHOD( GetCharacter );
-		ADD_METHOD( SetCharacter );
-		ADD_METHOD( GetWeightPounds );
-		ADD_METHOD( SetWeightPounds );
-		ADD_METHOD( GetVoomax );
-		ADD_METHOD( SetVoomax );
-		ADD_METHOD( GetAge );
-		ADD_METHOD( GetBirthYear );
-		ADD_METHOD( SetBirthYear );
-		ADD_METHOD( GetIgnoreStepCountCalories );
-		ADD_METHOD( SetIgnoreStepCountCalories );
-		ADD_METHOD( GetIsMale );
-		ADD_METHOD( SetIsMale );
-		ADD_METHOD( AddCaloriesToDailyTotal );
-		ADD_METHOD( CalculateCaloriesFromHeartRate );
-		ADD_METHOD( GetGoalType );
-		ADD_METHOD( SetGoalType );
-		ADD_METHOD( GetGoalCalories );
-		ADD_METHOD( SetGoalCalories );
-		ADD_METHOD( GetGoalSeconds );
-		ADD_METHOD( SetGoalSeconds );
-		ADD_METHOD( GetCaloriesBurnedToday );
-		ADD_METHOD( GetTotalNumSongsPlayed );
-		ADD_METHOD( IsCodeUnlocked );
-		ADD_METHOD( GetSongsActual );
-		ADD_METHOD( GetCoursesActual );
-		ADD_METHOD( GetSongsPossible );
-		ADD_METHOD( GetCoursesPossible );
-		ADD_METHOD( GetSongsPercentComplete );
-		ADD_METHOD( GetCoursesPercentComplete );
-		ADD_METHOD( GetTotalStepsWithTopGrade );
-		ADD_METHOD( GetTotalTrailsWithTopGrade );
-		ADD_METHOD( GetNumTotalSongsPlayed );
-		ADD_METHOD( GetTotalSessions );
-		ADD_METHOD( GetTotalSessionSeconds );
-		ADD_METHOD( GetTotalGameplaySeconds );
-		ADD_METHOD( GetSongsAndCoursesPercentCompleteAllDifficulties );
-		ADD_METHOD( GetTotalCaloriesBurned );
-		ADD_METHOD( GetDisplayTotalCaloriesBurned );
-		ADD_METHOD( GetMostPopularSong );
-		ADD_METHOD( GetMostPopularCourse );
-		ADD_METHOD( GetSongNumTimesPlayed );
-		ADD_METHOD( HasPassedAnyStepsInSong );
-		ADD_METHOD( GetNumToasties );
-		ADD_METHOD( GetTotalTapsAndHolds );
-		ADD_METHOD( GetTotalJumps );
-		ADD_METHOD( GetTotalHolds );
-		ADD_METHOD( GetTotalRolls );
-		ADD_METHOD( GetTotalMines );
-		ADD_METHOD( GetTotalHands );
-		ADD_METHOD( GetTotalLifts );
-		ADD_METHOD( GetTotalDancePoints );
-		ADD_METHOD( GetUserTable );
-		ADD_METHOD( GetLastPlayedSong );
-		ADD_METHOD( GetLastPlayedCourse );
-		ADD_METHOD( GetGUID );
-		ADD_METHOD(get_songs);
 	}
 };
 

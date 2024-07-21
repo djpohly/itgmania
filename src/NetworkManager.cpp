@@ -395,7 +395,7 @@ REGISTER_WITH_LUA_FUNCTION(registerWebSocketMetatable)
 class LunaNetworkManager: public Luna<NetworkManager>
 {
 public:
-	static int IsUrlAllowed(T* p, lua_State *L)
+	LUA_METHOD(IsUrlAllowed)(T* p, lua_State *L)
 	{
 		std::string url = SArg(1);
 
@@ -403,7 +403,7 @@ public:
 		return 1;
 	}
 
-	static int HttpRequest(T* p, lua_State *L)
+	LUA_METHOD(HttpRequest)(T* p, lua_State *L)
 	{
 		luaL_checktype(L, 1, LUA_TTABLE);
 
@@ -639,7 +639,7 @@ public:
 		}
 	}
 
-	static int WebSocket(T* p, lua_State *L)
+	LUA_METHOD(WebSocket)(T* p, lua_State *L)
 	{
 		luaL_checktype(L, 1, LUA_TTABLE);
 
@@ -790,7 +790,7 @@ public:
 		}
 	}
 
-	static int UrlEncode(T* p, lua_State *L)
+	LUA_METHOD(UrlEncode)(T* p, lua_State *L)
 	{
 		std::string url = SArg(1);
 
@@ -800,7 +800,7 @@ public:
 		return 1;
 	}
 
-	static int EncodeQueryParameters(T* p, lua_State *L)
+	LUA_METHOD(EncodeQueryParameters)(T* p, lua_State *L)
 	{
 		std::unordered_map<std::string, std::string> query;
 
@@ -836,15 +836,6 @@ public:
 
 		lua_pushstring(L, encoded.c_str());
 		return 1;
-	}
-
-	LunaNetworkManager()
-	{
-		ADD_METHOD(IsUrlAllowed);
-		ADD_METHOD(HttpRequest);
-		ADD_METHOD(WebSocket);
-		ADD_METHOD(UrlEncode);
-		ADD_METHOD(EncodeQueryParameters);
 	}
 
 private:

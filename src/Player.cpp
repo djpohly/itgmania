@@ -3490,7 +3490,7 @@ RString Player::ApplyRandomAttack()
 class LunaPlayer: public Luna<Player>
 {
 public:
-	static int SetLife(T* p, lua_State* L)
+	LUA_METHOD(SetLife)(T* p, lua_State* L)
 	{
 		if(p->m_inside_lua_set_life)
 		{
@@ -3501,7 +3501,7 @@ public:
 		p->m_inside_lua_set_life= false;
 		COMMON_RETURN_SELF;
 	}
-	static int ChangeLife(T* p, lua_State* L)
+	LUA_METHOD(ChangeLife)(T* p, lua_State* L)
 	{
 		if(p->m_inside_lua_set_life)
 		{
@@ -3512,34 +3512,24 @@ public:
 		p->m_inside_lua_set_life= false;
 		COMMON_RETURN_SELF;
 	}
-	static int SetActorWithJudgmentPosition( T* p, lua_State *L )
+	LUA_METHOD(SetActorWithJudgmentPosition)( T* p, lua_State *L )
 	{
 		Actor *pActor = Luna<Actor>::check(L, 1);
 		p->SetActorWithJudgmentPosition(pActor);
 		COMMON_RETURN_SELF;
 	}
-	static int SetActorWithComboPosition( T* p, lua_State *L )
+	LUA_METHOD(SetActorWithComboPosition)( T* p, lua_State *L )
 	{
 		Actor *pActor = Luna<Actor>::check(L, 1);
 		p->SetActorWithComboPosition(pActor);
 		COMMON_RETURN_SELF;
 	}
-	static int GetPlayerTimingData( T* p, lua_State *L )
+	LUA_METHOD(GetPlayerTimingData)( T* p, lua_State *L )
 	{
 		p->GetPlayerTimingData().PushSelf(L);
 		return 1;
 	}
 	GET_SET_BOOL_METHOD(oitg_zoom_mode, m_oitg_zoom_mode);
-
-	LunaPlayer()
-	{
-		ADD_METHOD(SetLife);
-		ADD_METHOD(ChangeLife);
-		ADD_METHOD( SetActorWithJudgmentPosition );
-		ADD_METHOD( SetActorWithComboPosition );
-		ADD_METHOD( GetPlayerTimingData );
-		ADD_GET_SET_METHODS(oitg_zoom_mode);
-	}
 };
 
 LUA_REGISTER_DERIVED_CLASS( Player, ActorFrame )

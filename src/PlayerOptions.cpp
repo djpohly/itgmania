@@ -1809,7 +1809,7 @@ void PlayerOptions::ResetPrefs( ResetPrefsType type )
 class LunaPlayerOptions: public Luna<PlayerOptions>
 {
 public:
-	static int IsEasierForSongAndSteps( T *p, lua_State *L )
+	LUA_METHOD(IsEasierForSongAndSteps)( T *p, lua_State *L )
 	{
 		Song* pSong = Luna<Song>::check(L,1);
 		Steps* pSteps = Luna<Steps>::check(L,2);
@@ -1817,7 +1817,7 @@ public:
 		lua_pushboolean(L, p->IsEasierForSongAndSteps(pSong, pSteps, pn) );
 		return 1;
 	}
-	static int IsEasierForCourseAndTrail( T *p, lua_State *L )
+	LUA_METHOD(IsEasierForCourseAndTrail)( T *p, lua_State *L )
 	{
 		// course, trail
 		Course* pCourse = Luna<Course>::check(L,1);
@@ -2051,7 +2051,7 @@ public:
 
 	FLOAT_NO_SPEED_INTERFACE(VisualDelay, VisualDelay, true);
 
-	static int DisableTimingWindow(T* p, lua_State* L)
+	LUA_METHOD(DisableTimingWindow)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if (original_top >= 1 && !lua_isnil(L, 1))
@@ -2063,7 +2063,7 @@ public:
 		return 1;
 	}
 
-	static int ResetDisabledTimingWindows(T* p, lua_State* L)
+	LUA_METHOD(ResetDisabledTimingWindows)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		p->m_twDisabledWindows.reset();
@@ -2071,7 +2071,7 @@ public:
 		return 1;
 	}
 
-	static int GetDisabledTimingWindows(T* p, lua_State* L)
+	LUA_METHOD(GetDisabledTimingWindows)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		lua_newtable( L );
@@ -2087,7 +2087,7 @@ public:
 	}
 
 	// NoteSkins
-	static int NoteSkin(T* p, lua_State* L)
+	LUA_METHOD(NoteSkin)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if( p->m_sNoteSkin.empty()  )
@@ -2130,7 +2130,7 @@ public:
 	// Speed Mods
 	// Sanity checked functions for speed mods, for themes that want to use the
 	// engine's enforcement of sane separation between speed mod types.
-	static int CMod(T* p, lua_State* L)
+	LUA_METHOD(CMod)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if(p->m_fTimeSpacing)
@@ -2163,7 +2163,7 @@ public:
 		return 2;
 	}
 
-	static int XMod(T* p, lua_State* L)
+	LUA_METHOD(XMod)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if(!p->m_fTimeSpacing)
@@ -2191,7 +2191,7 @@ public:
 		return 2;
 	}
 
-	static int MMod(T* p, lua_State* L)
+	LUA_METHOD(MMod)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if(!p->m_fTimeSpacing && p->m_fMaxScrollBPM)
@@ -2230,7 +2230,7 @@ public:
 		p->m_SpeedfSkew= speed;
 	}
 
-	static int Overhead(T* p, lua_State* L)
+	LUA_METHOD(Overhead)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		lua_pushboolean(L, (p->m_fPerspectiveTilt == 0.0f && p->m_fSkew == 0.0f));
@@ -2247,7 +2247,7 @@ public:
 		return 1;
 	}
 
-	static int Incoming(T* p, lua_State* L)
+	LUA_METHOD(Incoming)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if((p->m_fSkew > 0.0f && p->m_fPerspectiveTilt < 0.0f) ||
@@ -2275,7 +2275,7 @@ public:
 		return 2;
 	}
 
-	static int Space(T* p, lua_State* L)
+	LUA_METHOD(Space)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if((p->m_fSkew > 0.0f && p->m_fPerspectiveTilt > 0.0f) ||
@@ -2303,7 +2303,7 @@ public:
 		return 2;
 	}
 
-	static int Hallway(T* p, lua_State* L)
+	LUA_METHOD(Hallway)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if(p->m_fSkew == 0.0f && p->m_fPerspectiveTilt < 0.0f)
@@ -2329,7 +2329,7 @@ public:
 		return 2;
 	}
 
-	static int Distant(T* p, lua_State* L)
+	LUA_METHOD(Distant)(T* p, lua_State* L)
 	{
 		int original_top= lua_gettop(L);
 		if(p->m_fSkew == 0.0f && p->m_fPerspectiveTilt > 0.0f)
@@ -2355,9 +2355,9 @@ public:
 		return 2;
 	}
 
-	DEFINE_METHOD( UsingReverse, m_fScrolls[PlayerOptions::SCROLL_REVERSE] == 1.0f );
+	LUA_DEFINE_METHOD( UsingReverse, m_fScrolls[PlayerOptions::SCROLL_REVERSE] == 1.0f );
 
-	static int GetReversePercentForColumn( T *p, lua_State *L )
+	LUA_METHOD(GetReversePercentForColumn)( T *p, lua_State *L )
 	{
 		const int colNum = IArg(1);
 		const int numColumns = GAMESTATE->GetCurrentStyle(p->m_pn)->m_iColsPerPlayer;
@@ -2371,267 +2371,17 @@ public:
 		return 1;
 	}
 
-	static int GetStepAttacks( T *p, lua_State *L )
+	LUA_METHOD(GetStepAttacks)( T *p, lua_State *L )
 	{
 		lua_pushnumber(L,
 			(p->m_fNoAttack > 0 || p->m_fRandAttack > 0 ? false : true ));
 		return 1;
 	}
 
-	static int FromString(T* p, lua_State* L)
+	LUA_METHOD(FromString)(T* p, lua_State* L)
 	{
 		p->FromString(SArg(1));
 		COMMON_RETURN_SELF;
-	}
-
-	LunaPlayerOptions()
-	{
-		ADD_METHOD( IsEasierForSongAndSteps );
-		ADD_METHOD( IsEasierForCourseAndTrail );
-
-		ADD_METHOD(LifeSetting);
-		ADD_METHOD(DrainSetting);
-		ADD_METHOD(ModTimerSetting);
-		ADD_METHOD(ModTimerMult);
-		ADD_METHOD(ModTimerOffset);
-		ADD_METHOD(DrawSize);
-		ADD_METHOD(DrawSizeBack);
-		ADD_METHOD(BatteryLives);
-		ADD_METHOD(TimeSpacing);
-		ADD_METHOD(MaxScrollBPM);
-		ADD_METHOD(ScrollSpeed);
-		ADD_METHOD(ScrollBPM);
-		ADD_METHOD(Boost);
-		ADD_METHOD(Brake);
-		ADD_METHOD(Wave);
-		ADD_METHOD(WavePeriod);
-		ADD_METHOD(Expand);
-		ADD_METHOD(ExpandPeriod);
-		ADD_METHOD(TanExpand);
-		ADD_METHOD(TanExpandPeriod);
-		ADD_METHOD(Boomerang);
-		ADD_METHOD(Drunk);
-		ADD_METHOD(DrunkSpeed);
-		ADD_METHOD(DrunkOffset);
-		ADD_METHOD(DrunkPeriod);
-		ADD_METHOD(TanDrunk);
-		ADD_METHOD(TanDrunkSpeed);
-		ADD_METHOD(TanDrunkOffset);
-		ADD_METHOD(TanDrunkPeriod);
-		ADD_METHOD(DrunkZ);
-		ADD_METHOD(DrunkZSpeed);
-		ADD_METHOD(DrunkZOffset);
-		ADD_METHOD(DrunkZPeriod);
-		ADD_METHOD(TanDrunkZ);
-		ADD_METHOD(TanDrunkZSpeed);
-		ADD_METHOD(TanDrunkZOffset);
-		ADD_METHOD(TanDrunkZPeriod);
-		ADD_METHOD(Dizzy);
-		ADD_METHOD(ShrinkLinear);
-		ADD_METHOD(ShrinkMult);
-		ADD_METHOD(PulseInner);
-		ADD_METHOD(PulseOuter);
-		ADD_METHOD(PulseOffset);
-		ADD_METHOD(PulsePeriod);
-		ADD_METHOD(AttenuateX);
-		ADD_METHOD(AttenuateY);
-		ADD_METHOD(AttenuateZ);
-		ADD_METHOD(Confusion);
-		ADD_METHOD(ConfusionOffset);
-		ADD_METHOD(ConfusionX);
-		ADD_METHOD(ConfusionXOffset);
-		ADD_METHOD(ConfusionY);
-		ADD_METHOD(ConfusionYOffset);
-		ADD_METHOD(Bounce);
-		ADD_METHOD(BouncePeriod);
-		ADD_METHOD(BounceOffset);
-		ADD_METHOD(BounceZ);
-		ADD_METHOD(BounceZPeriod);
-		ADD_METHOD(BounceZOffset);
-		ADD_METHOD(Mini);
-		ADD_METHOD(Tiny);
-		ADD_METHOD(Flip);
-		ADD_METHOD(Invert);
-		ADD_METHOD(Tornado);
-		ADD_METHOD(TornadoPeriod);
-		ADD_METHOD(TornadoOffset);
-		ADD_METHOD(TanTornado);
-		ADD_METHOD(TanTornadoPeriod);
-		ADD_METHOD(TanTornadoOffset);
-		ADD_METHOD(TornadoZ);
-		ADD_METHOD(TornadoZPeriod);
-		ADD_METHOD(TornadoZOffset);
-		ADD_METHOD(TanTornadoZ);
-		ADD_METHOD(TanTornadoZPeriod);
-		ADD_METHOD(TanTornadoZOffset);
-		ADD_METHOD(Tipsy);
-		ADD_METHOD(TipsySpeed);
-		ADD_METHOD(TipsyOffset);
-		ADD_METHOD(TanTipsy);
-		ADD_METHOD(TanTipsySpeed);
-		ADD_METHOD(TanTipsyOffset);
-		ADD_METHOD(Bumpy);
-		ADD_METHOD(BumpyOffset);
-		ADD_METHOD(BumpyPeriod);
-		ADD_METHOD(TanBumpy);
-		ADD_METHOD(TanBumpyOffset);
-		ADD_METHOD(TanBumpyPeriod);
-		ADD_METHOD(BumpyX);
-		ADD_METHOD(BumpyXOffset);
-		ADD_METHOD(BumpyXPeriod);
-		ADD_METHOD(TanBumpyX);
-		ADD_METHOD(TanBumpyXOffset);
-		ADD_METHOD(TanBumpyXPeriod);
-		ADD_METHOD(Beat);
-		ADD_METHOD(BeatOffset);
-		ADD_METHOD(BeatPeriod);
-		ADD_METHOD(BeatMult);
-		ADD_METHOD(BeatY);
-		ADD_METHOD(BeatYOffset);
-		ADD_METHOD(BeatYPeriod);
-		ADD_METHOD(BeatYMult);
-		ADD_METHOD(BeatZ);
-		ADD_METHOD(BeatZOffset);
-		ADD_METHOD(BeatZPeriod);
-		ADD_METHOD(BeatZMult);
-		ADD_METHOD(Zigzag);
-		ADD_METHOD(ZigzagPeriod);
-		ADD_METHOD(ZigzagOffset);
-		ADD_METHOD(ZigzagZ);
-		ADD_METHOD(ZigzagZPeriod);
-		ADD_METHOD(ZigzagZOffset);
-		ADD_METHOD(Sawtooth);
-		ADD_METHOD(SawtoothPeriod);
-		ADD_METHOD(SawtoothZ);
-		ADD_METHOD(SawtoothZPeriod);
-		ADD_METHOD(Square);
-		ADD_METHOD(SquareOffset);
-		ADD_METHOD(SquarePeriod);
-		ADD_METHOD(SquareZ);
-		ADD_METHOD(SquareZOffset);
-		ADD_METHOD(SquareZPeriod);
-		ADD_METHOD(Digital);
-		ADD_METHOD(DigitalSteps);
-		ADD_METHOD(DigitalPeriod);
-		ADD_METHOD(DigitalOffset);
-		ADD_METHOD(TanDigital);
-		ADD_METHOD(TanDigitalSteps);
-		ADD_METHOD(TanDigitalPeriod);
-		ADD_METHOD(TanDigitalOffset);
-		ADD_METHOD(DigitalZ);
-		ADD_METHOD(DigitalZSteps);
-		ADD_METHOD(DigitalZPeriod);
-		ADD_METHOD(DigitalZOffset);
-		ADD_METHOD(TanDigitalZ);
-		ADD_METHOD(TanDigitalZSteps);
-		ADD_METHOD(TanDigitalZPeriod);
-		ADD_METHOD(TanDigitalZOffset);
-		ADD_METHOD(ParabolaX);
-		ADD_METHOD(ParabolaY);
-		ADD_METHOD(ParabolaZ);
-		ADD_METHOD(Xmode);
-		ADD_METHOD(Twirl);
-		ADD_METHOD(Roll);
-		ADD_METHOD(Hidden);
-		ADD_METHOD(HiddenOffset);
-		ADD_METHOD(Sudden);
-		ADD_METHOD(SuddenOffset);
-		ADD_METHOD(Stealth);
-		ADD_METHOD(Blink);
-		ADD_METHOD(RandomVanish);
-		ADD_METHOD(Reverse);
-		ADD_METHOD(Split);
-		ADD_METHOD(Alternate);
-		ADD_METHOD(Cross);
-		ADD_METHOD(Centered);
-		ADD_METHOD(Dark);
-		ADD_METHOD(Blind);
-		ADD_METHOD(Cover);
-		ADD_METHOD(StealthType);
-		ADD_METHOD(StealthPastReceptors);
-		ADD_METHOD(DizzyHolds);
-		ADD_METHOD(ZBuffer);
-		ADD_METHOD(Cosecant);
-		ADD_METHOD(RandAttack);
-		ADD_METHOD(NoAttack);
-		ADD_METHOD(PlayerAutoPlay);
-		ADD_METHOD(Tilt);
-		ADD_METHOD(Skew);
-		ADD_METHOD(Passmark);
-		ADD_METHOD(RandomSpeed);
-		ADD_METHOD(TurnNone);
-		ADD_METHOD(Mirror);
-		ADD_METHOD(LRMirror);
-		ADD_METHOD(UDMirror);
-		ADD_METHOD(Backwards);
-		ADD_METHOD(Left);
-		ADD_METHOD(Right);
-		ADD_METHOD(Shuffle);
-		ADD_METHOD(SoftShuffle);
-		ADD_METHOD(SuperShuffle);
-		ADD_METHOD(HyperShuffle);
-		ADD_METHOD(NoHolds);
-		ADD_METHOD(NoRolls);
-		ADD_METHOD(NoMines);
-		ADD_METHOD(Little);
-		ADD_METHOD(Wide);
-		ADD_METHOD(Big);
-		ADD_METHOD(Quick);
-		ADD_METHOD(BMRize);
-		ADD_METHOD(Skippy);
-		ADD_METHOD(Mines);
-		ADD_METHOD(AttackMines);
-		ADD_METHOD(Echo);
-		ADD_METHOD(Stomp);
-		ADD_METHOD(Planted);
-		ADD_METHOD(Floored);
-		ADD_METHOD(Twister);
-		ADD_METHOD(HoldRolls);
-		ADD_METHOD(NoJumps);
-		ADD_METHOD(NoHands);
-		ADD_METHOD(NoLifts);
-		ADD_METHOD(NoFakes);
-		ADD_METHOD(NoQuads);
-		ADD_METHOD(NoStretch);
-		ADD_METHOD(MuteOnError);
-
-		ADD_MULTICOL_METHOD(MoveX);
-		ADD_MULTICOL_METHOD(MoveY);
-		ADD_MULTICOL_METHOD(MoveZ);
-		ADD_MULTICOL_METHOD(ConfusionOffset);
-		ADD_MULTICOL_METHOD(ConfusionXOffset);
-		ADD_MULTICOL_METHOD(ConfusionYOffset);
-		ADD_MULTICOL_METHOD(Dark);
-		ADD_MULTICOL_METHOD(Stealth);
-		ADD_MULTICOL_METHOD(Tiny);
-		ADD_MULTICOL_METHOD(Bumpy);
-		ADD_MULTICOL_METHOD(Reverse);
-
-		ADD_METHOD(NoteSkin);
-		ADD_METHOD(FailSetting);
-		ADD_METHOD(MinTNSToHideNotes);
-		ADD_METHOD(VisualDelay);
-
-		ADD_METHOD(DisableTimingWindow);
-		ADD_METHOD(ResetDisabledTimingWindows);
-		ADD_METHOD(GetDisabledTimingWindows);
-
-		// Speed
-		ADD_METHOD( CMod );
-		ADD_METHOD( XMod );
-		ADD_METHOD( MMod );
-
-		ADD_METHOD(Overhead);
-		ADD_METHOD(Incoming);
-		ADD_METHOD(Space);
-		ADD_METHOD(Hallway);
-		ADD_METHOD(Distant);
-
-		ADD_METHOD( UsingReverse );
-		ADD_METHOD( GetReversePercentForColumn );
-		ADD_METHOD( GetStepAttacks );
-
-		ADD_METHOD(FromString);
 	}
 };
 

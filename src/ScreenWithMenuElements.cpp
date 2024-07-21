@@ -371,28 +371,20 @@ bool ScreenWithMenuElementsSimple::MenuBack( const InputEventPlus &input )
 class LunaScreenWithMenuElements: public Luna<ScreenWithMenuElements>
 {
 public:
-	static int Cancel( T* p, lua_State *L )		{ p->Cancel( SM_GoToPrevScreen ); COMMON_RETURN_SELF; }
-	static int IsTransitioning( T* p, lua_State *L ) { lua_pushboolean( L, p->IsTransitioning() ); return 1; }
-	static int SetAllowLateJoin( T* p, lua_State *L )
+	LUA_METHOD(Cancel)( T* p, lua_State *L )		{ p->Cancel( SM_GoToPrevScreen ); COMMON_RETURN_SELF; }
+	LUA_METHOD(IsTransitioning)( T* p, lua_State *L ) { lua_pushboolean( L, p->IsTransitioning() ); return 1; }
+	LUA_METHOD(SetAllowLateJoin)( T* p, lua_State *L )
 	{
 		p->m_bShouldAllowLateJoin= BArg(1);
 		COMMON_RETURN_SELF;
 	}
 
-	static int StartTransitioningScreen( T* p, lua_State *L )
+	LUA_METHOD(StartTransitioningScreen)( T* p, lua_State *L )
 	{
 		RString sMessage = SArg(1);
 		ScreenMessage SM = ScreenMessageHelpers::ToScreenMessage( sMessage );
 		p->StartTransitioningScreen( SM );
 		COMMON_RETURN_SELF;
-	}
-
-	LunaScreenWithMenuElements()
-	{
-		ADD_METHOD( Cancel );
-		ADD_METHOD( IsTransitioning );
-		ADD_METHOD( SetAllowLateJoin );
-		ADD_METHOD( StartTransitioningScreen );
 	}
 };
 

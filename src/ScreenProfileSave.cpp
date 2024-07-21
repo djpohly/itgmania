@@ -30,23 +30,17 @@ void ScreenProfileSave::Continue()
 class LunaScreenProfileSave: public Luna<ScreenProfileSave>
 {
 public:
-	static int Continue( T* p, lua_State *L )
+	LUA_METHOD(Continue)( T* p, lua_State *L )
 	{
 		LUA->YieldLua();
 		p->Continue();
 		LUA->UnyieldLua();
 		COMMON_RETURN_SELF;
 	}
-	static int HaveProfileToSave( T* p, lua_State *L )
+	LUA_METHOD(HaveProfileToSave)( T* p, lua_State *L )
 	{
 		LuaHelpers::Push( L, GAMESTATE->HaveProfileToSave() );
 		return 1;
-	}
-	
-	LunaScreenProfileSave()
-	{
-  		ADD_METHOD( Continue );
-  		ADD_METHOD( HaveProfileToSave );
 	}
 };
 

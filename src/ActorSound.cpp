@@ -51,27 +51,17 @@ void ActorSound::LoadFromNode( const XNode* pNode )
 class LunaActorSound: public Luna<ActorSound>
 {
 public:
-	static int load( T* p, lua_State *L )			{ p->Load(SArg(1)); COMMON_RETURN_SELF; }
-	static int play( T* p, lua_State *L )			{ p->Play(); COMMON_RETURN_SELF; }
-	static int pause( T* p, lua_State *L )			{ p->Pause(BArg(1)); COMMON_RETURN_SELF; }
-	static int stop( T* p, lua_State *L )			{ p->Stop(); COMMON_RETURN_SELF; }
-	static int get( T* p, lua_State *L )			{ p->PushSound( L ); return 1; }
-	static int set_is_action(T* p, lua_State* L)
+	LUA_METHOD(load)( T* p, lua_State *L )			{ p->Load(SArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(play)( T* p, lua_State *L )			{ p->Play(); COMMON_RETURN_SELF; }
+	LUA_METHOD(pause)( T* p, lua_State *L )			{ p->Pause(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(stop)( T* p, lua_State *L )			{ p->Stop(); COMMON_RETURN_SELF; }
+	LUA_METHOD(get)( T* p, lua_State *L )			{ p->PushSound( L ); return 1; }
+	LUA_METHOD(set_is_action)(T* p, lua_State* L)
 	{
 		p->m_is_action= BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(get_is_action, m_is_action);
-
-	LunaActorSound()
-	{
-		ADD_METHOD( load );
-		ADD_METHOD( play );
-		ADD_METHOD( pause );
-		ADD_METHOD( stop );
-		ADD_METHOD( get );
-		ADD_GET_SET_METHODS(is_action);
-	}
+	LUA_DEFINE_METHOD(get_is_action, m_is_action);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorSound, Actor )

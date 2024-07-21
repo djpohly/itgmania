@@ -3499,8 +3499,8 @@ const Style* GameManager::GameAndStringToStyle( const Game *game, RString sStyle
 class LunaGameManager: public Luna<GameManager>
 {
 public:
-	static int StepsTypeToLocalizedString( T* p, lua_State *L )	{ lua_pushstring(L, p->GetStepsTypeInfo(Enum::Check<StepsType>(L, 1)).GetLocalizedString() ); return 1; }
-	static int GetFirstStepsTypeForGame( T* p, lua_State *L )
+	LUA_METHOD(StepsTypeToLocalizedString)( T* p, lua_State *L )	{ lua_pushstring(L, p->GetStepsTypeInfo(Enum::Check<StepsType>(L, 1)).GetLocalizedString() ); return 1; }
+	LUA_METHOD(GetFirstStepsTypeForGame)( T* p, lua_State *L )
 	{
 		Game *pGame = Luna<Game>::check( L, 1 );
 
@@ -3511,7 +3511,7 @@ public:
 		LuaHelpers::Push( L, st );
 		return 1;
 	}
-	static int IsGameEnabled( T* p, lua_State *L )
+	LUA_METHOD(IsGameEnabled)( T* p, lua_State *L )
 	{
 		const Game *pGame = p->StringToGame(SArg(1));
 		if(pGame)
@@ -3521,7 +3521,7 @@ public:
 
 		return 1;
 	}
-	static int GetStylesForGame( T* p, lua_State *L )
+	LUA_METHOD(GetStylesForGame)( T* p, lua_State *L )
 	{
 		RString game_name= SArg(1);
 		const Game *pGame = p->StringToGame(game_name);
@@ -3539,7 +3539,7 @@ public:
 		}
 		return 1;
 	}
-	static int GetEnabledGames( T* p, lua_State *L )
+	LUA_METHOD(GetEnabledGames)( T* p, lua_State *L )
 	{
 		std::vector<const Game*> aGames;
 		p->GetEnabledGames( aGames );
@@ -3552,7 +3552,7 @@ public:
 		return 1;
 	}
 
-	static int SetGame( T* p, lua_State *L )
+	LUA_METHOD(SetGame)( T* p, lua_State *L )
 	{
 		RString game_name= SArg(1);
 		const Game *pGame = p->StringToGame(game_name);
@@ -3572,16 +3572,6 @@ public:
 		GameLoop::ChangeGame(game_name, theme);
 		return 0;
 	}
-
-	LunaGameManager()
-	{
-		ADD_METHOD( StepsTypeToLocalizedString );
-		ADD_METHOD( GetFirstStepsTypeForGame );
-		ADD_METHOD( IsGameEnabled );
-		ADD_METHOD( GetStylesForGame );
-		ADD_METHOD( GetEnabledGames );
-		ADD_METHOD( SetGame );
-	};
 };
 
 LUA_REGISTER_CLASS( GameManager )

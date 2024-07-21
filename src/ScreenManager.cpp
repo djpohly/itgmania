@@ -931,14 +931,14 @@ public:
 			luaL_error(L, errstr.c_str());
 		}
 	}
-	static int SetNewScreen( T* p, lua_State *L )
+	LUA_METHOD(SetNewScreen)( T* p, lua_State *L )
 	{
 		RString screen= SArg(1);
 		ValidateScreenName(L, screen);
 		p->SetNewScreen(screen);
 		COMMON_RETURN_SELF;
 	}
-	static int GetTopScreen( T* p, lua_State *L )
+	LUA_METHOD(GetTopScreen)( T* p, lua_State *L )
 	{
 		Actor *pScreen = p->GetTopScreen();
 		if( pScreen != nullptr )
@@ -947,10 +947,10 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	static int SystemMessage( T* p, lua_State *L )		{ p->SystemMessage( SArg(1) ); COMMON_RETURN_SELF; }
-	static int ScreenIsPrepped( T* p, lua_State *L )	{ lua_pushboolean( L, ScreenManagerUtil::ScreenIsPrepped( SArg(1) ) ); return 1; }
-	static int ScreenClassExists( T* p, lua_State *L )	{ lua_pushboolean( L, g_pmapRegistrees->find( SArg(1) ) != g_pmapRegistrees->end() ); return 1; }
-	static int AddNewScreenToTop( T* p, lua_State *L )
+	LUA_METHOD(SystemMessage)( T* p, lua_State *L )		{ p->SystemMessage( SArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(ScreenIsPrepped)( T* p, lua_State *L )	{ lua_pushboolean( L, ScreenManagerUtil::ScreenIsPrepped( SArg(1) ) ); return 1; }
+	LUA_METHOD(ScreenClassExists)( T* p, lua_State *L )	{ lua_pushboolean( L, g_pmapRegistrees->find( SArg(1) ) != g_pmapRegistrees->end() ); return 1; }
+	LUA_METHOD(AddNewScreenToTop)( T* p, lua_State *L )
 	{
 		RString screen= SArg(1);
 		ValidateScreenName(L, screen);
@@ -964,16 +964,16 @@ public:
 		p->AddNewScreenToTop( screen, SM );
 		COMMON_RETURN_SELF;
 	}
-	//static int GetScreenStackSize( T* p, lua_State *L )	{ lua_pushnumber( L, ScreenManagerUtil::g_ScreenStack.size() ); return 1; }
-	static int ReloadOverlayScreens( T* p, lua_State *L )	{ p->ReloadOverlayScreens(); COMMON_RETURN_SELF; }
+	//LUA_METHOD(GetScreenStackSize)( T* p, lua_State *L )	{ lua_pushnumber( L, ScreenManagerUtil::g_ScreenStack.size() ); return 1; }
+	LUA_METHOD(ReloadOverlayScreens)( T* p, lua_State *L )	{ p->ReloadOverlayScreens(); COMMON_RETURN_SELF; }
 
-	static int get_input_redirected(T* p, lua_State* L)
+	LUA_METHOD(get_input_redirected)(T* p, lua_State* L)
 	{
 		PlayerNumber pn= Enum::Check<PlayerNumber>(L, 1);
 		lua_pushboolean(L, p->get_input_redirected(pn));
 		return 1;
 	}
-	static int set_input_redirected(T* p, lua_State* L)
+	LUA_METHOD(set_input_redirected)(T* p, lua_State* L)
 	{
 		PlayerNumber pn= Enum::Check<PlayerNumber>(L, 1);
 		p->set_input_redirected(pn, BArg(2));
@@ -981,7 +981,7 @@ public:
 	}
 
 #define SCRMAN_PLAY_SOUND(sound_name) \
-	static int Play##sound_name(T* p, lua_State* L) \
+	LUA_METHOD(Play##sound_name)(T* p, lua_State* L) \
 	{ \
 		p->Play##sound_name(); \
 		COMMON_RETURN_SELF; \
@@ -992,24 +992,6 @@ public:
 	SCRMAN_PLAY_SOUND(CancelSound);
 	SCRMAN_PLAY_SOUND(ScreenshotSound);
 #undef SCRMAN_PLAY_SOUND
-
-	LunaScreenManager()
-	{
-		ADD_METHOD( SetNewScreen );
-		ADD_METHOD( GetTopScreen );
-		ADD_METHOD( SystemMessage );
-		ADD_METHOD( ScreenIsPrepped );
-		ADD_METHOD( ScreenClassExists );
-		ADD_METHOD( AddNewScreenToTop );
-		//ADD_METHOD( GetScreenStackSize );
-		ADD_METHOD( ReloadOverlayScreens );
-		ADD_METHOD(PlayInvalidSound);
-		ADD_METHOD(PlayStartSound);
-		ADD_METHOD(PlayCoinSound);
-		ADD_METHOD(PlayCancelSound);
-		ADD_METHOD(PlayScreenshotSound);
-		ADD_GET_SET_METHODS(input_redirected);
-	}
 };
 
 LUA_REGISTER_CLASS( ScreenManager )

@@ -154,12 +154,7 @@ void ScreenPlayerOptions::UpdateDisqualified( int row, PlayerNumber pn )
 class LunaScreenPlayerOptions: public Luna<ScreenPlayerOptions>
 {
 public:
-	static int GetGoToOptions( T* p, lua_State *L ) { lua_pushboolean( L, p->GetGoToOptions() ); return 1; }
-
-	LunaScreenPlayerOptions()
-	{
-  		ADD_METHOD( GetGoToOptions );
-	}
+	LUA_METHOD(GetGoToOptions)( T* p, lua_State *L ) { lua_pushboolean( L, p->GetGoToOptions() ); return 1; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenPlayerOptions, ScreenOptions )

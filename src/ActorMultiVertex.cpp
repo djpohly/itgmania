@@ -711,12 +711,12 @@ int ActorMultiVertex::AMV_TweenState::GetSafeNumToDraw( DrawMode dm, int num ) c
 class LunaActorMultiVertex: public Luna<ActorMultiVertex>
 {
 public:
-	static int SetNumVertices( T* p, lua_State *L )
+	LUA_METHOD(SetNumVertices)( T* p, lua_State *L )
 	{
 		p->SetNumVertices( IArg(1) );
 		COMMON_RETURN_SELF;
 	}
-	static int GetNumVertices( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumVertices() ); return 1; }
+	LUA_METHOD(GetNumVertices)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumVertices() ); return 1; }
 
 	static void SetVertexFromStack(T* p, lua_State* L, std::size_t VertexIndex, int DataStackIndex)
 	{
@@ -778,7 +778,7 @@ public:
 		return;
 	}
 
-	static int SetVertex(T* p, lua_State* L)
+	LUA_METHOD(SetVertex)(T* p, lua_State* L)
 	{
 		// Indices from Lua are one-indexed.  -1 to adjust.
 		int Index = IArg(1)-1;
@@ -800,7 +800,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetVertices(T* p, lua_State* L)
+	LUA_METHOD(SetVertices)(T* p, lua_State* L)
 	{
 		int First = 0;
 		int StackIndex = lua_gettop(L);
@@ -830,21 +830,21 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetEffectMode( T* p, lua_State *L )
+	LUA_METHOD(SetEffectMode)( T* p, lua_State *L )
 	{
 		EffectMode em = Enum::Check<EffectMode>(L, 1);
 		p->SetEffectMode( em );
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetTextureMode( T* p, lua_State *L )
+	LUA_METHOD(SetTextureMode)( T* p, lua_State *L )
 	{
 		TextureMode tm = Enum::Check<TextureMode>(L, 1);
 		p->SetTextureMode( tm );
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetLineWidth( T* p, lua_State *L )
+	LUA_METHOD(SetLineWidth)( T* p, lua_State *L )
 	{
 		float Width = FArg(1);
 		if( Width < 0 )
@@ -856,7 +856,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetDrawState( T* p, lua_State* L )
+	LUA_METHOD(SetDrawState)( T* p, lua_State* L )
 	{
 		DrawMode dm= p->GetDestDrawMode();
 		int first= p->GetDestFirstToDraw();
@@ -893,45 +893,45 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int GetDestDrawMode( T* p, lua_State* L )
+	LUA_METHOD(GetDestDrawMode)( T* p, lua_State* L )
 	{
 		Enum::Push(L, p->GetDestDrawMode());
 		return 1;
 	}
 
-	static int GetDestFirstToDraw( T* p, lua_State* L )
+	LUA_METHOD(GetDestFirstToDraw)( T* p, lua_State* L )
 	{
 		// Indices in Lua are one-indexed.  +1 to adjust.
 		lua_pushnumber(L, p->GetDestFirstToDraw()+1);
 		return 1;
 	}
 
-	static int GetDestNumToDraw( T* p, lua_State* L )
+	LUA_METHOD(GetDestNumToDraw)( T* p, lua_State* L )
 	{
 		lua_pushnumber(L, p->GetDestNumToDraw());
 		return 1;
 	}
 
-	static int GetCurrDrawMode( T* p, lua_State* L )
+	LUA_METHOD(GetCurrDrawMode)( T* p, lua_State* L )
 	{
 		Enum::Push(L, p->GetCurrDrawMode());
 		return 1;
 	}
 
-	static int GetCurrFirstToDraw( T* p, lua_State* L )
+	LUA_METHOD(GetCurrFirstToDraw)( T* p, lua_State* L )
 	{
 		// Indices in Lua are one-indexed.  +1 to adjust.
 		lua_pushnumber(L, p->GetCurrFirstToDraw()+1);
 		return 1;
 	}
 
-	static int GetCurrNumToDraw( T* p, lua_State* L )
+	LUA_METHOD(GetCurrNumToDraw)( T* p, lua_State* L )
 	{
 		lua_pushnumber(L, p->GetCurrNumToDraw());
 		return 1;
 	}
 
-	static int LoadTexture( T* p, lua_State *L )
+	LUA_METHOD(LoadTexture)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L, 1) )
 		{
@@ -948,7 +948,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int GetSpline(T* p, lua_State* L)
+	LUA_METHOD(GetSpline)(T* p, lua_State* L)
 	{
 		std::size_t i= static_cast<std::size_t>(IArg(1)-1);
 		if(i >= ActorMultiVertex::num_vert_splines)
@@ -959,19 +959,19 @@ public:
 		return 1;
 	}
 
-	static int SetVertsFromSplines(T* p, lua_State* L)
+	LUA_METHOD(SetVertsFromSplines)(T* p, lua_State* L)
 	{
 		p->SetVertsFromSplines();
 		COMMON_RETURN_SELF;
 	}
 
-	DEFINE_METHOD(GetUseAnimationState, _use_animation_state);
-	static int SetUseAnimationState(T* p, lua_State *L)
+	LUA_DEFINE_METHOD(GetUseAnimationState, _use_animation_state);
+	LUA_METHOD(SetUseAnimationState)(T* p, lua_State *L)
 	{
 		p->_use_animation_state= BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int GetNumStates(T* p, lua_State *L)
+	LUA_METHOD(GetNumStates)(T* p, lua_State *L)
 	{
 		lua_pushnumber(L, p->GetNumStates());
 		return 1;
@@ -1014,7 +1014,7 @@ public:
 #undef SET_SIDE
 #undef DATA_ERROR
 	}
-	static int AddState(T* p, lua_State *L)
+	LUA_METHOD(AddState)(T* p, lua_State *L)
 	{
 		ActorMultiVertex::State s;
 		FillStateFromLua(L, s, p->GetTexture(), 1);
@@ -1030,22 +1030,22 @@ public:
 		}
 		return static_cast<std::size_t>(index);
 	}
-	static int RemoveState(T* p, lua_State *L)
+	LUA_METHOD(RemoveState)(T* p, lua_State *L)
 	{
 		p->RemoveState(ValidStateIndex(p, L, 1));
 		COMMON_RETURN_SELF;
 	}
-	static int GetState(T* p, lua_State *L)
+	LUA_METHOD(GetState)(T* p, lua_State *L)
 	{
 		lua_pushnumber(L, p->GetState()+1);
 		return 1;
 	}
-	static int SetState(T* p, lua_State *L)
+	LUA_METHOD(SetState)(T* p, lua_State *L)
 	{
 		p->SetState(ValidStateIndex(p, L, 1));
 		COMMON_RETURN_SELF;
 	}
-	static int GetStateData(T* p, lua_State *L)
+	LUA_METHOD(GetStateData)(T* p, lua_State *L)
 	{
 		RageTexture* tex= p->GetTexture();
 		if(tex == nullptr)
@@ -1073,13 +1073,13 @@ public:
 		lua_rawseti(L, -2, 2);
 		return 1;
 	}
-	static int SetStateData(T* p, lua_State *L)
+	LUA_METHOD(SetStateData)(T* p, lua_State *L)
 	{
 		ActorMultiVertex::State& state= p->GetStateData(ValidStateIndex(p, L, 1));
 		FillStateFromLua(L, state, p->GetTexture(), 2);
 		COMMON_RETURN_SELF;
 	}
-	static int SetStateProperties(T* p, lua_State *L)
+	LUA_METHOD(SetStateProperties)(T* p, lua_State *L)
 	{
 		if(!lua_istable(L, 1))
 		{
@@ -1102,18 +1102,18 @@ public:
 		p->SetStateProperties(new_states);
 		COMMON_RETURN_SELF;
 	}
-	static int SetAllStateDelays(T* p, lua_State *L)
+	LUA_METHOD(SetAllStateDelays)(T* p, lua_State *L)
 	{
 		p->SetAllStateDelays(FArg(1));
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(GetAnimationLengthSeconds, GetAnimationLengthSeconds());
-	static int SetSecondsIntoAnimation(T* p, lua_State *L)
+	LUA_DEFINE_METHOD(GetAnimationLengthSeconds, GetAnimationLengthSeconds());
+	LUA_METHOD(SetSecondsIntoAnimation)(T* p, lua_State *L)
 	{
 		p->SetSecondsIntoAnimation(FArg(1));
 		COMMON_RETURN_SELF;
 	}
-	static int GetNumQuadStates(T* p, lua_State *L)
+	LUA_METHOD(GetNumQuadStates)(T* p, lua_State *L)
 	{
 		lua_pushnumber(L, p->GetNumQuadStates());
 		return 1;
@@ -1127,46 +1127,46 @@ public:
 		}
 		return static_cast<std::size_t>(index);
 	}
-	static int AddQuadState(T* p, lua_State *L)
+	LUA_METHOD(AddQuadState)(T* p, lua_State *L)
 	{
 		p->AddQuadState(IArg(1)-1);
 		COMMON_RETURN_SELF;
 	}
-	static int RemoveQuadState(T* p, lua_State *L)
+	LUA_METHOD(RemoveQuadState)(T* p, lua_State *L)
 	{
 		p->RemoveQuadState(QuadStateIndex(p, L, 1));
 		COMMON_RETURN_SELF;
 	}
-	static int GetQuadState(T* p, lua_State *L)
+	LUA_METHOD(GetQuadState)(T* p, lua_State *L)
 	{
 		lua_pushnumber(L, p->GetQuadState(QuadStateIndex(p, L, 1))+1);
 		return 1;
 	}
-	static int SetQuadState(T* p, lua_State *L)
+	LUA_METHOD(SetQuadState)(T* p, lua_State *L)
 	{
 		p->SetQuadState(QuadStateIndex(p, L, 1), IArg(2)-1);
 		COMMON_RETURN_SELF;
 	}
-	static int ForceStateUpdate(T* p, lua_State *L)
+	LUA_METHOD(ForceStateUpdate)(T* p, lua_State *L)
 	{
 		p->UpdateAnimationState(true);
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(GetDecodeMovie, _decode_movie);
-	static int SetDecodeMovie(T* p, lua_State *L)
+	LUA_DEFINE_METHOD(GetDecodeMovie, _decode_movie);
+	LUA_METHOD(SetDecodeMovie)(T* p, lua_State *L)
 	{
 		p->_decode_movie= BArg(1);
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetTexture( T* p, lua_State *L )
+	LUA_METHOD(SetTexture)( T* p, lua_State *L )
 	{
 		RageTexture *Texture = Luna<RageTexture>::check(L, 1);
 		Texture = TEXTUREMAN->CopyTexture( Texture );
 		p->SetTexture( Texture );
 		COMMON_RETURN_SELF;
 	}
-	static int GetTexture(T* p, lua_State *L)
+	LUA_METHOD(GetTexture)(T* p, lua_State *L)
 	{
 		RageTexture *texture = p->GetTexture();
 		if(texture != nullptr)
@@ -1178,57 +1178,6 @@ public:
 			lua_pushnil(L);
 		}
 		return 1;
-	}
-
-	LunaActorMultiVertex()
-	{
-
-		ADD_METHOD( SetVertex );
-		ADD_METHOD( SetVertices );
-
-		ADD_METHOD( SetEffectMode );
-		ADD_METHOD( SetTextureMode );
-		ADD_METHOD( SetLineWidth );
-
-		ADD_METHOD( SetDrawState );
-		ADD_METHOD( SetNumVertices );
-		ADD_METHOD( GetNumVertices );
-		ADD_METHOD( GetDestDrawMode );
-		ADD_METHOD( GetDestFirstToDraw );
-		ADD_METHOD( GetDestNumToDraw );
-		ADD_METHOD( GetCurrDrawMode );
-		ADD_METHOD( GetCurrFirstToDraw );
-		ADD_METHOD( GetCurrNumToDraw );
-
-		ADD_METHOD( GetSpline );
-		ADD_METHOD( SetVertsFromSplines );
-
-		ADD_METHOD(GetUseAnimationState);
-		ADD_METHOD(SetUseAnimationState);
-		ADD_METHOD(GetNumStates);
-		ADD_METHOD(GetNumQuadStates);
-		ADD_METHOD(AddState);
-		ADD_METHOD(RemoveState);
-		ADD_METHOD(GetState);
-		ADD_METHOD(SetState);
-		ADD_METHOD(GetStateData);
-		ADD_METHOD(SetStateData);
-		ADD_METHOD(SetStateProperties);
-		ADD_METHOD(SetAllStateDelays);
-		ADD_METHOD(SetSecondsIntoAnimation);
-		ADD_METHOD(AddQuadState);
-		ADD_METHOD(RemoveQuadState);
-		ADD_METHOD(GetQuadState);
-		ADD_METHOD(SetQuadState);
-		ADD_METHOD(ForceStateUpdate);
-		ADD_METHOD(GetDecodeMovie);
-		ADD_METHOD(SetDecodeMovie);
-
-		// Copy from RageTexture
-		ADD_METHOD( SetTexture );
-		ADD_METHOD( GetTexture );
-		// Load from file path
-		ADD_METHOD( LoadTexture );
 	}
 };
 

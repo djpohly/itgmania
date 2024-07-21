@@ -795,24 +795,24 @@ void UnlockManager::GetStepsUnlockedByEntryID( std::vector<Song *> &apSongsOut, 
 class LunaUnlockEntry: public Luna<UnlockEntry>
 {
 public:
-	static int IsLocked( T* p, lua_State *L )		{ lua_pushboolean(L, p->IsLocked() ); return 1; }
-	static int GetDescription( T* p, lua_State *L )		{ lua_pushstring(L, p->GetDescription() ); return 1; }
-	static int GetUnlockRewardType( T* p, lua_State *L )	{ lua_pushnumber(L, p->m_Type ); return 1; }
-	static int GetRequirement( T* p, lua_State *L )		{ UnlockRequirement i = Enum::Check<UnlockRequirement>( L, 1 ); lua_pushnumber(L, p->m_fRequirement[i] ); return 1; }
-	static int GetRequirePassHardSteps( T* p, lua_State *L ){ lua_pushboolean(L, p->m_bRequirePassHardSteps); return 1; }
-	static int GetRequirePassChallengeSteps( T* p, lua_State *L )
+	LUA_METHOD(IsLocked)( T* p, lua_State *L )		{ lua_pushboolean(L, p->IsLocked() ); return 1; }
+	LUA_METHOD(GetDescription)( T* p, lua_State *L )		{ lua_pushstring(L, p->GetDescription() ); return 1; }
+	LUA_METHOD(GetUnlockRewardType)( T* p, lua_State *L )	{ lua_pushnumber(L, p->m_Type ); return 1; }
+	LUA_METHOD(GetRequirement)( T* p, lua_State *L )		{ UnlockRequirement i = Enum::Check<UnlockRequirement>( L, 1 ); lua_pushnumber(L, p->m_fRequirement[i] ); return 1; }
+	LUA_METHOD(GetRequirePassHardSteps)( T* p, lua_State *L ){ lua_pushboolean(L, p->m_bRequirePassHardSteps); return 1; }
+	LUA_METHOD(GetRequirePassChallengeSteps)( T* p, lua_State *L )
 	{
 		lua_pushboolean(L, p->m_bRequirePassChallengeSteps);
 		return 1;
 	}
-	static int GetSong( T* p, lua_State *L )
+	LUA_METHOD(GetSong)( T* p, lua_State *L )
 	{
 		Song *pSong = p->m_Song.ToSong();
 		if( pSong ) { pSong->PushSelf(L); return 1; }
 		return 0;
 	}
 	// Get all of the steps locked based on difficulty (similar to In The Groove 2).
-	static int GetStepOfAllTypes( T* p, lua_State *L )
+	LUA_METHOD(GetStepOfAllTypes)( T* p, lua_State *L )
 	{
 		Song *pSong = p->m_Song.ToSong();
 		if (pSong)
@@ -833,7 +833,7 @@ public:
 	}
 
 	// TODO: Add a function to just get all steps.
-	static int GetStepByStepsType( T* p, lua_State *L )
+	LUA_METHOD(GetStepByStepsType)( T* p, lua_State *L )
 	{
 		Song *pSong = p->m_Song.ToSong();
 		if (pSong)
@@ -850,20 +850,20 @@ public:
 		return 0;
 	}
 
-	static int GetCourse( T* p, lua_State *L )
+	LUA_METHOD(GetCourse)( T* p, lua_State *L )
 	{
 		Course *pCourse = p->m_Course.ToCourse();
 		if( pCourse ) { pCourse->PushSelf(L); return 1; }
 		return 0;
 	}
-	static int GetCode( T* p, lua_State *L )
+	LUA_METHOD(GetCode)( T* p, lua_State *L )
 	{
 		lua_pushstring( L, p->m_sEntryID );
 		return 1;
 	}
 
 	// internal
-	static int GetArgs( T* p, lua_State *L )
+	LUA_METHOD(GetArgs)( T* p, lua_State *L )
 	{
 		Command cmd;
 		for( int i = 1; i <= lua_gettop(L); ++i )
@@ -872,46 +872,21 @@ public:
 		return 0;
 	}
 
-	static int song( T* p, lua_State *L )	{ GetArgs( p, L ); p->m_Type = UnlockRewardType_Song; return 0; }
-	static int steps( T* p, lua_State *L )	{ GetArgs( p, L ); p->m_Type = UnlockRewardType_Steps; return 0; }
-	static int steps_type(T* p, lua_State *L) { GetArgs(p, L); p->m_Type = UnlockRewardType_Steps_Type; return 0; }
-	static int course( T* p, lua_State *L ) { GetArgs( p, L ); p->m_Type = UnlockRewardType_Course; return 0; }
-	static int mod( T* p, lua_State *L )	{ GetArgs( p, L ); p->m_Type = UnlockRewardType_Modifier; return 0; }
-	static int code( T* p, lua_State *L )	{ p->m_sEntryID = SArg(1); return 0; }
-	static int roulette( T* p, lua_State *L ) { p->m_bRoulette = true; return 0; }
-	static int requirepasshardsteps( T* p, lua_State *L ) { p->m_bRequirePassHardSteps = true; return 0; }
-	static int requirepasschallengesteps( T* p, lua_State *L ) { p->m_bRequirePassChallengeSteps = true; return 0; }
-	static int require( T* p, lua_State *L )
+	LUA_METHOD(song)( T* p, lua_State *L )	{ GetArgs( p, L ); p->m_Type = UnlockRewardType_Song; return 0; }
+	LUA_METHOD(steps)( T* p, lua_State *L )	{ GetArgs( p, L ); p->m_Type = UnlockRewardType_Steps; return 0; }
+	LUA_METHOD(steps_type)(T* p, lua_State *L) { GetArgs(p, L); p->m_Type = UnlockRewardType_Steps_Type; return 0; }
+	LUA_METHOD(course)( T* p, lua_State *L ) { GetArgs( p, L ); p->m_Type = UnlockRewardType_Course; return 0; }
+	LUA_METHOD(mod)( T* p, lua_State *L )	{ GetArgs( p, L ); p->m_Type = UnlockRewardType_Modifier; return 0; }
+	LUA_METHOD(code)( T* p, lua_State *L )	{ p->m_sEntryID = SArg(1); return 0; }
+	LUA_METHOD(roulette)( T* p, lua_State *L ) { p->m_bRoulette = true; return 0; }
+	LUA_METHOD(requirepasshardsteps)( T* p, lua_State *L ) { p->m_bRequirePassHardSteps = true; return 0; }
+	LUA_METHOD(requirepasschallengesteps)( T* p, lua_State *L ) { p->m_bRequirePassChallengeSteps = true; return 0; }
+	LUA_METHOD(require)( T* p, lua_State *L )
 	{
 		const UnlockRequirement ut = Enum::Check<UnlockRequirement>( L, 1 );
 		if( ut != UnlockRequirement_Invalid )
 			p->m_fRequirement[ut] = FArg(2);
 		return 0;
-	}
-
-	LunaUnlockEntry()
-	{
-		ADD_METHOD( IsLocked );
-		ADD_METHOD( GetCode );
-		ADD_METHOD( GetDescription );
-		ADD_METHOD( GetUnlockRewardType );
-		ADD_METHOD( GetRequirement );
-		ADD_METHOD( GetRequirePassHardSteps );
-		ADD_METHOD( GetRequirePassChallengeSteps );
-		ADD_METHOD( GetSong );
-		ADD_METHOD( GetCourse );
-		ADD_METHOD( GetStepOfAllTypes );
-		ADD_METHOD( GetStepByStepsType );
-		ADD_METHOD( song );
-		ADD_METHOD( steps );
-		ADD_METHOD( steps_type );
-		ADD_METHOD( course );
-		ADD_METHOD( mod );
-		ADD_METHOD( code );
-		ADD_METHOD( roulette );
-		ADD_METHOD( requirepasshardsteps );
-		ADD_METHOD( requirepasschallengesteps );
-		ADD_METHOD( require );
 	}
 };
 
@@ -921,34 +896,34 @@ LUA_REGISTER_CLASS( UnlockEntry )
 class LunaUnlockManager: public Luna<UnlockManager>
 {
 public:
-	static int GetPointsUntilNextUnlock( T* p, lua_State *L )
+	LUA_METHOD(GetPointsUntilNextUnlock)( T* p, lua_State *L )
 	{
 		const UnlockRequirement ut = Enum::Check<UnlockRequirement>( L, 1 );
 		lua_pushnumber( L, p->PointsUntilNextUnlock(ut) );
 		return 1;
 	}
-	static int FindEntryID( T* p, lua_State *L )			{ RString sName = SArg(1); RString s = p->FindEntryID(sName); if( s.empty() ) lua_pushnil(L); else lua_pushstring(L, s); return 1; }
-	static int UnlockEntryID( T* p, lua_State *L )			{ RString sUnlockEntryID = SArg(1); p->UnlockEntryID(sUnlockEntryID); COMMON_RETURN_SELF; }
-	static int UnlockEntryIndex( T* p, lua_State *L )		{ int iUnlockEntryID = IArg(1); p->UnlockEntryIndex(iUnlockEntryID); COMMON_RETURN_SELF; }
-	static int LockEntryID( T * p, lua_State * L)
+	LUA_METHOD(FindEntryID)( T* p, lua_State *L )			{ RString sName = SArg(1); RString s = p->FindEntryID(sName); if( s.empty() ) lua_pushnil(L); else lua_pushstring(L, s); return 1; }
+	LUA_METHOD(UnlockEntryID)( T* p, lua_State *L )			{ RString sUnlockEntryID = SArg(1); p->UnlockEntryID(sUnlockEntryID); COMMON_RETURN_SELF; }
+	LUA_METHOD(UnlockEntryIndex)( T* p, lua_State *L )		{ int iUnlockEntryID = IArg(1); p->UnlockEntryIndex(iUnlockEntryID); COMMON_RETURN_SELF; }
+	LUA_METHOD(LockEntryID)( T * p, lua_State * L)
 	{
 		RString entryID = SArg(1);
 		p->LockEntryID( entryID );
 		COMMON_RETURN_SELF;
 	}
-	static int LockEntryIndex( T * p, lua_State * L)
+	LUA_METHOD(LockEntryIndex)( T * p, lua_State * L)
 	{
 		int entryIndex = IArg(1);
 		p->LockEntryIndex( entryIndex );
 		COMMON_RETURN_SELF;
 	}
-	static int PreferUnlockEntryID( T* p, lua_State *L )		{ RString sUnlockEntryID = SArg(1); p->PreferUnlockEntryID(sUnlockEntryID); COMMON_RETURN_SELF; }
-	static int GetNumUnlocks( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetNumUnlocks() ); return 1; }
-	static int GetNumUnlocked( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetNumUnlocked() ); return 1; }
-	static int GetUnlockEntryIndexToCelebrate( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetUnlockEntryIndexToCelebrate() ); return 1; }
-	static int AnyUnlocksToCelebrate( T* p, lua_State *L )		{ lua_pushboolean( L, p->AnyUnlocksToCelebrate() ); return 1; }
-	static int GetUnlockEntry( T* p, lua_State *L )			{ unsigned iIndex = IArg(1); if( iIndex >= p->m_UnlockEntries.size() ) return 0; p->m_UnlockEntries[iIndex].PushSelf(L); return 1; }
-	static int GetSongsUnlockedByEntryID( T* p, lua_State *L )
+	LUA_METHOD(PreferUnlockEntryID)( T* p, lua_State *L )		{ RString sUnlockEntryID = SArg(1); p->PreferUnlockEntryID(sUnlockEntryID); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetNumUnlocks)( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetNumUnlocks() ); return 1; }
+	LUA_METHOD(GetNumUnlocked)( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetNumUnlocked() ); return 1; }
+	LUA_METHOD(GetUnlockEntryIndexToCelebrate)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetUnlockEntryIndexToCelebrate() ); return 1; }
+	LUA_METHOD(AnyUnlocksToCelebrate)( T* p, lua_State *L )		{ lua_pushboolean( L, p->AnyUnlocksToCelebrate() ); return 1; }
+	LUA_METHOD(GetUnlockEntry)( T* p, lua_State *L )			{ unsigned iIndex = IArg(1); if( iIndex >= p->m_UnlockEntries.size() ) return 0; p->m_UnlockEntries[iIndex].PushSelf(L); return 1; }
+	LUA_METHOD(GetSongsUnlockedByEntryID)( T* p, lua_State *L )
 	{
 		std::vector<Song *> apSongs;
 		UNLOCKMAN->GetSongsUnlockedByEntryID( apSongs, SArg(1) );
@@ -956,7 +931,7 @@ public:
 		return 1;
 	}
 
-	static int GetStepsUnlockedByEntryID( T* p, lua_State *L )
+	LUA_METHOD(GetStepsUnlockedByEntryID)( T* p, lua_State *L )
 	{
 		// Return the Song each Steps are associated with, too.
 		std::vector<Song *> apSongs;
@@ -967,48 +942,25 @@ public:
 		return 2;
 	}
 
-	static int GetPoints( T* p, lua_State *L ) {
+	LUA_METHOD(GetPoints)( T* p, lua_State *L ) {
 		float fScores[NUM_UnlockRequirement];
 		UNLOCKMAN->GetPoints( PROFILEMAN->GetMachineProfile(), fScores );
 		lua_pushnumber( L, fScores[Enum::Check<UnlockRequirement>(L, 1)] );
 		return 1;
 	}
 
-	static int GetPointsForProfile( T* p, lua_State *L ) {
+	LUA_METHOD(GetPointsForProfile)( T* p, lua_State *L ) {
 		float fScores[NUM_UnlockRequirement];
 		UNLOCKMAN->GetPoints( Luna<Profile>::check(L,1), fScores );
 		lua_pushnumber( L, fScores[Enum::Check<UnlockRequirement>(L, 2)] );
 		return 1;
 	}
 
-	static int IsSongLocked( T* p, lua_State *L )
+	LUA_METHOD(IsSongLocked)( T* p, lua_State *L )
 	{
 		Song *pSong = Luna<Song>::check(L,1);
 		lua_pushnumber( L, UNLOCKMAN->SongIsLocked(pSong));
 		return 1;
-	}
-
-	LunaUnlockManager()
-	{
-		ADD_METHOD( AnyUnlocksToCelebrate );
-		ADD_METHOD( FindEntryID );
-		ADD_METHOD( GetNumUnlocks );
-		ADD_METHOD( GetNumUnlocked );
-		ADD_METHOD( GetPoints );
-		ADD_METHOD( GetPointsForProfile );
-		ADD_METHOD( GetPointsUntilNextUnlock );
-		ADD_METHOD( GetSongsUnlockedByEntryID );
-		ADD_METHOD( GetStepsUnlockedByEntryID );
-		ADD_METHOD( GetUnlockEntry );
-		ADD_METHOD( GetUnlockEntryIndexToCelebrate );
-		ADD_METHOD( PreferUnlockEntryID );
-		ADD_METHOD( UnlockEntryID );
-		ADD_METHOD( UnlockEntryIndex );
-		ADD_METHOD( LockEntryID );
-		ADD_METHOD( LockEntryIndex );
-		ADD_METHOD( IsSongLocked );
-		//ADD_METHOD( UnlockSong );
-		//ADD_METHOD( GetUnlocksByType );
 	}
 };
 

@@ -519,8 +519,8 @@ int WheelBase::FirstVisibleIndex()
 class LunaWheelBase: public Luna<WheelBase>
 {
 public:
-	static int Move( T* p, lua_State *L ){ p->Move( IArg(1) ); COMMON_RETURN_SELF; }
-	static int GetWheelItem( T* p, lua_State *L )
+	LUA_METHOD(Move)( T* p, lua_State *L ){ p->Move( IArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetWheelItem)( T* p, lua_State *L )
 	{
 		int iItem = IArg(1);
 
@@ -531,33 +531,18 @@ public:
 
 		return 1;
 	}
-	static int IsSettled( T* p, lua_State *L ){ lua_pushboolean( L, p->IsSettled() ); return 1; }
-	static int SetOpenSection( T* p, lua_State *L ){ p->SetOpenSection( SArg(1) ); COMMON_RETURN_SELF; }
-	static int GetCurrentIndex( T* p, lua_State *L ){ lua_pushnumber( L, p->GetCurrentIndex() ); return 1; }
-	static int GetNumItems( T* p, lua_State *L ){ lua_pushnumber( L, p->GetNumItems() ); return 1; }
+	LUA_METHOD(IsSettled)( T* p, lua_State *L ){ lua_pushboolean( L, p->IsSettled() ); return 1; }
+	LUA_METHOD(SetOpenSection)( T* p, lua_State *L ){ p->SetOpenSection( SArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetCurrentIndex)( T* p, lua_State *L ){ lua_pushnumber( L, p->GetCurrentIndex() ); return 1; }
+	LUA_METHOD(GetNumItems)( T* p, lua_State *L ){ lua_pushnumber( L, p->GetNumItems() ); return 1; }
 	// evil shit
-	//static int ChangeMusic( T* p, lua_State *L ){ p->ChangeMusicUnlessLocked( IArg(1) ); return 0; }
+	//LUA_METHOD(ChangeMusic)( T* p, lua_State *L ){ p->ChangeMusicUnlessLocked( IArg(1) ); return 0; }
 
-	DEFINE_METHOD( GetSelectedType,		GetSelectedType() )
-	DEFINE_METHOD( GetWheelState,		GetWheelState() )
+	LUA_DEFINE_METHOD( GetSelectedType,		GetSelectedType() )
+	LUA_DEFINE_METHOD( GetWheelState,		GetWheelState() )
 
 	// deprecated; use GetWheelState instead:
-	static int IsLocked( T* p, lua_State *L ){ lua_pushboolean( L, p->WheelIsLocked() ); return 1; }
-
-	LunaWheelBase()
-	{
-		ADD_METHOD( Move );
-		ADD_METHOD( GetWheelItem );
-		ADD_METHOD( IsSettled );
-		ADD_METHOD( IsLocked );
-		ADD_METHOD( SetOpenSection );
-		ADD_METHOD( GetCurrentIndex );
-		ADD_METHOD( GetNumItems );
-		ADD_METHOD( GetSelectedType );
-		// evil shit
-		//ADD_METHOD( Move );
-		//ADD_METHOD( ChangeMusic );
-	}
+	LUA_METHOD(IsLocked)( T* p, lua_State *L ){ lua_pushboolean( L, p->WheelIsLocked() ); return 1; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( WheelBase, ActorFrame )

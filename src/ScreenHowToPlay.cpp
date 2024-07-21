@@ -313,17 +313,12 @@ void ScreenHowToPlay::HandleScreenMessage( const ScreenMessage SM )
 class LunaScreenHowToPlay: public Luna<ScreenHowToPlay>
 {
 public:
-	static int GetLifeMeter( T* p, lua_State *L )
+	LUA_METHOD(GetLifeMeter)( T* p, lua_State *L )
 	{
 		//PlayerNumber pn = Enum::Check<PlayerNumber>( L, 1 );
 
 		p->m_pLifeMeterBar->PushSelf( L );
 		return 1;
-	}
-
-	LunaScreenHowToPlay()
-	{
-  		ADD_METHOD( GetLifeMeter );
 	}
 };
 

@@ -524,8 +524,8 @@ void StatsManager::GetStepsInUse( std::set<Steps*> &apInUseOut ) const
 class LunaStatsManager: public Luna<StatsManager>
 {
 public:
-	static int GetCurStageStats( T* p, lua_State *L )	{ p->m_CurStageStats.PushSelf(L); return 1; }
-	static int GetPlayedStageStats( T* p, lua_State *L )
+	LUA_METHOD(GetCurStageStats)( T* p, lua_State *L )	{ p->m_CurStageStats.PushSelf(L); return 1; }
+	LUA_METHOD(GetPlayedStageStats)( T* p, lua_State *L )
 	{
 		int iAgo = IArg(1);
 		int iIndex = p->m_vPlayedStageStats.size() - iAgo;
@@ -535,16 +535,16 @@ public:
 		p->m_vPlayedStageStats[iIndex].PushSelf(L);
 		return 1;
 	}
-	static int Reset( T* p, lua_State *L )			{ p->Reset(); return 0; }
-	static int GetAccumPlayedStageStats( T* p, lua_State *L )	{ p->GetAccumPlayedStageStats().PushSelf(L); return 1; }
-	static int GetFinalEvalStageStats( T* p, lua_State *L )
+	LUA_METHOD(Reset)( T* p, lua_State *L )			{ p->Reset(); return 0; }
+	LUA_METHOD(GetAccumPlayedStageStats)( T* p, lua_State *L )	{ p->GetAccumPlayedStageStats().PushSelf(L); return 1; }
+	LUA_METHOD(GetFinalEvalStageStats)( T* p, lua_State *L )
 	{
 		StageStats stats;
 		p->GetFinalEvalStageStats( stats );
 		stats.PushSelf(L);
 		return 1;
 	}
-	static int GetFinalGrade( T* p, lua_State *L )
+	LUA_METHOD(GetFinalGrade)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 
@@ -558,9 +558,9 @@ public:
 		}
 		return 1;
 	}
-	static int GetStagesPlayed( T* p, lua_State *L )				{ lua_pushnumber( L, p->m_vPlayedStageStats.size() ); return 1; }
+	LUA_METHOD(GetStagesPlayed)( T* p, lua_State *L )				{ lua_pushnumber( L, p->m_vPlayedStageStats.size() ); return 1; }
 
-	static int GetBestGrade( T* p, lua_State *L )
+	LUA_METHOD(GetBestGrade)( T* p, lua_State *L )
 	{
 		Grade g = NUM_Grade;
 		FOREACH_EnabledPlayer( pn )
@@ -569,7 +569,7 @@ public:
 		return 1;
 	}
 
-	static int GetWorstGrade( T* p, lua_State *L )
+	LUA_METHOD(GetWorstGrade)( T* p, lua_State *L )
 	{
 		Grade g = Grade_Tier01;
 		FOREACH_EnabledPlayer( pn )
@@ -578,7 +578,7 @@ public:
 		return 1;
 	}
 
-	static int GetBestFinalGrade( T* t, lua_State *L )
+	LUA_METHOD(GetBestFinalGrade)( T* t, lua_State *L )
 	{
 		Grade top_grade = Grade_Failed;
 		StageStats stats;
@@ -595,20 +595,6 @@ public:
 
 		Enum::Push( L, top_grade );
 		return 1;
-	}
-
-	LunaStatsManager()
-	{
-		ADD_METHOD( GetCurStageStats );
-		ADD_METHOD( GetPlayedStageStats );
-		ADD_METHOD( GetAccumPlayedStageStats );
-		ADD_METHOD( GetFinalEvalStageStats );
-		ADD_METHOD( Reset );
-		ADD_METHOD( GetFinalGrade );
-		ADD_METHOD( GetStagesPlayed );
-		ADD_METHOD( GetBestGrade );
-		ADD_METHOD( GetWorstGrade );
-		ADD_METHOD( GetBestFinalGrade );
 	}
 };
 

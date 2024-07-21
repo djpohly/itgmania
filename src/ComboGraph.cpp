@@ -137,23 +137,17 @@ void ComboGraph::Set( const StageStats &s, const PlayerStageStats &pss )
 class LunaComboGraph: public Luna<ComboGraph>
 {
 public:
-	static int Load( T* p, lua_State *L )
+	LUA_METHOD(Load)( T* p, lua_State *L )
 	{
 		p->Load( SArg(1) );
 		COMMON_RETURN_SELF;
 	}
-	static int Set( T* p, lua_State *L )
+	LUA_METHOD(Set)( T* p, lua_State *L )
 	{
 		StageStats *pStageStats = Luna<StageStats>::check( L, 1 );
 		PlayerStageStats *pPlayerStageStats = Luna<PlayerStageStats>::check( L, 2 );
 		p->Set( *pStageStats, *pPlayerStageStats );
 		COMMON_RETURN_SELF;
-	}
-
-	LunaComboGraph()
-	{
-		ADD_METHOD( Load );
-		ADD_METHOD( Set );
 	}
 };
 

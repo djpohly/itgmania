@@ -146,51 +146,41 @@ bool ActorMultiTexture::EarlyAbortDraw() const
 class LunaActorMultiTexture: public Luna<ActorMultiTexture>
 {
 public:
-	static int ClearTextures( T* p, lua_State *L )
+	LUA_METHOD(ClearTextures)( T* p, lua_State *L )
 	{
 		p->ClearTextures();
 		COMMON_RETURN_SELF;
 	}
-	static int AddTexture( T* p, lua_State *L )
+	LUA_METHOD(AddTexture)( T* p, lua_State *L )
 	{
 		RageTexture *pTexture = Luna<RageTexture>::check(L, 1);
 		int iRet = p->AddTexture( pTexture );
 		lua_pushinteger( L, iRet );
 		return 1;
 	}
-	static int SetTextureMode( T* p, lua_State *L )
+	LUA_METHOD(SetTextureMode)( T* p, lua_State *L )
 	{
 		int iIndex = IArg(1);
 		TextureMode tm = Enum::Check<TextureMode>(L, 2);
 		p->SetTextureMode( iIndex, tm );
 		COMMON_RETURN_SELF;
 	}
-	static int SetTextureCoords( T* p, lua_State *L )
+	LUA_METHOD(SetTextureCoords)( T* p, lua_State *L )
 	{
 		p->SetTextureCoords( RectF(FArg(1), FArg(2), FArg(3), FArg(4)) );
 		COMMON_RETURN_SELF;
 	}
-	static int SetSizeFromTexture( T* p, lua_State *L )
+	LUA_METHOD(SetSizeFromTexture)( T* p, lua_State *L )
 	{
 		RageTexture *pTexture = Luna<RageTexture>::check(L, 1);
 		p->SetSizeFromTexture( pTexture );
 		COMMON_RETURN_SELF;
 	}
-	static int SetEffectMode( T* p, lua_State *L )
+	LUA_METHOD(SetEffectMode)( T* p, lua_State *L )
 	{
 		EffectMode em = Enum::Check<EffectMode>(L, 1);
 		p->SetEffectMode( em );
 		COMMON_RETURN_SELF;
-	}
-
-	LunaActorMultiTexture()
-	{
-		ADD_METHOD( ClearTextures );
-		ADD_METHOD( AddTexture );
-		ADD_METHOD( SetTextureMode );
-		ADD_METHOD( SetTextureCoords );
-		ADD_METHOD( SetSizeFromTexture );
-		ADD_METHOD( SetEffectMode );
 	}
 };
 

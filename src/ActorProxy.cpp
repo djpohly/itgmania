@@ -37,14 +37,14 @@ void ActorProxy::LoadFromNode( const XNode* pNode )
 class LunaActorProxy: public Luna<ActorProxy>
 {
 public:
-	static int SetTarget( T* p, lua_State *L )
+	LUA_METHOD(SetTarget)( T* p, lua_State *L )
 	{
 		Actor *pTarget = Luna<Actor>::check( L, 1 );
 		p->SetTarget( pTarget );
 		COMMON_RETURN_SELF;
 	}
 
-	static int GetTarget( T* p, lua_State *L )
+	LUA_METHOD(GetTarget)( T* p, lua_State *L )
 	{
 		Actor *pTarget = p->GetTarget();
 		if( pTarget != nullptr )
@@ -52,12 +52,6 @@ public:
 		else
 			lua_pushnil( L );
 		return 1;
-	}
-
-	LunaActorProxy()
-	{
-		ADD_METHOD( SetTarget );
-		ADD_METHOD( GetTarget );
 	}
 };
 

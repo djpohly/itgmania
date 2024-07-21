@@ -205,26 +205,14 @@ void MenuTimer::SetText( float fSeconds )
 class LunaMenuTimer: public Luna<MenuTimer>
 {
 public:
-	static int SetSeconds( T* p, lua_State *L )	{ p->SetSeconds(FArg(1)); COMMON_RETURN_SELF; }
-	static int GetSeconds( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetSeconds() ); return 1; }
-	static int start( T* p, lua_State *L )		{ p->Start(); COMMON_RETURN_SELF; }
-	static int pause( T* p, lua_State *L )		{ p->Pause(); COMMON_RETURN_SELF; }
-	static int stop( T* p, lua_State *L )			{ p->Stop(); COMMON_RETURN_SELF; }
-	static int disable( T* p, lua_State *L )		{ p->Disable(); COMMON_RETURN_SELF; }
-	static int silent( T* p, lua_State *L )		{ p->EnableSilent(BArg(1)); COMMON_RETURN_SELF; }
-	static int stealth( T* p, lua_State *L )		{ p->EnableStealth(BArg(1)); COMMON_RETURN_SELF; }
-
-	LunaMenuTimer()
-	{
-		ADD_METHOD( SetSeconds );
-		ADD_METHOD( GetSeconds );
-		ADD_METHOD( start );
-		ADD_METHOD( pause );
-		ADD_METHOD( stop );
-		ADD_METHOD( disable );
-		ADD_METHOD( silent );
-		ADD_METHOD( stealth );
-	}
+	LUA_METHOD(SetSeconds)( T* p, lua_State *L )	{ p->SetSeconds(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetSeconds)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetSeconds() ); return 1; }
+	LUA_METHOD(start)( T* p, lua_State *L )		{ p->Start(); COMMON_RETURN_SELF; }
+	LUA_METHOD(pause)( T* p, lua_State *L )		{ p->Pause(); COMMON_RETURN_SELF; }
+	LUA_METHOD(stop)( T* p, lua_State *L )			{ p->Stop(); COMMON_RETURN_SELF; }
+	LUA_METHOD(disable)( T* p, lua_State *L )		{ p->Disable(); COMMON_RETURN_SELF; }
+	LUA_METHOD(silent)( T* p, lua_State *L )		{ p->EnableSilent(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(stealth)( T* p, lua_State *L )		{ p->EnableStealth(BArg(1)); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( MenuTimer, ActorFrame )

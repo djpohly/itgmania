@@ -550,13 +550,13 @@ RString NoteSkinManager::GetPathFromDirAndFile( const RString &sDir, const RStri
 class LunaNoteSkinManager: public Luna<NoteSkinManager>
 {
 public:
-	DEFINE_METHOD( GetPath, GetPath(SArg(1), SArg(2)) );
-	DEFINE_METHOD( GetMetric, GetMetric(SArg(1), SArg(2)) );
-	DEFINE_METHOD( GetMetricI, GetMetricI(SArg(1), SArg(2)) );
-	DEFINE_METHOD( GetMetricF, GetMetricF(SArg(1), SArg(2)) );
-	DEFINE_METHOD( GetMetricB, GetMetricB(SArg(1), SArg(2)) );
-	static int GetMetricA( T* p, lua_State *L )		{ p->GetMetricA(SArg(1),SArg(2))->PushSelf(L); return 1; }
-	static int LoadActor( T* p, lua_State *L )
+	LUA_DEFINE_METHOD( GetPath, GetPath(SArg(1), SArg(2)) );
+	LUA_DEFINE_METHOD( GetMetric, GetMetric(SArg(1), SArg(2)) );
+	LUA_DEFINE_METHOD( GetMetricI, GetMetricI(SArg(1), SArg(2)) );
+	LUA_DEFINE_METHOD( GetMetricF, GetMetricF(SArg(1), SArg(2)) );
+	LUA_DEFINE_METHOD( GetMetricB, GetMetricB(SArg(1), SArg(2)) );
+	LUA_METHOD(GetMetricA)( T* p, lua_State *L )		{ p->GetMetricA(SArg(1),SArg(2))->PushSelf(L); return 1; }
+	LUA_METHOD(LoadActor)( T* p, lua_State *L )
 	{
 		RString sButton = SArg(1);
 		RString sElement = SArg(2);
@@ -566,7 +566,7 @@ public:
 		return 1;
 	}
 #define FOR_NOTESKIN(x,n) \
-	static int x ## ForNoteSkin( T* p, lua_State *L ) \
+	LUA_METHOD(x##ForNoteSkin)( T* p, lua_State *L ) \
 	{ \
 		const RString sOldNoteSkin = p->GetCurrentNoteSkin(); \
 		RString nsname= SArg(n+1); \
@@ -587,7 +587,7 @@ public:
 	FOR_NOTESKIN( GetMetricA, 2 );
 	FOR_NOTESKIN( LoadActor, 2 );
 #undef FOR_NOTESKIN
-	static int GetNoteSkinNames( T* p, lua_State *L )
+	LUA_METHOD(GetNoteSkinNames)( T* p, lua_State *L )
 	{
 		std::vector<RString> vNoteskins;
 		p->GetNoteSkinNames( vNoteskins );
@@ -595,7 +595,7 @@ public:
 		return 1;
 	}
 	/*
-	static int GetNoteSkinNamesForGame( T* p, lua_State *L )
+	LUA_METHOD(GetNoteSkinNamesForGame)( T* p, lua_State *L )
 	{
 		Game *pGame = Luna<Game>::check( L, 1 );
 		std::vector<RString> vGameNoteskins;
@@ -604,27 +604,7 @@ public:
 		return 1;
 	}
 	*/
-	static int DoesNoteSkinExist( T* p, lua_State *L ) { lua_pushboolean(L, p->DoesNoteSkinExist( SArg(1) )); return 1; }
-
-	LunaNoteSkinManager()
-	{
-		ADD_METHOD( GetPath );
-		ADD_METHOD( GetMetric );
-		ADD_METHOD( GetMetricI );
-		ADD_METHOD( GetMetricF );
-		ADD_METHOD( GetMetricB );
-		ADD_METHOD( GetMetricA );
-		ADD_METHOD( LoadActor );
-		ADD_METHOD( GetPathForNoteSkin );
-		ADD_METHOD( GetMetricForNoteSkin );
-		ADD_METHOD( GetMetricIForNoteSkin );
-		ADD_METHOD( GetMetricFForNoteSkin );
-		ADD_METHOD( GetMetricBForNoteSkin );
-		ADD_METHOD( GetMetricAForNoteSkin );
-		ADD_METHOD( LoadActorForNoteSkin );
-		ADD_METHOD( GetNoteSkinNames );
-		ADD_METHOD( DoesNoteSkinExist ); // for the current game
-	}
+	LUA_METHOD(DoesNoteSkinExist)( T* p, lua_State *L ) { lua_pushboolean(L, p->DoesNoteSkinExist( SArg(1) )); return 1; }
 };
 
 LUA_REGISTER_CLASS( NoteSkinManager )

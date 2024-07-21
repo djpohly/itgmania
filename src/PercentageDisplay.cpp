@@ -211,17 +211,12 @@ bool PercentageDisplay::ShowDancePointsNotPercentage() const
 class LunaPercentageDisplay: public Luna<PercentageDisplay>
 {
 public:
-	static int LoadFromStats( T* p, lua_State *L )
+	LUA_METHOD(LoadFromStats)( T* p, lua_State *L )
 	{
 		const PlayerState *pStageStats = Luna<PlayerState>::check( L, 1 );
 		const PlayerStageStats *pPlayerStageStats = Luna<PlayerStageStats>::check( L, 2 );
 		p->Load( pStageStats, pPlayerStageStats );
 		COMMON_RETURN_SELF;
-	}
-
-	LunaPercentageDisplay()
-	{
-		ADD_METHOD( LoadFromStats );
 	}
 };
 

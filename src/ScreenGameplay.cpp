@@ -3127,9 +3127,9 @@ bool ScreenGameplay::LoadReplay()
 class LunaScreenGameplay: public Luna<ScreenGameplay>
 {
 public:
-	static int GetNextCourseSong( T* p, lua_State *L ) { p->GetNextCourseSong()->PushSelf(L); return 1; }
-	static int Center1Player( T* p, lua_State *L ) { lua_pushboolean( L, p->Center1Player() ); return 1; }
-	static int GetLifeMeter( T* p, lua_State *L )
+	LUA_METHOD(GetNextCourseSong)( T* p, lua_State *L ) { p->GetNextCourseSong()->PushSelf(L); return 1; }
+	LUA_METHOD(Center1Player)( T* p, lua_State *L ) { lua_pushboolean( L, p->Center1Player() ); return 1; }
+	LUA_METHOD(GetLifeMeter)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>( L, 1 );
 
@@ -3143,7 +3143,7 @@ public:
 		pLM->PushSelf( L );
 		return 1;
 	}
-	static int GetPlayerInfo( T* p, lua_State *L )
+	LUA_METHOD(GetPlayerInfo)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>( L, 1 );
 
@@ -3154,7 +3154,7 @@ public:
 		pi->PushSelf( L );
 		return 1;
 	}
-	static int GetDummyPlayerInfo( T* p, lua_State *L )
+	LUA_METHOD(GetDummyPlayerInfo)( T* p, lua_State *L )
 	{
 		int iDummyIndex = IArg(1);
 		PlayerInfo *pi = p->GetDummyPlayerInfo(iDummyIndex);
@@ -3163,9 +3163,9 @@ public:
 		pi->PushSelf( L );
 		return 1;
 	}
-	static int PauseGame( T* p, lua_State *L )		{ p->Pause( BArg(1)); return 0; }
-	static int IsPaused( T* p, lua_State *L )		{ lua_pushboolean( L, p->IsPaused() ); return 1; }
-	static int GetHasteRate( T* p, lua_State *L )    { lua_pushnumber( L, p->GetHasteRate() ); return 1; }
+	LUA_METHOD(PauseGame)( T* p, lua_State *L )		{ p->Pause( BArg(1)); return 0; }
+	LUA_METHOD(IsPaused)( T* p, lua_State *L )		{ lua_pushboolean( L, p->IsPaused() ); return 1; }
+	LUA_METHOD(GetHasteRate)( T* p, lua_State *L )    { lua_pushnumber( L, p->GetHasteRate() ); return 1; }
 	static bool TurningPointsValid(lua_State* L, int index)
 	{
 		std::size_t size= lua_objlen(L, index);
@@ -3195,12 +3195,12 @@ public:
 	FLOAT_TABLE_INTERFACE(HasteAddAmounts, HasteAddAmounts, AddAmountsValid);
 	FLOAT_NO_SPEED_INTERFACE(HasteTimeBetweenUpdates, HasteTimeBetweenUpdates, (v > 0));
 	FLOAT_NO_SPEED_INTERFACE(HasteLifeSwitchPoint, HasteLifeSwitchPoint, (v >= 0 && v <= 1));
-	static int begin_backing_out(T* p, lua_State* L)
+	LUA_METHOD(begin_backing_out)(T* p, lua_State* L)
 	{
 		p->BeginBackingOutFromGameplay();
 		COMMON_RETURN_SELF;
 	}
-	static int GetTrueBPS(T* p, lua_State* L)
+	LUA_METHOD(GetTrueBPS)(T* p, lua_State* L)
 	{
 		PlayerNumber pn= Enum::Check<PlayerNumber>(L, 1);
 		float haste= p->GetHasteRate();
@@ -3209,25 +3209,6 @@ public:
 		float true_bps= haste * rate * bps;
 		lua_pushnumber(L, true_bps);
 		return 1;
-	}
-
-	LunaScreenGameplay()
-	{
-		ADD_METHOD( GetNextCourseSong );
-		ADD_METHOD( Center1Player );
-		ADD_METHOD( GetLifeMeter );
-		ADD_METHOD( GetPlayerInfo );
-		ADD_METHOD( GetDummyPlayerInfo );
-		// sm-ssc additions:
-		ADD_METHOD( PauseGame );
-		ADD_METHOD( IsPaused );
-		ADD_METHOD( GetHasteRate );
-		ADD_METHOD( HasteTurningPoints );
-		ADD_METHOD( HasteAddAmounts );
-		ADD_METHOD( HasteTimeBetweenUpdates );
-		ADD_METHOD( HasteLifeSwitchPoint );
-		ADD_METHOD(begin_backing_out);
-		ADD_METHOD( GetTrueBPS );
 	}
 };
 
@@ -3238,7 +3219,7 @@ LUA_REGISTER_DERIVED_CLASS( ScreenGameplay, ScreenWithMenuElements )
 class LunaPlayerInfo: public Luna<PlayerInfo>
 {
 public:
-	static int GetLifeMeter( T* p, lua_State *L )
+	LUA_METHOD(GetLifeMeter)( T* p, lua_State *L )
 	{
 		if(p->m_pLifeMeter)
 		{
@@ -3248,19 +3229,13 @@ public:
 		return 0;
 	}
 
-	static int GetStepsQueueWrapped( T* p, lua_State *L )
+	LUA_METHOD(GetStepsQueueWrapped)( T* p, lua_State *L )
 	{
 		int iIndex = IArg(1);
 		iIndex %= p->m_vpStepsQueue.size();
 		Steps *pSteps = p->m_vpStepsQueue[iIndex];
 		pSteps->PushSelf(L);
 		return 1;
-	}
-
-	LunaPlayerInfo()
-	{
-		ADD_METHOD( GetLifeMeter );
-		ADD_METHOD( GetStepsQueueWrapped );
 	}
 };
 

@@ -59,18 +59,10 @@ TapNoteScore Game::GetMapJudgmentTo( TapNoteScore tns ) const
 class LunaGame: public Luna<Game>
 {
 public:
-	static int GetName( T* p, lua_State *L )			{ lua_pushstring( L, p->m_szName ); return 1; }
-	static int CountNotesSeparately( T* p, lua_State *L )	{ lua_pushboolean( L, p->m_bCountNotesSeparately ); return 1; }
-	DEFINE_METHOD( GetMapJudgmentTo, GetMapJudgmentTo(Enum::Check<TapNoteScore>(L, 1)) )
-	DEFINE_METHOD(GetSeparateStyles, m_PlayersHaveSeparateStyles);
-
-	LunaGame()
-	{
-		ADD_METHOD( GetName );
-		ADD_METHOD( CountNotesSeparately );
-		ADD_METHOD( GetMapJudgmentTo );
-		ADD_METHOD( GetSeparateStyles );
-	}
+	LUA_METHOD(GetName)( T* p, lua_State *L )			{ lua_pushstring( L, p->m_szName ); return 1; }
+	LUA_METHOD(CountNotesSeparately)( T* p, lua_State *L )	{ lua_pushboolean( L, p->m_bCountNotesSeparately ); return 1; }
+	LUA_DEFINE_METHOD( GetMapJudgmentTo, GetMapJudgmentTo(Enum::Check<TapNoteScore>(L, 1)) )
+	LUA_DEFINE_METHOD(GetSeparateStyles, m_PlayersHaveSeparateStyles);
 };
 
 LUA_REGISTER_CLASS( Game )

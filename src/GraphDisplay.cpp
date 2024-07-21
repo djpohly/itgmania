@@ -283,12 +283,12 @@ void GraphDisplay::UpdateVerts()
 class LunaGraphDisplay: public Luna<GraphDisplay>
 {
 public:
-	static int Load( T* p, lua_State *L )
+	LUA_METHOD(Load)( T* p, lua_State *L )
 	{
 		p->Load( SArg(1) );
 		COMMON_RETURN_SELF;
 	}
-	static int Set( T* p, lua_State *L )
+	LUA_METHOD(Set)( T* p, lua_State *L )
 	{
 		StageStats *pStageStats = Luna<StageStats>::check( L, 1 );
 		PlayerStageStats *pPlayerStageStats = Luna<PlayerStageStats>::check( L, 2 );
@@ -302,12 +302,6 @@ public:
 		}
 		p->Set( *pStageStats, *pPlayerStageStats );
 		COMMON_RETURN_SELF;
-	}
-
-	LunaGraphDisplay()
-	{
-		ADD_METHOD( Load );
-		ADD_METHOD( Set );
 	}
 };
 

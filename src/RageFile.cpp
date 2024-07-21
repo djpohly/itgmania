@@ -347,13 +347,13 @@ public:
 			luaL_error(L, "File '%s' is not open for writing.", p->GetPath().c_str());
 		}
 	}
-	static int destroy( T* p, lua_State *L )
+	LUA_METHOD(destroy)( T* p, lua_State *L )
 	{
 		SAFE_DELETE(p);
 		return 1;
 	}
 
-	static int Open( T* p, lua_State *L )
+	LUA_METHOD(Open)( T* p, lua_State *L )
 	{
 		const RString path = SArg(1);
 		int mode = IArg(2);
@@ -369,26 +369,26 @@ public:
 		return 1;
 	}
 
-	static int Close( T* p, lua_State *L )
+	LUA_METHOD(Close)( T* p, lua_State *L )
 	{
 		p->Close();
 		return 1;
 	}
 
-	static int Write( T* p, lua_State *L )
+	LUA_METHOD(Write)( T* p, lua_State *L )
 	{
 		can_safely_write(p, L);
 		lua_pushinteger( L, p->Write( SArg(1) ) );
 		return 1;
 	}
 
-	static int Flush(T* p, lua_State* L)
+	LUA_METHOD(Flush)(T* p, lua_State* L)
 	{
 		p->Flush();
 		COMMON_RETURN_SELF;
 	}
 
-	static int Read( T* p, lua_State *L )
+	LUA_METHOD(Read)( T* p, lua_State *L )
 	{
 		can_safely_read(p, L);
 		RString string;
@@ -397,7 +397,7 @@ public:
 		return 1;
 	}
 
-	static int ReadBytes( T* p, lua_State *L )
+	LUA_METHOD(ReadBytes)( T* p, lua_State *L )
 	{
 		can_safely_read(p, L);
 		RString string;
@@ -406,21 +406,21 @@ public:
 		return 1;
 	}
 
-	static int Seek( T* p, lua_State *L )
+	LUA_METHOD(Seek)( T* p, lua_State *L )
 	{
 		can_safely_read(p, L);
 		lua_pushinteger( L, p->Seek( IArg(1) ) );
 		return 1;
 	}
 
-	static int Tell( T* p, lua_State *L )
+	LUA_METHOD(Tell)( T* p, lua_State *L )
 	{
 		can_safely_read(p, L);
 		lua_pushinteger( L, p->Tell() );
 		return 1;
 	}
 
-	static int GetLine( T* p, lua_State *L )
+	LUA_METHOD(GetLine)( T* p, lua_State *L )
 	{
 		can_safely_read(p, L);
 		RString string;
@@ -429,14 +429,14 @@ public:
 		return 1;
 	}
 
-	static int PutLine( T* p, lua_State *L )
+	LUA_METHOD(PutLine)( T* p, lua_State *L )
 	{
 		can_safely_write(p, L);
 		lua_pushinteger( L, p->PutLine( SArg(1) ) );
 		return 1;
 	}
 
-	static int GetError( T* p, lua_State *L )
+	LUA_METHOD(GetError)( T* p, lua_State *L )
 	{
 		RString error;
 		error = p->GetError();
@@ -444,35 +444,17 @@ public:
 		return 1;
 	}
 
-	static int ClearError( T* p, lua_State *L )
+	LUA_METHOD(ClearError)( T* p, lua_State *L )
 	{
 		p->ClearError();
 		return 1;
 	}
 
-	static int AtEOF( T* p, lua_State *L )
+	LUA_METHOD(AtEOF)( T* p, lua_State *L )
 	{
 		can_safely_read(p, L);
 		lua_pushboolean( L, p->AtEOF() );
 		return 1;
-	}
-
-	LunaRageFile()
-	{
-		ADD_METHOD( Open );
-		ADD_METHOD( Close );
-		ADD_METHOD( Write );
-		ADD_METHOD(Flush);
-		ADD_METHOD( Read );
-		ADD_METHOD( ReadBytes );
-		ADD_METHOD( Seek );
-		ADD_METHOD( Tell );
-		ADD_METHOD( GetLine );
-		ADD_METHOD( PutLine );
-		ADD_METHOD( destroy );
-		ADD_METHOD( GetError );
-		ADD_METHOD( ClearError );
-		ADD_METHOD( AtEOF );
 	}
 };
 

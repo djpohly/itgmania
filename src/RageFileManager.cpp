@@ -1268,7 +1268,7 @@ unsigned int GetHashForDirectory( const RString &sDir )
 class LunaRageFileManager: public Luna<RageFileManager>
 {
 public:
-	static int Copy(T* p, lua_State *L){
+	LUA_METHOD(Copy)(T* p, lua_State *L){
 		const std::string fromPath = SArg(1);
 		const std::string toPath = SArg(2);
 
@@ -1282,10 +1282,10 @@ public:
 		lua_pushboolean(L, p->Copy(fromPath, toPath));
 		return 1;
 	}
-	static int DoesFileExist( T* p, lua_State *L ){ lua_pushboolean( L, p->DoesFileExist(SArg(1)) ); return 1; }
-	static int GetFileSizeBytes( T* p, lua_State *L ){ lua_pushnumber( L, p->GetFileSizeInBytes(SArg(1)) ); return 1; }
-	static int GetHashForFile( T* p, lua_State *L ){ lua_pushnumber( L, p->GetFileHash(SArg(1)) ); return 1; }
-	static int GetDirListing( T* p, lua_State *L )
+	LUA_METHOD(DoesFileExist)( T* p, lua_State *L ){ lua_pushboolean( L, p->DoesFileExist(SArg(1)) ); return 1; }
+	LUA_METHOD(GetFileSizeBytes)( T* p, lua_State *L ){ lua_pushnumber( L, p->GetFileSizeInBytes(SArg(1)) ); return 1; }
+	LUA_METHOD(GetHashForFile)( T* p, lua_State *L ){ lua_pushnumber( L, p->GetFileHash(SArg(1)) ); return 1; }
+	LUA_METHOD(GetDirListing)( T* p, lua_State *L )
 	{
 		std::vector<RString> vDirs;
 		bool bOnlyDirs = false;
@@ -1306,7 +1306,7 @@ public:
 		LuaHelpers::CreateTableFromArray(vDirs, L);
 		return 1;
 	}
-	static int Unzip(T* p, lua_State *L)
+	LUA_METHOD(Unzip)(T* p, lua_State *L)
 	{
 		std::string zipPath = SArg(1);
 		std::string targetPath = SArg(2);
@@ -1322,16 +1322,6 @@ public:
 		lua_pushboolean(L, success);
 		return 1;
 
-	}
-
-	LunaRageFileManager()
-	{
-		ADD_METHOD( Copy );
-		ADD_METHOD( DoesFileExist );
-		ADD_METHOD( GetFileSizeBytes );
-		ADD_METHOD( GetHashForFile );
-		ADD_METHOD( GetDirListing );
-		ADD_METHOD( Unzip );
 	}
 };
 

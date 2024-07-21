@@ -90,13 +90,13 @@ void ActorFrameTexture::DrawPrimitives()
 class LunaActorFrameTexture : public Luna<ActorFrameTexture>
 {
 public:
-	static int Create( T* p, lua_State *L )				{ p->Create(); COMMON_RETURN_SELF; }
-	static int EnableDepthBuffer( T* p, lua_State *L )		{ p->EnableDepthBuffer(BArg(1)); COMMON_RETURN_SELF; }
-	static int EnableAlphaBuffer( T* p, lua_State *L )		{ p->EnableAlphaBuffer(BArg(1)); COMMON_RETURN_SELF; }
-	static int EnableFloat( T* p, lua_State *L )			{ p->EnableFloat(BArg(1)); COMMON_RETURN_SELF; }
-	static int EnablePreserveTexture( T* p, lua_State *L )		{ p->EnablePreserveTexture(BArg(1)); COMMON_RETURN_SELF; }
-	static int SetTextureName( T* p, lua_State *L )			{ p->SetTextureName(SArg(1)); COMMON_RETURN_SELF; }
-	static int GetTexture( T* p, lua_State *L )
+	LUA_METHOD(Create)( T* p, lua_State *L )				{ p->Create(); COMMON_RETURN_SELF; }
+	LUA_METHOD(EnableDepthBuffer)( T* p, lua_State *L )		{ p->EnableDepthBuffer(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(EnableAlphaBuffer)( T* p, lua_State *L )		{ p->EnableAlphaBuffer(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(EnableFloat)( T* p, lua_State *L )			{ p->EnableFloat(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(EnablePreserveTexture)( T* p, lua_State *L )		{ p->EnablePreserveTexture(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetTextureName)( T* p, lua_State *L )			{ p->SetTextureName(SArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetTexture)( T* p, lua_State *L )
 	{
 		RageTexture *pTexture = p->GetTexture();
 		if( pTexture == nullptr )
@@ -108,17 +108,6 @@ public:
 			pTexture->PushSelf(L);
 		}
 		return 1;
-	}
-
-	LunaActorFrameTexture()
-	{
-		ADD_METHOD( Create );
-		ADD_METHOD( EnableDepthBuffer );
-		ADD_METHOD( EnableAlphaBuffer );
-		ADD_METHOD( EnableFloat );
-		ADD_METHOD( EnablePreserveTexture );
-		ADD_METHOD( SetTextureName );
-		ADD_METHOD( GetTexture );
 	}
 };
 

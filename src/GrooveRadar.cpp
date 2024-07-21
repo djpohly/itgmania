@@ -215,7 +215,7 @@ void GrooveRadar::GrooveRadarValueMap::DrawPrimitives()
 class LunaGrooveRadar: public Luna<GrooveRadar>
 {
 public:
-	static int SetFromRadarValues( T* p, lua_State *L )
+	LUA_METHOD(SetFromRadarValues)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		if( lua_isnil(L,2) )
@@ -229,7 +229,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int SetFromValues( T* p, lua_State *L )
+	LUA_METHOD(SetFromValues)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		if( !lua_istable(L, 2) || lua_isnil(L,2) )
@@ -244,14 +244,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int SetEmpty( T* p, lua_State *L )		{ p->SetEmpty( Enum::Check<PlayerNumber>(L, 1) ); COMMON_RETURN_SELF; }
-
-	LunaGrooveRadar()
-	{
-		ADD_METHOD( SetFromRadarValues );
-		ADD_METHOD( SetFromValues );
-		ADD_METHOD( SetEmpty );
-	}
+	LUA_METHOD(SetEmpty)( T* p, lua_State *L )		{ p->SetEmpty( Enum::Check<PlayerNumber>(L, 1) ); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( GrooveRadar, ActorFrame )

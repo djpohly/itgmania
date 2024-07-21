@@ -42,7 +42,6 @@
 #include <tuple>
 #include <vector>
 
-
 SongManager*	SONGMAN = nullptr;	// global and accessible from anywhere in our program
 
 /** @brief The file that contains various random attacks. */
@@ -2114,7 +2113,7 @@ int SongManager::GetSongRank(Song* pSong)
 class LunaSongManager: public Luna<SongManager>
 {
 public:
-	static int SetPreferredSongs( T* p, lua_State *L )
+	LUA_METHOD(SetPreferredSongs)( T* p, lua_State *L )
 	{
 		RString sPreferredSongs = SArg(1);
 		if ( lua_gettop(L) >= 2 && !lua_isnil(L, 2) )
@@ -2128,7 +2127,7 @@ public:
 
 		COMMON_RETURN_SELF;
 	}
-	static int SetPreferredCourses( T* p, lua_State *L )
+	LUA_METHOD(SetPreferredCourses)( T* p, lua_State *L )
 	{
 		RString sPreferredCourses = SArg(1);
 		if ( lua_gettop(L) >= 2 && !lua_isnil(L, 2) )
@@ -2141,13 +2140,13 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int GetAllSongs( T* p, lua_State *L )
+	LUA_METHOD(GetAllSongs)( T* p, lua_State *L )
 	{
 		const std::vector<Song*> &v = p->GetAllSongs();
 		LuaHelpers::CreateTableFromArray<Song*>( v, L );
 		return 1;
 	}
-	static int GetAllCourses( T* p, lua_State *L )
+	LUA_METHOD(GetAllCourses)( T* p, lua_State *L )
 	{
 		std::vector<Course*> v;
 		p->GetAllCourses( v, BArg(1) );
@@ -2155,14 +2154,14 @@ public:
 		return 1;
 	}
 
-	static int GetPreferredSortSongs( T* p, lua_State *L )
+	LUA_METHOD(GetPreferredSortSongs)( T* p, lua_State *L )
 	{
 		std::vector<Song*> v;
 		p->GetPreferredSortSongs(v);
 		LuaHelpers::CreateTableFromArray<Song*>( v, L );
 		return 1;
 	}
-	static int GetPreferredSortCourses( T* p, lua_State *L )
+	LUA_METHOD(GetPreferredSortCourses)( T* p, lua_State *L )
 	{
 		std::vector<Course*> v;
 		CourseType ct = Enum::Check<CourseType>(L,1);
@@ -2171,22 +2170,22 @@ public:
 		return 1;
 	}
 
-	static int FindSong( T* p, lua_State *L )		{ Song *pS = p->FindSong(SArg(1)); if(pS) pS->PushSelf(L); else lua_pushnil(L); return 1; }
-	static int FindCourse( T* p, lua_State *L )		{ Course *pC = p->FindCourse(SArg(1)); if(pC) pC->PushSelf(L); else lua_pushnil(L); return 1; }
-	static int GetRandomSong( T* p, lua_State *L )		{ Song *pS = p->GetRandomSong(); if(pS) pS->PushSelf(L); else lua_pushnil(L); return 1; }
-	static int GetRandomCourse( T* p, lua_State *L )	{ Course *pC = p->GetRandomCourse(); if(pC) pC->PushSelf(L); else lua_pushnil(L); return 1; }
-	static int GetNumSongs( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumSongs() ); return 1; }
-	static int GetNumLockedSongs( T* p, lua_State *L ) { lua_pushnumber( L, p->GetNumLockedSongs() ); return 1; }
-	static int GetNumUnlockedSongs( T* p, lua_State *L )    { lua_pushnumber( L, p->GetNumUnlockedSongs() ); return 1; }
-	static int GetNumSelectableAndUnlockedSongs( T* p, lua_State *L )    { lua_pushnumber( L, p->GetNumSelectableAndUnlockedSongs() ); return 1; }
-	static int GetNumAdditionalSongs( T* p, lua_State *L )  { lua_pushnumber( L, 0 ); return 1; }	// deprecated
-	static int GetNumSongGroups( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetNumSongGroups() ); return 1; }
-	static int GetNumCourses( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumCourses() ); return 1; }
-	static int GetNumAdditionalCourses( T* p, lua_State *L ){ lua_pushnumber( L, 0 ); return 1; }	// deprecated
-	static int GetNumCourseGroups( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetNumCourseGroups() ); return 1; }
+	LUA_METHOD(FindSong)( T* p, lua_State *L )		{ Song *pS = p->FindSong(SArg(1)); if(pS) pS->PushSelf(L); else lua_pushnil(L); return 1; }
+	LUA_METHOD(FindCourse)( T* p, lua_State *L )		{ Course *pC = p->FindCourse(SArg(1)); if(pC) pC->PushSelf(L); else lua_pushnil(L); return 1; }
+	LUA_METHOD(GetRandomSong)( T* p, lua_State *L )		{ Song *pS = p->GetRandomSong(); if(pS) pS->PushSelf(L); else lua_pushnil(L); return 1; }
+	LUA_METHOD(GetRandomCourse)( T* p, lua_State *L )	{ Course *pC = p->GetRandomCourse(); if(pC) pC->PushSelf(L); else lua_pushnil(L); return 1; }
+	LUA_METHOD(GetNumSongs)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumSongs() ); return 1; }
+	LUA_METHOD(GetNumLockedSongs)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetNumLockedSongs() ); return 1; }
+	LUA_METHOD(GetNumUnlockedSongs)( T* p, lua_State *L )    { lua_pushnumber( L, p->GetNumUnlockedSongs() ); return 1; }
+	LUA_METHOD(GetNumSelectableAndUnlockedSongs)( T* p, lua_State *L )    { lua_pushnumber( L, p->GetNumSelectableAndUnlockedSongs() ); return 1; }
+	LUA_METHOD(GetNumAdditionalSongs)( T* p, lua_State *L )  { lua_pushnumber( L, 0 ); return 1; }	// deprecated
+	LUA_METHOD(GetNumSongGroups)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetNumSongGroups() ); return 1; }
+	LUA_METHOD(GetNumCourses)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumCourses() ); return 1; }
+	LUA_METHOD(GetNumAdditionalCourses)( T* p, lua_State *L ){ lua_pushnumber( L, 0 ); return 1; }	// deprecated
+	LUA_METHOD(GetNumCourseGroups)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetNumCourseGroups() ); return 1; }
 
 	/* Note: this could now be implemented as Luna<Steps>::GetSong */
-	static int GetSongFromSteps( T* p, lua_State *L )
+	LUA_METHOD(GetSongFromSteps)( T* p, lua_State *L )
 	{
 		Song *pSong = nullptr;
 		if( lua_isnil(L,1) ) { pSong = nullptr; }
@@ -2196,7 +2195,7 @@ public:
 		return 1;
 	}
 
-	static int GetExtraStageInfo( T* p, lua_State *L )
+	LUA_METHOD(GetExtraStageInfo)( T* p, lua_State *L )
 	{
 		bool bExtra2 = BArg( 1 );
 		const Style *pStyle = Luna<Style>::check( L, 2 );
@@ -2209,11 +2208,11 @@ public:
 
 		return 2;
 	}
-	DEFINE_METHOD( GetSongColor, GetSongColor( Luna<Song>::check(L,1) ) )
-	DEFINE_METHOD( GetSongGroupColor, GetSongGroupColor( SArg(1) ) )
-	DEFINE_METHOD( GetCourseColor, GetCourseColor( Luna<Course>::check(L,1) ) )
+	LUA_DEFINE_METHOD( GetSongColor, GetSongColor( Luna<Song>::check(L,1) ) )
+	LUA_DEFINE_METHOD( GetSongGroupColor, GetSongGroupColor( SArg(1) ) )
+	LUA_DEFINE_METHOD( GetCourseColor, GetCourseColor( Luna<Course>::check(L,1) ) )
 
-	static int GetSongRank( T* p, lua_State *L )
+	LUA_METHOD(GetSongRank)( T* p, lua_State *L )
 	{
 		Song *pSong = Luna<Song>::check(L,1);
 		int index = p->GetSongRank(pSong);
@@ -2224,13 +2223,13 @@ public:
 		return 1;
 	}
 	/*
-	static int GetSongRankFromProfile( T* p, lua_State *L )
+	LUA_METHOD(GetSongRankFromProfile)( T* p, lua_State *L )
 	{
 		// it's like the above but also takes in a ProfileSlot as well.
 	}
 	*/
 
-	static int GetSongGroupNames( T* p, lua_State *L )
+	LUA_METHOD(GetSongGroupNames)( T* p, lua_State *L )
 	{
 		std::vector<RString> v;
 		p->GetSongGroupNames( v );
@@ -2238,14 +2237,14 @@ public:
 		return 1;
 	}
 
-	static int GetSongsInGroup( T* p, lua_State *L )
+	LUA_METHOD(GetSongsInGroup)( T* p, lua_State *L )
 	{
 		std::vector<Song*> v = p->GetSongs(SArg(1));
 		LuaHelpers::CreateTableFromArray<Song*>( v, L );
 		return 1;
 	}
 
-	static int GetCoursesInGroup( T* p, lua_State *L )
+	LUA_METHOD(GetCoursesInGroup)( T* p, lua_State *L )
 	{
 		std::vector<Course*> v;
 		p->GetCoursesInGroup(v,SArg(1),BArg(2));
@@ -2253,9 +2252,9 @@ public:
 		return 1;
 	}
 
-	DEFINE_METHOD( ShortenGroupName, ShortenGroupName( SArg(1) ) )
+	LUA_DEFINE_METHOD( ShortenGroupName, ShortenGroupName( SArg(1) ) )
 
-	static int GetCourseGroupNames( T* p, lua_State *L )
+	LUA_METHOD(GetCourseGroupNames)( T* p, lua_State *L )
 	{
 		std::vector<RString> v;
 		p->GetCourseGroupNames( v );
@@ -2263,31 +2262,31 @@ public:
 		return 1;
 	}
 
-	DEFINE_METHOD( GetSongGroupBannerPath, GetSongGroupBannerPath(SArg(1)) );
-	DEFINE_METHOD( GetCourseGroupBannerPath, GetCourseGroupBannerPath(SArg(1)) );
-	DEFINE_METHOD( DoesSongGroupExist, DoesSongGroupExist(SArg(1)) );
-	DEFINE_METHOD( DoesCourseGroupExist, DoesCourseGroupExist(SArg(1)) );
+	LUA_DEFINE_METHOD( GetSongGroupBannerPath, GetSongGroupBannerPath(SArg(1)) );
+	LUA_DEFINE_METHOD( GetCourseGroupBannerPath, GetCourseGroupBannerPath(SArg(1)) );
+	LUA_DEFINE_METHOD( DoesSongGroupExist, DoesSongGroupExist(SArg(1)) );
+	LUA_DEFINE_METHOD( DoesCourseGroupExist, DoesCourseGroupExist(SArg(1)) );
 
-	static int GetPopularSongs( T* p, lua_State *L )
+	LUA_METHOD(GetPopularSongs)( T* p, lua_State *L )
 	{
 		const std::vector<Song*> &v = p->GetPopularSongs();
 		LuaHelpers::CreateTableFromArray<Song*>( v, L );
 		return 1;
 	}
-	static int GetPopularCourses( T* p, lua_State *L )
+	LUA_METHOD(GetPopularCourses)( T* p, lua_State *L )
 	{
 		CourseType ct = Enum::Check<CourseType>(L,1);
 		const std::vector<Course*> &v = p->GetPopularCourses(ct);
 		LuaHelpers::CreateTableFromArray<Course*>( v, L );
 		return 1;
 	}
-	static int SongToPreferredSortSectionName( T* p, lua_State *L )
+	LUA_METHOD(SongToPreferredSortSectionName)( T* p, lua_State *L )
 	{
 		const Song* pSong = Luna<Song>::check(L,1);
 		lua_pushstring(L, p->SongToPreferredSortSectionName(pSong));
 		return 1;
 	}
-	static int GetPreferredSortSongsBySectionName( T* p, lua_State *L )
+	LUA_METHOD(GetPreferredSortSongsBySectionName)( T* p, lua_State *L )
 	{
 		std::vector<Song*> v;
 		p->GetPreferredSortSongsBySectionName(SArg(1), v);
@@ -2295,52 +2294,9 @@ public:
 		return 1;
 	}
 
-	static int WasLoadedFromAdditionalSongs( T* p, lua_State *L )	{ lua_pushboolean(L, false); return 1; }	// deprecated
-	static int WasLoadedFromAdditionalCourses( T* p, lua_State *L )	{ lua_pushboolean(L, false); return 1; }	// deprecated
+	LUA_METHOD(WasLoadedFromAdditionalSongs)( T* p, lua_State *L )	{ lua_pushboolean(L, false); return 1; }	// deprecated
 
-	LunaSongManager()
-	{
-		ADD_METHOD( GetAllSongs );
-		ADD_METHOD( GetAllCourses );
-		ADD_METHOD( FindSong );
-		ADD_METHOD( FindCourse );
-		ADD_METHOD( GetRandomSong );
-		ADD_METHOD( GetRandomCourse );
-		ADD_METHOD( GetCourseGroupNames );
-		ADD_METHOD( GetNumSongs );
-		ADD_METHOD( GetNumLockedSongs );
-		ADD_METHOD( GetNumUnlockedSongs );
-		ADD_METHOD( GetNumSelectableAndUnlockedSongs );
-		ADD_METHOD( GetNumAdditionalSongs );	// deprecated
-		ADD_METHOD( GetNumSongGroups );
-		ADD_METHOD( GetNumCourses );
-		ADD_METHOD( GetNumAdditionalCourses );	// deprecated
-		ADD_METHOD( GetNumCourseGroups );
-		ADD_METHOD( GetSongFromSteps );
-		ADD_METHOD( GetExtraStageInfo );
-		ADD_METHOD( GetSongColor );
-		ADD_METHOD( GetSongGroupColor );
-		ADD_METHOD( GetCourseColor );
-		ADD_METHOD( GetSongRank );
-		ADD_METHOD( GetSongGroupNames );
-		ADD_METHOD( GetSongsInGroup );
-		ADD_METHOD( GetCoursesInGroup );
-		ADD_METHOD( ShortenGroupName );
-		ADD_METHOD( SetPreferredSongs );
-		ADD_METHOD( SetPreferredCourses );
-		ADD_METHOD( GetPreferredSortSongs );
-		ADD_METHOD( GetPreferredSortCourses );
-		ADD_METHOD( GetSongGroupBannerPath );
-		ADD_METHOD( GetCourseGroupBannerPath );
-		ADD_METHOD( DoesSongGroupExist );
-		ADD_METHOD( DoesCourseGroupExist );
-		ADD_METHOD( GetPopularSongs );
-		ADD_METHOD( GetPopularCourses );
-		ADD_METHOD( SongToPreferredSortSectionName );
-		ADD_METHOD( GetPreferredSortSongsBySectionName );
-		ADD_METHOD( WasLoadedFromAdditionalSongs );	// deprecated
-		ADD_METHOD( WasLoadedFromAdditionalCourses );	// deprecated
-	}
+	LUA_METHOD(WasLoadedFromAdditionalCourses)( T* p, lua_State *L )	{ lua_pushboolean(L, false); return 1; }
 };
 
 LUA_REGISTER_CLASS( SongManager )

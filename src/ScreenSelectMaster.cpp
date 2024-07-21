@@ -1101,16 +1101,11 @@ float ScreenSelectMaster::GetCursorY( PlayerNumber pn )
 class LunaScreenSelectMaster: public Luna<ScreenSelectMaster>
 {
 public:
-	static int GetSelectionIndex( T* p, lua_State *L ) { lua_pushnumber( L, p->GetPlayerSelectionIndex(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
+	LUA_METHOD(GetSelectionIndex)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetPlayerSelectionIndex(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
 	// should I even bother adding this? -aj
 	// would have to make a public function to get this in ssmaster.h:
 	// m_aGameCommands[i].m_sName
-	// static int SelectionIndexToChoiceName( T* p, lua_State *L ){  return 1; }
-
-	LunaScreenSelectMaster()
-	{
-  		ADD_METHOD( GetSelectionIndex );
-	}
+	// LUA_METHOD(SelectionIndexToChoiceName)( T* p, lua_State *L ){  return 1; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenSelectMaster, ScreenWithMenuElements )

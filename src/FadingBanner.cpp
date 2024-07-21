@@ -268,38 +268,38 @@ void FadingBanner::LoadCustom( RString sBanner )
 class LunaFadingBanner: public Luna<FadingBanner>
 {
 public:
-	static int scaletoclipped( T* p, lua_State *L )			{ p->ScaleToClipped(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	static int ScaleToClipped( T* p, lua_State *L )			{ p->ScaleToClipped(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	static int LoadFromSong( T* p, lua_State *L )
+	LUA_METHOD(scaletoclipped)( T* p, lua_State *L )			{ p->ScaleToClipped(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
+	LUA_METHOD(ScaleToClipped)( T* p, lua_State *L )			{ p->ScaleToClipped(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
+	LUA_METHOD(LoadFromSong)( T* p, lua_State *L )
 	{ 
 		if( lua_isnil(L,1) ) { p->LoadFromSong(nullptr); }
 		else { Song *pS = Luna<Song>::check(L,1); p->LoadFromSong( pS ); }
 		COMMON_RETURN_SELF;
 	}
-	static int LoadFromCourse( T* p, lua_State *L )
+	LUA_METHOD(LoadFromCourse)( T* p, lua_State *L )
 	{ 
 		if( lua_isnil(L,1) ) { p->LoadFromCourse(nullptr); }
 		else { Course *pC = Luna<Course>::check(L,1); p->LoadFromCourse( pC ); }
 		COMMON_RETURN_SELF;
 	}
-	static int LoadIconFromCharacter( T* p, lua_State *L )
+	LUA_METHOD(LoadIconFromCharacter)( T* p, lua_State *L )
 	{ 
 		if( lua_isnil(L,1) ) { p->LoadIconFromCharacter(nullptr); }
 		else { Character *pC = Luna<Character>::check(L,1); p->LoadIconFromCharacter( pC ); }
 		COMMON_RETURN_SELF;
 	}
-	static int LoadCardFromCharacter( T* p, lua_State *L )
+	LUA_METHOD(LoadCardFromCharacter)( T* p, lua_State *L )
 	{ 
 		if( lua_isnil(L,1) ) { p->LoadIconFromCharacter(nullptr); }
 		else { Character *pC = Luna<Character>::check(L,1); p->LoadIconFromCharacter( pC ); }
 		COMMON_RETURN_SELF;
 	}
-	static int LoadFromSongGroup( T* p, lua_State *L )	{ p->LoadFromSongGroup( SArg(1) ); COMMON_RETURN_SELF; }
-	static int LoadRandom( T* p, lua_State *L ) { p->LoadRandom(); COMMON_RETURN_SELF; }
-	static int LoadRoulette( T* p, lua_State *L ) { p->LoadRoulette(); COMMON_RETURN_SELF; }
-	static int LoadCourseFallback( T* p, lua_State *L ) { p->LoadCourseFallback(); COMMON_RETURN_SELF; }
-	static int LoadFallback( T* p, lua_State *L ) { p->LoadFallback(); COMMON_RETURN_SELF; }
-	static int LoadFromSortOrder( T* p, lua_State *L )
+	LUA_METHOD(LoadFromSongGroup)( T* p, lua_State *L )	{ p->LoadFromSongGroup( SArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(LoadRandom)( T* p, lua_State *L ) { p->LoadRandom(); COMMON_RETURN_SELF; }
+	LUA_METHOD(LoadRoulette)( T* p, lua_State *L ) { p->LoadRoulette(); COMMON_RETURN_SELF; }
+	LUA_METHOD(LoadCourseFallback)( T* p, lua_State *L ) { p->LoadCourseFallback(); COMMON_RETURN_SELF; }
+	LUA_METHOD(LoadFallback)( T* p, lua_State *L ) { p->LoadFallback(); COMMON_RETURN_SELF; }
+	LUA_METHOD(LoadFromSortOrder)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->LoadFromSortOrder( SortOrder_Invalid ); }
 		else
@@ -309,25 +309,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int GetLatestIndex( T* p, lua_State *L ){ lua_pushnumber( L, p->GetLatestIndex() ); return 1; }
-
-	LunaFadingBanner()
-	{
-		ADD_METHOD( scaletoclipped );
-		ADD_METHOD( ScaleToClipped );
-		ADD_METHOD( LoadFromSong );
-		ADD_METHOD( LoadFromSongGroup );
-		ADD_METHOD( LoadFromCourse );
-		ADD_METHOD( LoadIconFromCharacter );
-		ADD_METHOD( LoadCardFromCharacter );
-		ADD_METHOD( LoadRandom );
-		ADD_METHOD( LoadRoulette );
-		ADD_METHOD( LoadCourseFallback );
-		ADD_METHOD( LoadFallback );
-		ADD_METHOD( LoadFromSortOrder );
-		ADD_METHOD( GetLatestIndex );
-		//ADD_METHOD( GetBanner );
-	}
+	LUA_METHOD(GetLatestIndex)( T* p, lua_State *L ){ lua_pushnumber( L, p->GetLatestIndex() ); return 1; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( FadingBanner, ActorFrame )

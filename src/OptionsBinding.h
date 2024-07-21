@@ -20,7 +20,7 @@
 		return 1; \
 	}
 #define FLOAT_INTERFACE(func_name, member, valid) \
-	static int func_name(T* p, lua_State* L) \
+	LUA_METHOD(func_name)(T* p, lua_State* L) \
 	{ \
 		int original_top= lua_gettop(L); \
 		lua_pushnumber(L, p->m_f ## member); \
@@ -42,7 +42,7 @@
 		return 2; \
 	}
 #define FLOAT_NO_SPEED_INTERFACE(func_name, member, valid) \
-	static int func_name(T* p, lua_State* L) \
+	LUA_METHOD(func_name)(T* p, lua_State* L) \
 	{ \
 		int original_top= lua_gettop(L); \
 		lua_pushnumber(L, p->m_f ## member); \
@@ -59,7 +59,7 @@
 		return 1; \
 	}
 #define INT_INTERFACE(func_name, member) \
-	static int func_name(T* p, lua_State* L) \
+	LUA_METHOD(func_name)(T* p, lua_State* L) \
 	{ \
 		int original_top= lua_gettop(L); \
 		lua_pushnumber(L, p->m_ ## member); \
@@ -73,7 +73,7 @@
 // BOOL_INTERFACE can't use OPTIONAL_RETURN_SELF because it pushes a bool.
 // If it did original_top, then "foo(true)" would chain when it shouldn't.
 #define BOOL_INTERFACE(func_name, member) \
-	static int func_name(T* p, lua_State* L) \
+	LUA_METHOD(func_name)(T* p, lua_State* L) \
 	{ \
 		int original_top= lua_gettop(L); \
 		lua_pushboolean(L, p->m_b ## member); \
@@ -89,7 +89,7 @@
 		return 1; \
 	}
 #define ENUM_INTERFACE(func_name, member, enum_name) \
-	static int func_name(T* p, lua_State* L) \
+	LUA_METHOD(func_name)(T* p, lua_State* L) \
 	{ \
 		int original_top= lua_gettop(L); \
 		Enum::Push(L, p->m_ ## member); \
@@ -102,7 +102,7 @@
 	}
 // Walk the table to make sure all entries are valid before setting.
 #define FLOAT_TABLE_INTERFACE(func_name, member, valid) \
-	static int func_name(T* p, lua_State* L) \
+	LUA_METHOD(func_name)(T* p, lua_State* L) \
 	{ \
 		int original_top= lua_gettop(L); \
 		lua_createtable(L, p->m_ ## member.size(), 0); \

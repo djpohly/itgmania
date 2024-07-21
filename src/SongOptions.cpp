@@ -220,20 +220,6 @@ public:
 	BOOL_INTERFACE(SaveReplay, SaveReplay);
 	FLOAT_INTERFACE(MusicRate, MusicRate, (v > 0.0f && v <= 3.0f)); // Greater than 3 seems to crash frequently, haven't investigated why. -Kyz
 	FLOAT_INTERFACE(Haste, Haste, (v >= -1.0f && v <= 1.0f));
-
-	LunaSongOptions()
-	{
-		ADD_METHOD(AutosyncSetting);
-		//ADD_METHOD(SoundEffectSetting);
-		ADD_METHOD(AssistClap);
-		ADD_METHOD(AssistMetronome);
-		ADD_METHOD(StaticBackground);
-		ADD_METHOD(RandomBGOnly);
-		ADD_METHOD(SaveScore);
-		ADD_METHOD(SaveReplay);
-		ADD_METHOD(MusicRate);
-		ADD_METHOD(Haste);
-	}
 };
 
 LUA_REGISTER_CLASS( SongOptions )

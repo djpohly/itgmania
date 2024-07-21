@@ -246,7 +246,7 @@ bool ScreenNameEntryTraditional::Backspace( PlayerNumber pn )
 class LunaScreenNameEntryTraditional: public Luna<ScreenNameEntryTraditional>
 {
 public:
-	static int EnterKey( T* p, lua_State *L )
+	LUA_METHOD(EnterKey)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		RString sKey = SArg(2);
@@ -255,7 +255,7 @@ public:
 		return 1;
 	}
 
-	static int Finish( T* p, lua_State *L )
+	LUA_METHOD(Finish)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		bool bRet = p->Finish( pn );
@@ -263,7 +263,7 @@ public:
 		return 1;
 	}
 
-	static int Backspace( T* p, lua_State *L )
+	LUA_METHOD(Backspace)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		bool bRet = p->Backspace( pn );
@@ -271,49 +271,37 @@ public:
 		return 1;
 	}
 
-	static int GetEnteringName( T* p, lua_State *L )
+	LUA_METHOD(GetEnteringName)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		LuaHelpers::Push( L, p->m_bEnteringName[pn] );
 		return 1;
 	}
 
-	static int GetFinalized( T* p, lua_State *L )
+	LUA_METHOD(GetFinalized)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		LuaHelpers::Push( L, p->m_bFinalized[pn] );
 		return 1;
 	}
 
-	static int GetAnyEntering( T* p, lua_State *L )
+	LUA_METHOD(GetAnyEntering)( T* p, lua_State *L )
 	{
 		LuaHelpers::Push( L, p->AnyEntering() );
 		return 1;
 	}
 
-	static int GetAnyStillEntering( T* p, lua_State *L )
+	LUA_METHOD(GetAnyStillEntering)( T* p, lua_State *L )
 	{
 		LuaHelpers::Push( L, p->AnyStillEntering() );
 		return 1;
 	}
 
-	static int GetSelection( T* p, lua_State *L )
+	LUA_METHOD(GetSelection)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		LuaHelpers::Push( L, WStringToRString(p->m_sSelection[pn]) );
 		return 1;
-	}
-
-	LunaScreenNameEntryTraditional()
-	{
-		ADD_METHOD( EnterKey );
-		ADD_METHOD( Finish );
-		ADD_METHOD( Backspace );
-		ADD_METHOD( GetEnteringName );
-		ADD_METHOD( GetAnyEntering );
-		ADD_METHOD( GetFinalized );
-		ADD_METHOD( GetAnyStillEntering );
-		ADD_METHOD( GetSelection );
 	}
 };
 

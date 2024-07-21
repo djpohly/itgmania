@@ -49,22 +49,16 @@ void GradeDisplay::SetGrade( Grade grade )
 class LunaGradeDisplay: public Luna<GradeDisplay>
 {
 public:
-	static int Load( T* p, lua_State *L )
+	LUA_METHOD(Load)( T* p, lua_State *L )
 	{
 		p->Load( SArg(1) );
 		COMMON_RETURN_SELF;
 	}
-	static int SetGrade( T* p, lua_State *L )
+	LUA_METHOD(SetGrade)( T* p, lua_State *L )
 	{
 		Grade g = Enum::Check<Grade>(L, 1);
 		p->SetGrade( g );
 		COMMON_RETURN_SELF;
-	}
-
-	LunaGradeDisplay()
-	{
-		ADD_METHOD( Load );
-		ADD_METHOD( SetGrade );
 	}
 };
 

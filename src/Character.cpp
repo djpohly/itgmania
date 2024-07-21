@@ -213,33 +213,17 @@ void Character::UndemandGraphics()
 class LunaCharacter: public Luna<Character>
 {
 public:
-	static int GetCardPath( T* p, lua_State *L )			{ lua_pushstring(L, p->GetCardPath() ); return 1; }
-	static int GetIconPath( T* p, lua_State *L )			{ lua_pushstring(L, p->GetIconPath() ); return 1; }
-	static int GetSongSelectIconPath( T* p, lua_State *L )	{ lua_pushstring(L, p->GetSongSelectIconPath() ); return 1; }
-	static int GetStageIconPath( T* p, lua_State *L )		{ lua_pushstring(L, p->GetStageIconPath() ); return 1; }
-	static int GetModelPath( T* p, lua_State *L )			{ lua_pushstring(L, p->GetModelPath() ); return 1; }
-	static int GetRestAnimationPath( T* p, lua_State *L )			{ lua_pushstring(L, p->GetRestAnimationPath() ); return 1; }
-	static int GetWarmUpAnimationPath( T* p, lua_State *L )			{ lua_pushstring(L, p->GetWarmUpAnimationPath() ); return 1; }
-	static int GetDanceAnimationPath( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDanceAnimationPath() ); return 1; }
-	static int GetCharacterDir( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharDir ); return 1; }
-	static int GetCharacterID( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharacterID ); return 1; }
-	static int GetDisplayName( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDisplayName() ); return 1; }
-
-	LunaCharacter()
-	{
-		ADD_METHOD( GetCardPath );
-		ADD_METHOD( GetIconPath );
-		ADD_METHOD( GetSongSelectIconPath );
-		ADD_METHOD( GetStageIconPath );
-		// sm-ssc adds:
-		ADD_METHOD( GetModelPath );
-		ADD_METHOD( GetRestAnimationPath );
-		ADD_METHOD( GetWarmUpAnimationPath );
-		ADD_METHOD( GetDanceAnimationPath );
-		ADD_METHOD( GetCharacterDir );
-		ADD_METHOD( GetCharacterID );
-		ADD_METHOD( GetDisplayName );
-	}
+	LUA_METHOD(GetCardPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetCardPath() ); return 1; }
+	LUA_METHOD(GetIconPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetIconPath() ); return 1; }
+	LUA_METHOD(GetSongSelectIconPath)( T* p, lua_State *L )	{ lua_pushstring(L, p->GetSongSelectIconPath() ); return 1; }
+	LUA_METHOD(GetStageIconPath)( T* p, lua_State *L )		{ lua_pushstring(L, p->GetStageIconPath() ); return 1; }
+	LUA_METHOD(GetModelPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetModelPath() ); return 1; }
+	LUA_METHOD(GetRestAnimationPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetRestAnimationPath() ); return 1; }
+	LUA_METHOD(GetWarmUpAnimationPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetWarmUpAnimationPath() ); return 1; }
+	LUA_METHOD(GetDanceAnimationPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDanceAnimationPath() ); return 1; }
+	LUA_METHOD(GetCharacterDir)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharDir ); return 1; }
+	LUA_METHOD(GetCharacterID)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharacterID ); return 1; }
+	LUA_METHOD(GetDisplayName)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDisplayName() ); return 1; }
 };
 
 LUA_REGISTER_CLASS( Character )

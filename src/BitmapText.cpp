@@ -1012,20 +1012,20 @@ void BitmapText::Attribute::FromStack( lua_State *L, int iPos )
 class LunaBitmapText: public Luna<BitmapText>
 {
 public:
-	static int wrapwidthpixels( T* p, lua_State *L )	{ p->SetWrapWidthPixels( IArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(wrapwidthpixels)( T* p, lua_State *L )	{ p->SetWrapWidthPixels( IArg(1) ); COMMON_RETURN_SELF; }
 #define MAX_DIMENSION(maxdimension, SetMaxDimension) \
-	static int maxdimension( T* p, lua_State *L ) \
+	LUA_METHOD(maxdimension)( T* p, lua_State *L ) \
 	{ p->SetMaxDimension(FArg(1)); COMMON_RETURN_SELF; }
 	MAX_DIMENSION(maxwidth, SetMaxWidth);
 	MAX_DIMENSION(maxheight, SetMaxHeight);
 #undef MAX_DIMENSION
-	static int max_dimension_use_zoom(T* p, lua_State* L)
+	LUA_METHOD(max_dimension_use_zoom)(T* p, lua_State* L)
 	{
 		p->SetMaxDimUseZoom(lua_toboolean(L, 1));
 		COMMON_RETURN_SELF;
 	}
-	static int vertspacing( T* p, lua_State *L )		{ p->SetVertSpacing( IArg(1) ); COMMON_RETURN_SELF; }
-	static int settext( T* p, lua_State *L )
+	LUA_METHOD(vertspacing)( T* p, lua_State *L )		{ p->SetVertSpacing( IArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(settext)( T* p, lua_State *L )
 	{
 		RString s = SArg(1);
 		RString sAlt;
@@ -1047,13 +1047,13 @@ public:
 		p->SetText( s, sAlt );
 		COMMON_RETURN_SELF;
 	}
-	static int rainbowscroll( T* p, lua_State *L )		{ p->SetRainbowScroll( BArg(1) ); COMMON_RETURN_SELF; }
-	static int jitter( T* p, lua_State *L )			{ p->SetJitter( BArg(1) ); COMMON_RETURN_SELF; }
-	static int distort( T* p, lua_State *L) { p->SetDistortion( FArg(1) ); COMMON_RETURN_SELF; }
-	static int undistort( T* p, lua_State *L) { p->UnSetDistortion(); COMMON_RETURN_SELF; }
+	LUA_METHOD(rainbowscroll)( T* p, lua_State *L )		{ p->SetRainbowScroll( BArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(jitter)( T* p, lua_State *L )			{ p->SetJitter( BArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(distort)( T* p, lua_State *L) { p->SetDistortion( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(undistort)( T* p, lua_State *L) { p->UnSetDistortion(); COMMON_RETURN_SELF; }
 	GETTER_SETTER_BOOL_METHOD(mult_attrs_with_diffuse);
-	static int GetText( T* p, lua_State *L )		{ lua_pushstring( L, p->GetText() ); return 1; }
-	static int AddAttribute( T* p, lua_State *L )
+	LUA_METHOD(GetText)( T* p, lua_State *L )		{ lua_pushstring( L, p->GetText() ); return 1; }
+	LUA_METHOD(AddAttribute)( T* p, lua_State *L )
 	{
 		std::size_t iPos = IArg(1);
 		BitmapText::Attribute attr = p->GetDefaultAttribute();
@@ -1062,35 +1062,11 @@ public:
 		p->AddAttribute( iPos, attr );
 		COMMON_RETURN_SELF;
 	}
-	static int ClearAttributes( T* p, lua_State *L )	{ p->ClearAttributes(); COMMON_RETURN_SELF; }
-	static int strokecolor( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetStrokeColor( c ); COMMON_RETURN_SELF; }
-	DEFINE_METHOD(getstrokecolor, GetStrokeColor());
-	static int uppercase( T* p, lua_State *L )		{ p->SetUppercase( BArg(1) ); COMMON_RETURN_SELF; }
-	static int textglowmode( T* p, lua_State *L )	{ p->SetTextGlowMode( Enum::Check<TextGlowMode>(L, 1) ); COMMON_RETURN_SELF; }
-
-	LunaBitmapText()
-	{
-		ADD_METHOD( wrapwidthpixels );
-		ADD_METHOD( maxwidth );
-		ADD_METHOD( maxheight );
-		ADD_METHOD( max_dimension_use_zoom );
-		ADD_METHOD( vertspacing );
-		ADD_METHOD( settext );
-		ADD_METHOD( rainbowscroll );
-		ADD_METHOD( jitter );
-		ADD_METHOD( distort );
-		ADD_METHOD( undistort );
-		ADD_GET_SET_METHODS(mult_attrs_with_diffuse);
-		ADD_METHOD( GetText );
-		ADD_METHOD( AddAttribute );
-		ADD_METHOD( ClearAttributes );
-		ADD_METHOD( strokecolor );
-		ADD_METHOD( getstrokecolor );
-		ADD_METHOD( uppercase );
-		ADD_METHOD( textglowmode );
-		//ADD_METHOD( LoadFromFont );
-		//ADD_METHOD( LoadFromTextureAndChars );
-	}
+	LUA_METHOD(ClearAttributes)( T* p, lua_State *L )	{ p->ClearAttributes(); COMMON_RETURN_SELF; }
+	LUA_METHOD(strokecolor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetStrokeColor( c ); COMMON_RETURN_SELF; }
+	LUA_DEFINE_METHOD(getstrokecolor, GetStrokeColor());
+	LUA_METHOD(uppercase)( T* p, lua_State *L )		{ p->SetUppercase( BArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(textglowmode)( T* p, lua_State *L )	{ p->SetTextGlowMode( Enum::Check<TextGlowMode>(L, 1) ); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( BitmapText, Actor )

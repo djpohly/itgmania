@@ -145,11 +145,11 @@ RString Style::ColToButtonName( int iCol ) const
 class LunaStyle: public Luna<Style>
 {
 public:
-	static int GetName( T* p, lua_State *L )		{ LuaHelpers::Push( L, (RString) p->m_szName ); return 1; }
-	DEFINE_METHOD( GetStyleType,		m_StyleType )
-	DEFINE_METHOD( GetStepsType,		m_StepsType )
-	DEFINE_METHOD( ColumnsPerPlayer,	m_iColsPerPlayer )
-	static int NeedsZoomOutWith2Players(T* p, lua_State *L)
+	LUA_METHOD(GetName)( T* p, lua_State *L )		{ LuaHelpers::Push( L, (RString) p->m_szName ); return 1; }
+	LUA_DEFINE_METHOD( GetStyleType,		m_StyleType )
+	LUA_DEFINE_METHOD( GetStepsType,		m_StepsType )
+	LUA_DEFINE_METHOD( ColumnsPerPlayer,	m_iColsPerPlayer )
+	LUA_METHOD(NeedsZoomOutWith2Players)(T* p, lua_State *L)
 	{
 		// m_bNeedsZoomOutWith2Players was removed in favor of having
 		// ScreenGameplay use the style's width and margin values to calculate
@@ -157,15 +157,15 @@ public:
 		lua_pushboolean(L, false);
 		return 1;
 	}
-	static int GetWidth(T* p, lua_State* L)
+	LUA_METHOD(GetWidth)(T* p, lua_State* L)
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		lua_pushnumber(L, p->GetWidth(pn));
 		return 1;
 	}
-	DEFINE_METHOD( LockedDifficulty,	m_bLockDifficulties )
+	LUA_DEFINE_METHOD( LockedDifficulty,	m_bLockDifficulties )
 
-	static int GetColumnInfo( T* p, lua_State *L )
+	LUA_METHOD(GetColumnInfo)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		int iCol = IArg(2) - 1;
@@ -187,7 +187,7 @@ public:
 		return 1;
 	}
 
-	static int GetColumnDrawOrder( T* p, lua_State *L )
+	LUA_METHOD(GetColumnDrawOrder)( T* p, lua_State *L )
 	{
 		int iCol = IArg(1) - 1;
 		if( iCol < 0 || iCol >= p->m_iColsPerPlayer*NUM_PLAYERS )
@@ -197,19 +197,6 @@ public:
 		}
 		lua_pushnumber( L, p->m_iColumnDrawOrder[iCol]+1 );
 		return 1;
-	}
-
-	LunaStyle()
-	{
-		ADD_METHOD( GetName );
-		ADD_METHOD( GetStyleType );
-		ADD_METHOD( GetStepsType );
-		ADD_METHOD( GetColumnInfo );
-		ADD_METHOD( GetColumnDrawOrder );
-		ADD_METHOD( ColumnsPerPlayer );
-		ADD_METHOD( NeedsZoomOutWith2Players );
-		ADD_METHOD( GetWidth );
-		ADD_METHOD( LockedDifficulty );
 	}
 };
 

@@ -1343,15 +1343,15 @@ void TimingSegmentSetToLuaTable(TimingData* td, TimingSegmentType tst, lua_State
 class LunaTimingData: public Luna<TimingData>
 {
 public:
-	static int HasStops( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasStops()); return 1; }
-	static int HasDelays( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasDelays()); return 1; }
-	static int HasBPMChanges( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasBpmChanges()); return 1; }
-	static int HasWarps( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasWarps()); return 1; }
-	static int HasFakes( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasFakes()); return 1; }
-	static int HasSpeedChanges( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasSpeedChanges()); return 1; }
-	static int HasScrollChanges( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasScrollChanges()); return 1; }
+	LUA_METHOD(HasStops)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasStops()); return 1; }
+	LUA_METHOD(HasDelays)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasDelays()); return 1; }
+	LUA_METHOD(HasBPMChanges)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasBpmChanges()); return 1; }
+	LUA_METHOD(HasWarps)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasWarps()); return 1; }
+	LUA_METHOD(HasFakes)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasFakes()); return 1; }
+	LUA_METHOD(HasSpeedChanges)( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasSpeedChanges()); return 1; }
+	LUA_METHOD(HasScrollChanges)( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasScrollChanges()); return 1; }
 #define GET_FUNCTION(get_name, segment_name) \
-	static int get_name(T* p, lua_State* L) \
+	LUA_METHOD(get_name)(T* p, lua_State* L) \
 	{ \
 		if(lua_toboolean(L, 1)) \
 		{ \
@@ -1376,7 +1376,7 @@ public:
 	GET_FUNCTION(GetLabels, SEGMENT_LABEL);
 	GET_FUNCTION(GetBPMsAndTimes, SEGMENT_BPM);
 #undef GET_FUNCTION
-	static int GetBPMs( T* p, lua_State *L )
+	LUA_METHOD(GetBPMs)( T* p, lua_State *L )
 	{
 		std::vector<float> vBPMs;
 		const std::vector<TimingSegment*> &bpms = p->GetTimingSegments(SEGMENT_BPM);
@@ -1387,7 +1387,7 @@ public:
 		LuaHelpers::CreateTableFromArray(vBPMs, L);
 		return 1;
 	}
-	static int GetActualBPM( T* p, lua_State *L )
+	LUA_METHOD(GetActualBPM)( T* p, lua_State *L )
 	{
 		// certainly there's a better way to do it than this? -aj
 		float fMinBPM, fMaxBPM;
@@ -1398,40 +1398,11 @@ public:
 		LuaHelpers::CreateTableFromArray(fBPMs, L);
 		return 1;
 	}
-	static int HasNegativeBPMs( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasWarps()); return 1; }
+	LUA_METHOD(HasNegativeBPMs)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasWarps()); return 1; }
 	// formerly in Song.cpp in sm-ssc private beta 1.x:
-	static int GetBPMAtBeat( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetBPMAtBeat(FArg(1))); return 1; }
-	static int GetBeatFromElapsedTime( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetBeatFromElapsedTime(FArg(1))); return 1; }
-	static int GetElapsedTimeFromBeat( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetElapsedTimeFromBeat(FArg(1))); return 1; }
-
-	LunaTimingData()
-	{
-		ADD_METHOD( HasStops );
-		ADD_METHOD( HasDelays );
-		ADD_METHOD( HasBPMChanges );
-		ADD_METHOD( HasWarps );
-		ADD_METHOD( HasFakes );
-		ADD_METHOD( HasSpeedChanges );
-		ADD_METHOD( HasScrollChanges );
-		ADD_METHOD( GetStops );
-		ADD_METHOD( GetDelays );
-		ADD_METHOD( GetBPMs );
-		ADD_METHOD( GetWarps );
-		ADD_METHOD( GetFakes );
-		ADD_METHOD( GetTimeSignatures );
-		ADD_METHOD( GetTickcounts );
-		ADD_METHOD( GetSpeeds );
-		ADD_METHOD( GetScrolls );
-		ADD_METHOD( GetCombos );
-		ADD_METHOD( GetLabels );
-		ADD_METHOD( GetBPMsAndTimes );
-		ADD_METHOD( GetActualBPM );
-		ADD_METHOD( HasNegativeBPMs );
-		// formerly in Song.cpp in sm-ssc private beta 1.x:
-		ADD_METHOD( GetBPMAtBeat );
-		ADD_METHOD( GetBeatFromElapsedTime );
-		ADD_METHOD( GetElapsedTimeFromBeat );
-	}
+	LUA_METHOD(GetBPMAtBeat)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetBPMAtBeat(FArg(1))); return 1; }
+	LUA_METHOD(GetBeatFromElapsedTime)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetBeatFromElapsedTime(FArg(1))); return 1; }
+	LUA_METHOD(GetElapsedTimeFromBeat)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetElapsedTimeFromBeat(FArg(1))); return 1; }
 };
 
 LUA_REGISTER_CLASS( TimingData )

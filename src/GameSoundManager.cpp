@@ -831,14 +831,14 @@ float GameSoundManager::GetPlayerBalance( PlayerNumber pn )
 class LunaGameSoundManager: public Luna<GameSoundManager>
 {
 public:
-	static int DimMusic( T* p, lua_State *L )
+	LUA_METHOD(DimMusic)( T* p, lua_State *L )
 	{
 		float fVolume = FArg(1);
 		float fDurationSeconds = FArg(2);
 		p->DimMusic( fVolume, fDurationSeconds );
 		COMMON_RETURN_SELF;
 	}
-	static int PlayOnce( T* p, lua_State *L )
+	LUA_METHOD(PlayOnce)( T* p, lua_State *L )
 	{
 		RString sPath = SArg(1);
 		if(lua_toboolean(L, 2) && PREFSMAN->m_MuteActions)
@@ -848,19 +848,19 @@ public:
 		p->PlayOnce( sPath );
 		COMMON_RETURN_SELF;
 	}
-	static int PlayAnnouncer( T* p, lua_State *L )
+	LUA_METHOD(PlayAnnouncer)( T* p, lua_State *L )
 	{
 		RString sPath = SArg(1);
 		p->PlayOnceFromAnnouncer( sPath );
 		COMMON_RETURN_SELF;
 	}
-	static int GetPlayerBalance( T* p, lua_State *L )
+	LUA_METHOD(GetPlayerBalance)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		lua_pushnumber( L, p->GetPlayerBalance(pn) );
 		return 1;
 	}
-	static int PlayMusicPart( T* p, lua_State *L )
+	LUA_METHOD(PlayMusicPart)( T* p, lua_State *L )
 	{
 		RString musicPath = SArg(1);
 		float musicStart = FArg(2);
@@ -895,19 +895,8 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int StopMusic( T* p, lua_State *L )			{ p->StopMusic(); COMMON_RETURN_SELF; }
-	static int IsTimingDelayed( T* p, lua_State *L )	{ lua_pushboolean( L, g_Playing->m_bTimingDelayed ); return 1; }
-
-	LunaGameSoundManager()
-	{
-		ADD_METHOD( DimMusic );
-		ADD_METHOD( PlayOnce );
-		ADD_METHOD( PlayAnnouncer );
-		ADD_METHOD( GetPlayerBalance );
-		ADD_METHOD( PlayMusicPart );
-		ADD_METHOD( StopMusic );
-		ADD_METHOD( IsTimingDelayed );
-	}
+	LUA_METHOD(StopMusic)( T* p, lua_State *L )			{ p->StopMusic(); COMMON_RETURN_SELF; }
+	LUA_METHOD(IsTimingDelayed)( T* p, lua_State *L )	{ lua_pushboolean( L, g_Playing->m_bTimingDelayed ); return 1; }
 };
 
 LUA_REGISTER_CLASS(GameSoundManager);

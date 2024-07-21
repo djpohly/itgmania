@@ -809,13 +809,13 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		}
 		return i;
 	}
-	static int solve(T* p, lua_State* L)
+	LUA_METHOD(solve)(T* p, lua_State* L)
 	{
 		p->solve();
 		COMMON_RETURN_SELF;
 	}
 #define LCSN_EVAL_SOMETHING(something) \
-	static int something(T* p, lua_State* L) \
+	LUA_METHOD(something)(T* p, lua_State* L) \
 	{ \
 		std::vector<float> pos; \
 		p->something(FArg(1), pos); \
@@ -861,7 +861,7 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		get_element_table_from_stack(p, L, s, p->dimension(), pos);
 		p->set_point(i, pos);
 	}
-	static int set_point(T* p, lua_State* L)
+	LUA_METHOD(set_point)(T* p, lua_State* L)
 	{
 		std::size_t i= point_index(p, L, 1);
 		set_point_from_stack(p, L, i, 2);
@@ -879,13 +879,13 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		std::vector<float> d; get_element_table_from_stack(p, L, s+2, limit, d);
 		p->set_coefficients(i, b, c, d);
 	}
-	static int set_coefficients(T* p, lua_State* L)
+	LUA_METHOD(set_coefficients)(T* p, lua_State* L)
 	{
 		std::size_t i= point_index(p, L, 1);
 		set_coefficients_from_stack(p, L, i, 2);
 		COMMON_RETURN_SELF;
 	}
-	static int get_coefficients(T* p, lua_State* L)
+	LUA_METHOD(get_coefficients)(T* p, lua_State* L)
 	{
 		std::size_t i= point_index(p, L, 1);
 		std::size_t limit= p->dimension();
@@ -907,24 +907,24 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		}
 		return 1;
 	}
-	static int set_spatial_extent(T* p, lua_State* L)
+	LUA_METHOD(set_spatial_extent)(T* p, lua_State* L)
 	{
 		std::size_t i= dimension_index(p, L, 1);
 		p->set_spatial_extent(i, FArg(2));
 		COMMON_RETURN_SELF;
 	}
-	static int get_spatial_extent(T* p, lua_State* L)
+	LUA_METHOD(get_spatial_extent)(T* p, lua_State* L)
 	{
 		std::size_t i= dimension_index(p, L, 1);
 		lua_pushnumber(L, p->get_spatial_extent(i));
 		return 1;
 	}
-	static int get_max_t(T* p, lua_State* L)
+	LUA_METHOD(get_max_t)(T* p, lua_State* L)
 	{
 		lua_pushnumber(L, p->get_max_t());
 		return 1;
 	}
-	static int set_size(T* p, lua_State* L)
+	LUA_METHOD(set_size)(T* p, lua_State* L)
 	{
 		int siz= IArg(1);
 		if(siz < 0)
@@ -934,12 +934,12 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		p->resize(static_cast<std::size_t>(siz));
 		COMMON_RETURN_SELF;
 	}
-	static int get_size(T* p, lua_State* L)
+	LUA_METHOD(get_size)(T* p, lua_State* L)
 	{
 		lua_pushnumber(L, p->size());
 		return 1;
 	}
-	static int set_dimension(T* p, lua_State* L)
+	LUA_METHOD(set_dimension)(T* p, lua_State* L)
 	{
 		if(p->m_owned_by_actor)
 		{
@@ -954,32 +954,20 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		p->redimension(static_cast<std::size_t>(dim));
 		COMMON_RETURN_SELF;
 	}
-	static int get_dimension(T* p, lua_State* L)
+	LUA_METHOD(get_dimension)(T* p, lua_State* L)
 	{
 		lua_pushnumber(L, p->dimension());
 		return 1;
 	}
-	static int empty(T* p, lua_State* L)
+	LUA_METHOD(empty)(T* p, lua_State* L)
 	{
 		lua_pushboolean(L, p->empty());
 		return 1;
 	}
-#define SET_GET_LUA(name) \
-	static int set_##name(T* p, lua_State* L) \
-	{ \
-		p->set_##name(lua_toboolean(L, 1)); \
-		COMMON_RETURN_SELF; \
-	} \
-	static int get_##name(T* p, lua_State* L) \
-	{ \
-		lua_pushboolean(L, p->get_##name()); \
-		return 1; \
-	}
-	SET_GET_LUA(loop);
-	SET_GET_LUA(polygonal);
-	SET_GET_LUA(dirty);
-#undef SET_GET_LUA
-	static int destroy(T* p, lua_State* L)
+	GETTER_SETTER_BOOL_METHOD(loop);
+	GETTER_SETTER_BOOL_METHOD(polygonal);
+	GETTER_SETTER_BOOL_METHOD(dirty);
+	LUA_METHOD(destroy)(T* p, lua_State* L)
 	{
 		if(p->m_owned_by_actor)
 		{
@@ -988,32 +976,6 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		}
 		SAFE_DELETE(p);
 		return 0;
-	}
-	LunaCubicSplineN()
-	{
-		ADD_METHOD(solve);
-		ADD_METHOD(evaluate);
-		ADD_METHOD(evaluate_derivative);
-		ADD_METHOD(evaluate_second_derivative);
-		ADD_METHOD(evaluate_third_derivative);
-		ADD_METHOD(set_point);
-		ADD_METHOD(set_coefficients);
-		ADD_METHOD(get_coefficients);
-		ADD_METHOD(set_spatial_extent);
-		ADD_METHOD(get_spatial_extent);
-		ADD_METHOD(get_max_t);
-		ADD_METHOD(set_size);
-		ADD_METHOD(get_size);
-		ADD_METHOD(set_dimension);
-		ADD_METHOD(get_dimension);
-		ADD_METHOD(empty);
-		ADD_METHOD(set_loop);
-		ADD_METHOD(get_loop);
-		ADD_METHOD(set_polygonal);
-		ADD_METHOD(get_polygonal);
-		ADD_METHOD(set_dirty);
-		ADD_METHOD(get_dirty);
-		ADD_METHOD(destroy);
 	}
 };
 LUA_REGISTER_CLASS(CubicSplineN);

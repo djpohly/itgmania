@@ -1362,10 +1362,10 @@ void ScreenOptions::SetOptionRowFromName( const RString& nombre )
 class LunaScreenOptions: public Luna<ScreenOptions>
 {
 public:
-	static int AllAreOnLastRow( T* p, lua_State *L ) { lua_pushboolean( L, p->AllAreOnLastRow() ); return 1; }
-	static int FocusedItemEndsScreen( T* p, lua_State *L ) { lua_pushboolean( L, p->FocusedItemEndsScreen(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	static int GetCurrentRowIndex( T* p, lua_State *L ) { lua_pushnumber( L, p->GetCurrentRow(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	static int GetOptionRow( T* p, lua_State *L ) {
+	LUA_METHOD(AllAreOnLastRow)( T* p, lua_State *L ) { lua_pushboolean( L, p->AllAreOnLastRow() ); return 1; }
+	LUA_METHOD(FocusedItemEndsScreen)( T* p, lua_State *L ) { lua_pushboolean( L, p->FocusedItemEndsScreen(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
+	LUA_METHOD(GetCurrentRowIndex)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetCurrentRow(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
+	LUA_METHOD(GetOptionRow)( T* p, lua_State *L ) {
 		int row_index= IArg(1);
 		// TODO:  Change row indices to be 1-indexed when breaking compatibility
 		// is allowed. -Kyz
@@ -1380,18 +1380,8 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	DEFINE_METHOD(GetNumRows, GetNumRows());
-   //static int SetOptionRowFromName( T* p, lua_State *L ) { p->SetOptionRowFromName( SArg(1) ); return 0; }
-
-	LunaScreenOptions()
-	{
-		ADD_METHOD( AllAreOnLastRow );
-		ADD_METHOD( FocusedItemEndsScreen );
-		ADD_METHOD( GetCurrentRowIndex );
-		ADD_METHOD( GetOptionRow );
-		ADD_METHOD( GetNumRows );
-        //ADD_METHOD( SetOptionRowFromName );
-	}
+	LUA_DEFINE_METHOD(GetNumRows, GetNumRows());
+	//LUA_METHOD(SetOptionRowFromName)( T* p, lua_State *L ) { p->SetOptionRowFromName( SArg(1) ); return 0; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenOptions, ScreenWithMenuElements )

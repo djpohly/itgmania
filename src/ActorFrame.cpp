@@ -599,9 +599,9 @@ void ActorFrame::SetDrawByZPosition( bool b )
 class LunaActorFrame : public Luna<ActorFrame>
 {
 public:
-	static int playcommandonchildren( T* p, lua_State *L )		{ p->PlayCommandOnChildren(SArg(1)); COMMON_RETURN_SELF; }
-	static int playcommandonleaves( T* p, lua_State *L )		{ p->PlayCommandOnLeaves(SArg(1)); COMMON_RETURN_SELF; }
-	static int runcommandsonleaves( T* p, lua_State *L )
+	LUA_METHOD(playcommandonchildren)( T* p, lua_State *L )		{ p->PlayCommandOnChildren(SArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(playcommandonleaves)( T* p, lua_State *L )		{ p->PlayCommandOnLeaves(SArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(runcommandsonleaves)( T* p, lua_State *L )
 	{
 		luaL_checktype( L, 1, LUA_TFUNCTION );
 		LuaReference cmds;
@@ -610,7 +610,7 @@ public:
 		p->RunCommandsOnLeaves( cmds );
 		COMMON_RETURN_SELF;
 	}
-	static int RunCommandsOnChildren( T* p, lua_State *L )
+	LUA_METHOD(RunCommandsOnChildren)( T* p, lua_State *L )
 	{
 		luaL_checktype( L, 1, LUA_TFUNCTION );
 		lua_pushvalue( L, 2 );
@@ -624,9 +624,9 @@ public:
 		p->RunCommandsOnChildren( cmds, &ParamTable );
 		COMMON_RETURN_SELF;
 	}
-	static int propagate( T* p, lua_State *L )			{ p->SetPropagateCommands( BIArg(1) ); COMMON_RETURN_SELF; }
-	static int fov( T* p, lua_State *L )				{ p->SetFOV( FArg(1) ); COMMON_RETURN_SELF; }
-	static int SetUpdateRate( T* p, lua_State *L )
+	LUA_METHOD(propagate)( T* p, lua_State *L )			{ p->SetPropagateCommands( BIArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(fov)( T* p, lua_State *L )				{ p->SetFOV( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetUpdateRate)( T* p, lua_State *L )
 	{
 		float rate= FArg(1);
 		if(rate <= 0)
@@ -636,22 +636,22 @@ public:
 		p->SetUpdateRate(rate);
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(GetUpdateRate, GetUpdateRate());
-	static int SetFOV( T* p, lua_State *L )				{ p->SetFOV( FArg(1) ); COMMON_RETURN_SELF; }
-	static int vanishpoint( T* p, lua_State *L )			{ p->SetVanishPoint( FArg(1), FArg(2) ); COMMON_RETURN_SELF; }
-	static int GetChild( T* p, lua_State *L )
+	LUA_DEFINE_METHOD(GetUpdateRate, GetUpdateRate());
+	LUA_METHOD(SetFOV)( T* p, lua_State *L )				{ p->SetFOV( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(vanishpoint)( T* p, lua_State *L )			{ p->SetVanishPoint( FArg(1), FArg(2) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetChild)( T* p, lua_State *L )
 	{
 		p->PushChildTable(L, SArg(1));
 		return 1;
 	}
-	static int GetChildren( T* p, lua_State *L )
+	LUA_METHOD(GetChildren)( T* p, lua_State *L )
 	{
 		p->PushChildrenTable( L );
 		return 1;
 	}
-	static int GetNumChildren( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumChildren() ); return 1; }
-	static int SetDrawByZPosition( T* p, lua_State *L )	{ p->SetDrawByZPosition( BArg(1) ); COMMON_RETURN_SELF; }
-	static int SetDrawFunction( T* p, lua_State *L )
+	LUA_METHOD(GetNumChildren)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumChildren() ); return 1; }
+	LUA_METHOD(SetDrawByZPosition)( T* p, lua_State *L )	{ p->SetDrawByZPosition( BArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetDrawFunction)( T* p, lua_State *L )
 	{
 		if(lua_isnil(L,1))
 		{
@@ -670,12 +670,12 @@ public:
 		p->SetDrawFunction( ref );
 		COMMON_RETURN_SELF;
 	}
-	static int GetDrawFunction( T* p, lua_State *L )
+	LUA_METHOD(GetDrawFunction)( T* p, lua_State *L )
 	{
 		p->GetDrawFunction().PushSelf(L);
 		return 1;
 	}
-	static int SetUpdateFunction( T* p, lua_State *L )
+	LUA_METHOD(SetUpdateFunction)( T* p, lua_State *L )
 	{
 		if(lua_isnil(L,1))
 		{
@@ -694,13 +694,13 @@ public:
 		p->SetUpdateFunction( ref );
 		COMMON_RETURN_SELF;
 	}
-	static int SortByDrawOrder( T* p, lua_State *L )		{ p->SortByDrawOrder(); COMMON_RETURN_SELF; }
+	LUA_METHOD(SortByDrawOrder)( T* p, lua_State *L )		{ p->SortByDrawOrder(); COMMON_RETURN_SELF; }
 
-	//static int CustomLighting( T* p, lua_State *L )			{ p->SetCustomLighting(BArg(1)); COMMON_RETURN_SELF; }
-	static int SetAmbientLightColor( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetAmbientLightColor( c ); COMMON_RETURN_SELF; }
-	static int SetDiffuseLightColor( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseLightColor( c ); COMMON_RETURN_SELF; }
-	static int SetSpecularLightColor( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetSpecularLightColor( c ); COMMON_RETURN_SELF; }
-	static int SetLightDirection( T* p, lua_State *L )
+	//LUA_METHOD(CustomLighting)( T* p, lua_State *L )			{ p->SetCustomLighting(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetAmbientLightColor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetAmbientLightColor( c ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetDiffuseLightColor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseLightColor( c ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetSpecularLightColor)( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetSpecularLightColor( c ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetLightDirection)( T* p, lua_State *L )
 	{
 		luaL_checktype( L, 1, LUA_TTABLE );
 		lua_pushvalue( L, 1 );
@@ -716,7 +716,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int AddChildFromPath( T* p, lua_State *L )
+	LUA_METHOD(AddChildFromPath)( T* p, lua_State *L )
 	{
 		// this one is tricky, we need to get an Actor from Lua.
 		Actor *pActor = ActorUtil::MakeActor( SArg(1) );
@@ -730,7 +730,7 @@ public:
 		return 1;
 	}
 
-	static int RemoveChild( T* p, lua_State *L )
+	LUA_METHOD(RemoveChild)( T* p, lua_State *L )
 	{
 		Actor *child = p->GetChild(SArg(1));
 		if(child)
@@ -740,39 +740,8 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int RemoveAllChildren( T* p, lua_State *L )
+	LUA_METHOD(RemoveAllChildren)( T* p, lua_State *L )
 	{ p->DeleteAllChildren(); COMMON_RETURN_SELF; }
-
-	LunaActorFrame()
-	{
-		ADD_METHOD( playcommandonchildren );
-		ADD_METHOD( playcommandonleaves );
-		ADD_METHOD( runcommandsonleaves );
-		ADD_METHOD( RunCommandsOnChildren );
-		ADD_METHOD( propagate ); // deprecated
-		ADD_METHOD( fov );
-		ADD_METHOD( SetUpdateRate );
-		ADD_METHOD( GetUpdateRate );
-		ADD_METHOD( SetFOV );
-		ADD_METHOD( vanishpoint );
-		ADD_METHOD( GetChild );
-		ADD_METHOD( GetChildren );
-		ADD_METHOD( GetNumChildren );
-		ADD_METHOD( SetDrawByZPosition );
-		ADD_METHOD( SetDrawFunction );
-		ADD_METHOD( GetDrawFunction );
-		ADD_METHOD( SetUpdateFunction );
-		ADD_METHOD( SortByDrawOrder );
-		//ADD_METHOD( CustomLighting );
-		ADD_METHOD( SetAmbientLightColor );
-		ADD_METHOD( SetDiffuseLightColor );
-		ADD_METHOD( SetSpecularLightColor );
-		ADD_METHOD( SetLightDirection );
-		ADD_METHOD( AddChildFromPath );
-		ADD_METHOD( RemoveChild );
-		ADD_METHOD( RemoveAllChildren );
-
-	}
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorFrame, Actor )

@@ -392,12 +392,7 @@ void StepsDisplayList::HandleMessage( const Message &msg )
 class LunaStepsDisplayList: public Luna<StepsDisplayList>
 {
 public:
-	static int setfromgamestate( T* p, lua_State *L )		{ p->SetFromGameState(); COMMON_RETURN_SELF; }
-
-	LunaStepsDisplayList()
-	{
-		ADD_METHOD( setfromgamestate );
-	}
+	LUA_METHOD(setfromgamestate)( T* p, lua_State *L )		{ p->SetFromGameState(); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( StepsDisplayList, ActorFrame )

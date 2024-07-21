@@ -339,12 +339,7 @@ void PaneDisplay::SetFromGameState()
 class LunaPaneDisplay: public Luna<PaneDisplay>
 {
 public:
-	static int SetFromGameState( T* p, lua_State *L )	{ p->SetFromGameState(); COMMON_RETURN_SELF; }
-
-	LunaPaneDisplay()
-	{
-		ADD_METHOD( SetFromGameState );
-	}
+	LUA_METHOD(SetFromGameState)( T* p, lua_State *L )	{ p->SetFromGameState(); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( PaneDisplay, ActorFrame )

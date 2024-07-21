@@ -207,18 +207,10 @@ float HoldNoteResult::GetLastHeldBeat() const
 class LunaTapNoteResult: public Luna<TapNoteResult>
 {
 public:
-	DEFINE_METHOD(GetTapNoteScore, tns);
-	DEFINE_METHOD(GetTapNoteOffset, fTapNoteOffset);
-	DEFINE_METHOD(GetHidden, bHidden);
-	DEFINE_METHOD(GetHeld, bHeld);
-
-	LunaTapNoteResult()
-	{
-		ADD_METHOD( GetTapNoteScore );
-		ADD_METHOD( GetTapNoteOffset );
-		ADD_METHOD( GetHidden );
-		ADD_METHOD( GetHeld );
-	}
+	LUA_DEFINE_METHOD(GetTapNoteScore, tns);
+	LUA_DEFINE_METHOD(GetTapNoteOffset, fTapNoteOffset);
+	LUA_DEFINE_METHOD(GetHidden, bHidden);
+	LUA_DEFINE_METHOD(GetHeld, bHeld);
 };
 LUA_REGISTER_CLASS( TapNoteResult )
 
@@ -226,26 +218,14 @@ LUA_REGISTER_CLASS( TapNoteResult )
 class LunaHoldNoteResult: public Luna<HoldNoteResult>
 {
 public:
-	DEFINE_METHOD(GetHoldNoteScore, hns);
-	DEFINE_METHOD(GetLife, fLife);
-	DEFINE_METHOD(GetOverlappedTime, fOverlappedTime);
-	DEFINE_METHOD(GetLastHeldBeat, GetLastHeldBeat() );
-	DEFINE_METHOD(GetCheckpointsHit, iCheckpointsHit );
-	DEFINE_METHOD(GetCheckpointsMissed, iCheckpointsMissed );
-	DEFINE_METHOD(GetHeld, bHeld );
-	DEFINE_METHOD(GetActive, bActive );
-
-	LunaHoldNoteResult()
-	{
-		ADD_METHOD( GetHoldNoteScore );
-		ADD_METHOD( GetLife );
-		ADD_METHOD( GetOverlappedTime );
-		ADD_METHOD( GetLastHeldBeat );
-		ADD_METHOD( GetCheckpointsHit );
-		ADD_METHOD( GetCheckpointsMissed );
-		ADD_METHOD( GetHeld );
-		ADD_METHOD( GetActive );
-	}
+	LUA_DEFINE_METHOD(GetHoldNoteScore, hns);
+	LUA_DEFINE_METHOD(GetLife, fLife);
+	LUA_DEFINE_METHOD(GetOverlappedTime, fOverlappedTime);
+	LUA_DEFINE_METHOD(GetLastHeldBeat, GetLastHeldBeat() );
+	LUA_DEFINE_METHOD(GetCheckpointsHit, iCheckpointsHit );
+	LUA_DEFINE_METHOD(GetCheckpointsMissed, iCheckpointsMissed );
+	LUA_DEFINE_METHOD(GetHeld, bHeld );
+	LUA_DEFINE_METHOD(GetActive, bActive );
 };
 LUA_REGISTER_CLASS( HoldNoteResult )
 
@@ -253,30 +233,16 @@ LUA_REGISTER_CLASS( HoldNoteResult )
 class LunaTapNote: public Luna<TapNote>
 {
 public:
-	DEFINE_METHOD( GetTapNoteType, type );
-	DEFINE_METHOD( GetTapNoteSubType, subType );
-	DEFINE_METHOD( GetTapNoteSource, source );
-	DEFINE_METHOD( GetPlayerNumber, pn );
-	DEFINE_METHOD( GetAttackModifiers, sAttackModifiers );
-	DEFINE_METHOD( GetAttackDuration, fAttackDurationSeconds );
-	DEFINE_METHOD( GetKeysoundIndex, iKeysoundIndex );
-	static int GetHoldDuration( T* p, lua_State* L )		{ lua_pushnumber(L, NoteRowToBeat(p->iDuration)); return 1; }
-	static int GetTapNoteResult( T* p, lua_State* L )		{ p->result.PushSelf(L); return 1; }
-	static int GetHoldNoteResult( T* p, lua_State* L )		{ p->HoldResult.PushSelf(L); return 1; }
-
-	LunaTapNote()
-	{
-		ADD_METHOD( GetTapNoteType );
-		ADD_METHOD( GetTapNoteSubType );
-		ADD_METHOD( GetTapNoteSource );
-		ADD_METHOD( GetTapNoteResult );
-		ADD_METHOD( GetPlayerNumber );
-		ADD_METHOD( GetAttackModifiers );
-		ADD_METHOD( GetAttackDuration );
-		ADD_METHOD( GetKeysoundIndex );
-		ADD_METHOD( GetHoldDuration );
-		ADD_METHOD( GetHoldNoteResult );
-	}
+	LUA_DEFINE_METHOD( GetTapNoteType, type );
+	LUA_DEFINE_METHOD( GetTapNoteSubType, subType );
+	LUA_DEFINE_METHOD( GetTapNoteSource, source );
+	LUA_DEFINE_METHOD( GetPlayerNumber, pn );
+	LUA_DEFINE_METHOD( GetAttackModifiers, sAttackModifiers );
+	LUA_DEFINE_METHOD( GetAttackDuration, fAttackDurationSeconds );
+	LUA_DEFINE_METHOD( GetKeysoundIndex, iKeysoundIndex );
+	LUA_METHOD(GetHoldDuration)( T* p, lua_State* L )		{ lua_pushnumber(L, NoteRowToBeat(p->iDuration)); return 1; }
+	LUA_METHOD(GetTapNoteResult)( T* p, lua_State* L )		{ p->result.PushSelf(L); return 1; }
+	LUA_METHOD(GetHoldNoteResult)( T* p, lua_State* L )		{ p->HoldResult.PushSelf(L); return 1; }
 };
 LUA_REGISTER_CLASS( TapNote )
 

@@ -88,10 +88,10 @@ const RectF *RageTexture::GetTextureCoordRect( int iFrameNo ) const
 class LunaRageTexture: public Luna<RageTexture>
 {
 public:
-	static int position( T* p, lua_State *L )		{ p->SetPosition( FArg(1) ); COMMON_RETURN_SELF; }
-	static int loop( T* p, lua_State *L )			{ p->SetLooping( BIArg(1) ); COMMON_RETURN_SELF; }
-	static int rate( T* p, lua_State *L )			{ p->SetPlaybackRate( FArg(1) ); COMMON_RETURN_SELF; }
-	static int GetTextureCoordRect( T* p, lua_State *L )
+	LUA_METHOD(position)( T* p, lua_State *L )		{ p->SetPosition( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(loop)( T* p, lua_State *L )			{ p->SetLooping( BIArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(rate)( T* p, lua_State *L )			{ p->SetPlaybackRate( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetTextureCoordRect)( T* p, lua_State *L )
 	{
 		const RectF *pRect = p->GetTextureCoordRect( IArg(1) );
 		lua_pushnumber( L, pRect->left );
@@ -100,40 +100,23 @@ public:
 		lua_pushnumber( L, pRect->bottom );
 		return 4;
 	}
-	static int GetNumFrames(T* p, lua_State* L)
+	LUA_METHOD(GetNumFrames)(T* p, lua_State* L)
 	{
 		lua_pushnumber(L, p->GetNumFrames());
 		return 1;
 	}
-	static int Reload(T* p, lua_State* L)
+	LUA_METHOD(Reload)(T* p, lua_State* L)
 	{
 		p->Reload();
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(GetSourceWidth, GetSourceWidth());
-	DEFINE_METHOD(GetSourceHeight, GetSourceHeight());
-	DEFINE_METHOD(GetTextureWidth, GetTextureWidth());
-	DEFINE_METHOD(GetTextureHeight, GetTextureHeight());
-	DEFINE_METHOD(GetImageWidth, GetImageWidth());
-	DEFINE_METHOD(GetImageHeight, GetImageHeight());
-	DEFINE_METHOD(GetPath, GetID().filename);
-
-	LunaRageTexture()
-	{
-		ADD_METHOD( position );
-		ADD_METHOD( loop );
-		ADD_METHOD( rate );
-		ADD_METHOD( GetTextureCoordRect );
-		ADD_METHOD( GetNumFrames );
-		ADD_METHOD( Reload );
-		ADD_METHOD(GetSourceWidth);
-		ADD_METHOD(GetSourceHeight);
-		ADD_METHOD(GetTextureWidth);
-		ADD_METHOD(GetTextureHeight);
-		ADD_METHOD(GetImageWidth);
-		ADD_METHOD(GetImageHeight);
-		ADD_METHOD(GetPath);
-	}
+	LUA_DEFINE_METHOD(GetSourceWidth, GetSourceWidth());
+	LUA_DEFINE_METHOD(GetSourceHeight, GetSourceHeight());
+	LUA_DEFINE_METHOD(GetTextureWidth, GetTextureWidth());
+	LUA_DEFINE_METHOD(GetTextureHeight, GetTextureHeight());
+	LUA_DEFINE_METHOD(GetImageWidth, GetImageWidth());
+	LUA_DEFINE_METHOD(GetImageHeight, GetImageHeight());
+	LUA_DEFINE_METHOD(GetPath, GetID().filename);
 };
 
 LUA_REGISTER_CLASS( RageTexture )

@@ -9,15 +9,9 @@
 class LunaDisplayMode: public Luna<DisplayMode>
 {
 public:
-	DEFINE_METHOD( GetWidth, width );
-	DEFINE_METHOD( GetHeight, height );
-	DEFINE_METHOD( GetRefreshRate, refreshRate );
-	LunaDisplayMode()
-	{
-		ADD_METHOD( GetWidth );
-		ADD_METHOD( GetHeight );
-		ADD_METHOD( GetRefreshRate );
-	}
+	LUA_DEFINE_METHOD( GetWidth, width );
+	LUA_DEFINE_METHOD( GetHeight, height );
+	LUA_DEFINE_METHOD( GetRefreshRate, refreshRate );
 };
 
 LUA_REGISTER_CLASS( DisplayMode )
@@ -25,10 +19,10 @@ LUA_REGISTER_CLASS( DisplayMode )
 class LunaDisplaySpec: public Luna<DisplaySpec>
 {
 public:
-	DEFINE_METHOD( GetId, id() );
-	DEFINE_METHOD( GetName, name() );
-	DEFINE_METHOD( IsVirtual, isVirtual() );
-	static int GetSupportedModes( T* p, lua_State *L)
+	LUA_DEFINE_METHOD( GetId, id() );
+	LUA_DEFINE_METHOD( GetName, name() );
+	LUA_DEFINE_METHOD( IsVirtual, isVirtual() );
+	LUA_METHOD(GetSupportedModes)( T* p, lua_State *L)
 	{
 		std::vector<DisplayMode*> v;
 		for (auto const &m:  p->supportedModes())
@@ -38,7 +32,7 @@ public:
 		LuaHelpers::CreateTableFromArray( v, L );
 		return 1;
 	}
-	static int GetCurrentMode( T *p, lua_State *L )
+	LUA_METHOD(GetCurrentMode)( T *p, lua_State *L )
 	{
 		if (p->currentMode() != nullptr) {
 			DisplayMode *m = const_cast<DisplayMode *>( p->currentMode() );
@@ -47,15 +41,6 @@ public:
 			lua_pushnil( L );
 		}
 		return 1;
-	}
-
-	LunaDisplaySpec()
-	{
-		ADD_METHOD( GetId );
-		ADD_METHOD( GetName );
-		ADD_METHOD( GetSupportedModes );
-		ADD_METHOD( IsVirtual );
-		ADD_METHOD( GetCurrentMode );
 	}
 };
 

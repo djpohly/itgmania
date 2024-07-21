@@ -1328,10 +1328,10 @@ RString ThemeManager::GetBlankGraphicPath()
 class LunaThemeManager: public Luna<ThemeManager>
 {
 public:
-	static int ReloadMetrics( T* p, lua_State *L )		{ p->ReloadMetrics(); return 0; }
+	LUA_METHOD(ReloadMetrics)( T* p, lua_State *L )		{ p->ReloadMetrics(); return 0; }
 
-	static int HasMetric( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasMetric(SArg(1),SArg(2))); return 1; }
-	static int GetMetric( T* p, lua_State *L )
+	LUA_METHOD(HasMetric)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasMetric(SArg(1),SArg(2))); return 1; }
+	LUA_METHOD(GetMetric)( T* p, lua_State *L )
 	{
 		RString group= SArg(1);
 		RString name= SArg(2);
@@ -1342,8 +1342,8 @@ public:
 		p->PushMetric(L, group, name);
 		return 1;
 	}
-	static int HasString( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasString(SArg(1),SArg(2))); return 1; }
-	static int GetString( T* p, lua_State *L )
+	LUA_METHOD(HasString)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasString(SArg(1),SArg(2))); return 1; }
+	LUA_METHOD(GetString)( T* p, lua_State *L )
 	{
 		RString group= SArg(1);
 		RString name= SArg(2);
@@ -1354,7 +1354,7 @@ public:
 		lua_pushstring(L, p->GetString(group, name));
 		return 1;
 	}
-	static int GetPathInfoB( T* p, lua_State *L )
+	LUA_METHOD(GetPathInfoB)( T* p, lua_State *L )
 	{
 		ThemeManager::PathInfo pi;
 		p->GetPathInfo( pi, EC_BGANIMATIONS, SArg(1), SArg(2) );
@@ -1366,7 +1366,7 @@ public:
 	// GENERAL_GET_PATH uses lua_toboolean instead of BArg because that makes
 	// it optional. -Kyz
 #define GENERAL_GET_PATH(get_path_name) \
-	static int get_path_name(T* p, lua_State* L) \
+	LUA_METHOD(get_path_name)(T* p, lua_State* L) \
 	{ \
 		lua_pushstring(L, p->get_path_name( \
 				SArg(1), SArg(2), lua_toboolean(L, 3))); \
@@ -1379,9 +1379,9 @@ public:
 	GENERAL_GET_PATH(GetPathO);
 #undef GENERAL_GET_PATH
 
-	static int RunLuaScripts( T* p, lua_State *L )			{ p->RunLuaScripts(SArg(1)); return 1; }
+	LUA_METHOD(RunLuaScripts)( T* p, lua_State *L )			{ p->RunLuaScripts(SArg(1)); return 1; }
 
-	static int GetSelectableThemeNames( T* p, lua_State *L )
+	LUA_METHOD(GetSelectableThemeNames)( T* p, lua_State *L )
 	{
 		// pushes a table of theme folders from GetSelectableThemeNames()
 		//lua_pushnumber(L, p->GetNumSelectableThemes() );
@@ -1391,16 +1391,16 @@ public:
 		return 1;
 	}
 
-	static int GetNumSelectableThemes( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetNumSelectableThemes() ); return 1; }
+	LUA_METHOD(GetNumSelectableThemes)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetNumSelectableThemes() ); return 1; }
 
-	DEFINE_METHOD( GetCurrentThemeDirectory, GetCurThemeDir() );
-	DEFINE_METHOD( GetCurLanguage, GetCurLanguage() );
-	static int GetThemeDisplayName( T* p, lua_State *L )			{  lua_pushstring(L, p->GetThemeDisplayName(p->GetCurThemeName())); return 1; }
-	static int GetThemeAuthor( T* p, lua_State *L )			{  lua_pushstring(L, p->GetThemeAuthor(p->GetCurThemeName())); return 1; }
-	DEFINE_METHOD( DoesThemeExist, DoesThemeExist(SArg(1)) );
-	DEFINE_METHOD( IsThemeSelectable, IsThemeSelectable(SArg(1)) );
-	DEFINE_METHOD( DoesLanguageExist, DoesLanguageExist(SArg(1)) );
-	DEFINE_METHOD( GetCurThemeName, GetCurThemeName() );
+	LUA_DEFINE_METHOD( GetCurrentThemeDirectory, GetCurThemeDir() );
+	LUA_DEFINE_METHOD( GetCurLanguage, GetCurLanguage() );
+	LUA_METHOD(GetThemeDisplayName)( T* p, lua_State *L )			{  lua_pushstring(L, p->GetThemeDisplayName(p->GetCurThemeName())); return 1; }
+	LUA_METHOD(GetThemeAuthor)( T* p, lua_State *L )			{  lua_pushstring(L, p->GetThemeAuthor(p->GetCurThemeName())); return 1; }
+	LUA_DEFINE_METHOD( DoesThemeExist, DoesThemeExist(SArg(1)) );
+	LUA_DEFINE_METHOD( IsThemeSelectable, IsThemeSelectable(SArg(1)) );
+	LUA_DEFINE_METHOD( DoesLanguageExist, DoesLanguageExist(SArg(1)) );
+	LUA_DEFINE_METHOD( GetCurThemeName, GetCurThemeName() );
 
 	static void PushMetricNamesInGroup(IniFile const& ini, lua_State* L)
 	{
@@ -1424,19 +1424,19 @@ public:
 		}
 	}
 
-	static int GetMetricNamesInGroup(T* p, lua_State* L)
+	LUA_METHOD(GetMetricNamesInGroup)(T* p, lua_State* L)
 	{
 		PushMetricNamesInGroup(g_pLoadedThemeData->iniMetrics, L);
 		return 1;
 	}
 
-	static int GetStringNamesInGroup(T* p, lua_State* L)
+	LUA_METHOD(GetStringNamesInGroup)(T* p, lua_State* L)
 	{
 		PushMetricNamesInGroup(g_pLoadedThemeData->iniStrings, L);
 		return 1;
 	}
 
-	static int SetTheme(T* p, lua_State* L)
+	LUA_METHOD(SetTheme)(T* p, lua_State* L)
 	{
 		RString theme_name= SArg(1);
 		if(!p->IsThemeSelectable(theme_name))
@@ -1447,7 +1447,7 @@ public:
 		return 0;
 	}
 
-	static int get_theme_fallback_list(T* p, lua_State* L)
+	LUA_METHOD(get_theme_fallback_list)(T* p, lua_State* L)
 	{
 		lua_createtable(L, g_vThemes.size(), 0);
 		int ret= lua_gettop(L);
@@ -1457,36 +1457,6 @@ public:
 			lua_rawseti(L, ret, tid+1);
 		}
 		return 1;
-	}
-
-	LunaThemeManager()
-	{
-		ADD_METHOD( ReloadMetrics );
-		ADD_METHOD( GetMetric );
-		ADD_METHOD( GetString );
-		ADD_METHOD( GetPathInfoB );
-		ADD_METHOD( GetPathF );
-		ADD_METHOD( GetPathG );
-		ADD_METHOD( GetPathB );
-		ADD_METHOD( GetPathS );
-		ADD_METHOD( GetPathO );
-		ADD_METHOD( RunLuaScripts );
-		ADD_METHOD( GetSelectableThemeNames );
-		ADD_METHOD( GetNumSelectableThemes );
-		ADD_METHOD( GetCurrentThemeDirectory );
-		ADD_METHOD( GetCurLanguage );
-		ADD_METHOD( GetThemeDisplayName );
-		ADD_METHOD( GetThemeAuthor );
-		ADD_METHOD( DoesThemeExist );
-		ADD_METHOD( IsThemeSelectable );
-		ADD_METHOD( DoesLanguageExist );
-		ADD_METHOD( GetCurThemeName );
-		ADD_METHOD( HasMetric );
-		ADD_METHOD( HasString );
-		ADD_METHOD( GetMetricNamesInGroup );
-		ADD_METHOD( GetStringNamesInGroup );
-		ADD_METHOD( SetTheme );
-		ADD_METHOD(get_theme_fallback_list);
 	}
 };
 

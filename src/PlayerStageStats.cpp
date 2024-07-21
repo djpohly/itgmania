@@ -730,47 +730,47 @@ LuaFunction( FormatPercentScore,	PlayerStageStats::FormatPercentScore( FArg(1) )
 class LunaPlayerStageStats: public Luna<PlayerStageStats>
 {
 public:
-	DEFINE_METHOD( GetCaloriesBurned,			m_fCaloriesBurned )
-	DEFINE_METHOD( GetNumControllerSteps,		m_iNumControllerSteps )
-	DEFINE_METHOD( GetLifeRemainingSeconds,		m_fLifeRemainingSeconds )
-	DEFINE_METHOD( GetSurvivalSeconds,			GetSurvivalSeconds() )
-	DEFINE_METHOD( GetCurrentCombo,				m_iCurCombo )
-	DEFINE_METHOD( GetCurrentMissCombo,			m_iCurMissCombo )
-	DEFINE_METHOD( GetCurrentScoreMultiplier,	m_iCurScoreMultiplier )
-	DEFINE_METHOD( GetScore,					m_iScore )
-	DEFINE_METHOD( GetCurMaxScore,				m_iCurMaxScore )
-	DEFINE_METHOD( GetTapNoteScores,			m_iTapNoteScores[Enum::Check<TapNoteScore>(L, 1)] )
-	DEFINE_METHOD( GetHoldNoteScores,			m_iHoldNoteScores[Enum::Check<HoldNoteScore>(L, 1)] )
-	DEFINE_METHOD( FullCombo,					FullCombo() )
-	DEFINE_METHOD( FullComboOfScore,			FullComboOfScore( Enum::Check<TapNoteScore>(L, 1) ) )
-	DEFINE_METHOD( MaxCombo,					GetMaxCombo().m_cnt )
-	DEFINE_METHOD( GetCurrentLife,				GetCurrentLife() )
-	DEFINE_METHOD( GetGrade,					GetGrade() )
-	DEFINE_METHOD( GetActualDancePoints,		m_iActualDancePoints )
-	DEFINE_METHOD( GetPossibleDancePoints,		m_iPossibleDancePoints )
-	DEFINE_METHOD( GetCurrentPossibleDancePoints,		m_iCurPossibleDancePoints )
-	DEFINE_METHOD( GetPercentDancePoints,		GetPercentDancePoints() )
-	DEFINE_METHOD( GetLessonScoreActual,		GetLessonScoreActual() )
-	DEFINE_METHOD( GetLessonScoreNeeded,		GetLessonScoreNeeded() )
-	DEFINE_METHOD( GetPersonalHighScoreIndex,	m_iPersonalHighScoreIndex )
-	DEFINE_METHOD( GetMachineHighScoreIndex,	m_iMachineHighScoreIndex )
-	DEFINE_METHOD( GetStageAward,				m_StageAward )
-	DEFINE_METHOD( GetPeakComboAward,			m_PeakComboAward )
-	DEFINE_METHOD( IsDisqualified,				IsDisqualified() )
-	DEFINE_METHOD( GetAliveSeconds,				m_fAliveSeconds )
-	DEFINE_METHOD( GetPercentageOfTaps,			GetPercentageOfTaps( Enum::Check<TapNoteScore>(L, 1) ) )
-	DEFINE_METHOD( GetBestFullComboTapNoteScore, GetBestFullComboTapNoteScore() )
-	DEFINE_METHOD( GetFailed, 					m_bFailed )
-	DEFINE_METHOD( GetSongsPassed, 					m_iSongsPassed )
-	DEFINE_METHOD( GetSongsPlayed, 					m_iSongsPlayed )
+	LUA_DEFINE_METHOD( GetCaloriesBurned,			m_fCaloriesBurned )
+	LUA_DEFINE_METHOD( GetNumControllerSteps,		m_iNumControllerSteps )
+	LUA_DEFINE_METHOD( GetLifeRemainingSeconds,		m_fLifeRemainingSeconds )
+	LUA_DEFINE_METHOD( GetSurvivalSeconds,			GetSurvivalSeconds() )
+	LUA_DEFINE_METHOD( GetCurrentCombo,				m_iCurCombo )
+	LUA_DEFINE_METHOD( GetCurrentMissCombo,			m_iCurMissCombo )
+	LUA_DEFINE_METHOD( GetCurrentScoreMultiplier,	m_iCurScoreMultiplier )
+	LUA_DEFINE_METHOD( GetScore,					m_iScore )
+	LUA_DEFINE_METHOD( GetCurMaxScore,				m_iCurMaxScore )
+	LUA_DEFINE_METHOD( GetTapNoteScores,			m_iTapNoteScores[Enum::Check<TapNoteScore>(L, 1)] )
+	LUA_DEFINE_METHOD( GetHoldNoteScores,			m_iHoldNoteScores[Enum::Check<HoldNoteScore>(L, 1)] )
+	LUA_DEFINE_METHOD( FullCombo,					FullCombo() )
+	LUA_DEFINE_METHOD( FullComboOfScore,			FullComboOfScore( Enum::Check<TapNoteScore>(L, 1) ) )
+	LUA_DEFINE_METHOD( MaxCombo,					GetMaxCombo().m_cnt )
+	LUA_DEFINE_METHOD( GetCurrentLife,				GetCurrentLife() )
+	LUA_DEFINE_METHOD( GetGrade,					GetGrade() )
+	LUA_DEFINE_METHOD( GetActualDancePoints,		m_iActualDancePoints )
+	LUA_DEFINE_METHOD( GetPossibleDancePoints,		m_iPossibleDancePoints )
+	LUA_DEFINE_METHOD( GetCurrentPossibleDancePoints,		m_iCurPossibleDancePoints )
+	LUA_DEFINE_METHOD( GetPercentDancePoints,		GetPercentDancePoints() )
+	LUA_DEFINE_METHOD( GetLessonScoreActual,		GetLessonScoreActual() )
+	LUA_DEFINE_METHOD( GetLessonScoreNeeded,		GetLessonScoreNeeded() )
+	LUA_DEFINE_METHOD( GetPersonalHighScoreIndex,	m_iPersonalHighScoreIndex )
+	LUA_DEFINE_METHOD( GetMachineHighScoreIndex,	m_iMachineHighScoreIndex )
+	LUA_DEFINE_METHOD( GetStageAward,				m_StageAward )
+	LUA_DEFINE_METHOD( GetPeakComboAward,			m_PeakComboAward )
+	LUA_DEFINE_METHOD( IsDisqualified,				IsDisqualified() )
+	LUA_DEFINE_METHOD( GetAliveSeconds,				m_fAliveSeconds )
+	LUA_DEFINE_METHOD( GetPercentageOfTaps,			GetPercentageOfTaps( Enum::Check<TapNoteScore>(L, 1) ) )
+	LUA_DEFINE_METHOD( GetBestFullComboTapNoteScore, GetBestFullComboTapNoteScore() )
+	LUA_DEFINE_METHOD( GetFailed, 					m_bFailed )
+	LUA_DEFINE_METHOD( GetSongsPassed, 					m_iSongsPassed )
+	LUA_DEFINE_METHOD( GetSongsPlayed, 					m_iSongsPlayed )
 
-	static int GetHighScore( T* p, lua_State *L )
+	LUA_METHOD(GetHighScore)( T* p, lua_State *L )
 	{
 		p->m_HighScore.PushSelf(L);
 		return 1;
 	}
 
-	static int GetPlayedSteps( T* p, lua_State *L )
+	LUA_METHOD(GetPlayedSteps)( T* p, lua_State *L )
 	{
 		lua_newtable(L);
 		for( int i = 0; i < (int) std::min(p->m_iStepsPlayed, (int) p->m_vpPossibleSteps.size()); ++i )
@@ -780,7 +780,7 @@ public:
 		}
 		return 1;
 	}
-	static int GetPossibleSteps( T* p, lua_State *L )
+	LUA_METHOD(GetPossibleSteps)( T* p, lua_State *L )
 	{
 		lua_newtable(L);
 		for( int i = 0; i < (int) p->m_vpPossibleSteps.size(); ++i )
@@ -790,7 +790,7 @@ public:
 		}
 		return 1;
 	}
-	static int GetComboList( T* p, lua_State *L )
+	LUA_METHOD(GetComboList)( T* p, lua_State *L )
 	{
 		lua_createtable(L, p->m_ComboList.size(), 0);
 		for( std::size_t i= 0; i < p->m_ComboList.size(); ++i)
@@ -818,7 +818,7 @@ public:
 		}
 		return 1;
 	}
-	static int GetLifeRecord( T* p, lua_State *L )
+	LUA_METHOD(GetLifeRecord)( T* p, lua_State *L )
 	{
 		float last_second= FArg(1);
 		int samples= 100;
@@ -843,9 +843,9 @@ public:
 		return 1;
 	}
 
-	static int GetRadarPossible( T* p, lua_State *L ) { p->m_radarPossible.PushSelf(L); return 1; }
-	static int GetRadarActual( T* p, lua_State *L ) { p->m_radarActual.PushSelf(L); return 1; }
-	static int SetScore( T* p, lua_State *L )
+	LUA_METHOD(GetRadarPossible)( T* p, lua_State *L ) { p->m_radarPossible.PushSelf(L); return 1; }
+	LUA_METHOD(GetRadarActual)( T* p, lua_State *L ) { p->m_radarActual.PushSelf(L); return 1; }
+	LUA_METHOD(SetScore)( T* p, lua_State *L )
 	{
 		if( IArg(1) >= 0 )
 		{
@@ -854,7 +854,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int SetCurMaxScore( T* p, lua_State *L )
+	LUA_METHOD(SetCurMaxScore)( T* p, lua_State *L )
 	{
 		if( IArg(1) >= 0 )
 		{
@@ -863,7 +863,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int SetDancePointLimits( T* p, lua_State *L )
+	LUA_METHOD(SetDancePointLimits)( T* p, lua_State *L )
 	{
 		int actual = IArg(1);
 		int possible = IArg(2);
@@ -883,59 +883,10 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int FailPlayer( T* p, lua_State *L )
+	LUA_METHOD(FailPlayer)( T* p, lua_State *L )
 	{
 		p->m_bFailed = true;
 		COMMON_RETURN_SELF;
-	}
-
-	LunaPlayerStageStats()
-	{
-		ADD_METHOD( GetCaloriesBurned );
-		ADD_METHOD( GetNumControllerSteps );
-		ADD_METHOD( GetLifeRemainingSeconds );
-		ADD_METHOD( GetSurvivalSeconds );
-		ADD_METHOD( GetCurrentCombo );
-		ADD_METHOD( GetCurrentMissCombo );
-		ADD_METHOD( GetCurrentScoreMultiplier );
-		ADD_METHOD( GetScore );
-		ADD_METHOD( GetCurMaxScore );
-		ADD_METHOD( GetTapNoteScores );
-		ADD_METHOD( GetHoldNoteScores );
-		ADD_METHOD( FullCombo );
-		ADD_METHOD( FullComboOfScore );
-		ADD_METHOD( MaxCombo );
-		ADD_METHOD( GetCurrentLife );
-		ADD_METHOD( GetGrade );
-		ADD_METHOD( GetHighScore );
-		ADD_METHOD( GetActualDancePoints );
-		ADD_METHOD( GetPossibleDancePoints );
-		ADD_METHOD( GetCurrentPossibleDancePoints );
-		ADD_METHOD( GetPercentDancePoints );
-		ADD_METHOD( GetLessonScoreActual );
-		ADD_METHOD( GetLessonScoreNeeded );
-		ADD_METHOD( GetPersonalHighScoreIndex );
-		ADD_METHOD( GetMachineHighScoreIndex );
-		ADD_METHOD( GetStageAward );
-		ADD_METHOD( GetPeakComboAward );
-		ADD_METHOD( IsDisqualified );
-		ADD_METHOD( GetPlayedSteps );
-		ADD_METHOD( GetPossibleSteps );
-		ADD_METHOD( GetComboList );
-		ADD_METHOD( GetLifeRecord );
-		ADD_METHOD( GetAliveSeconds );
-		ADD_METHOD( GetPercentageOfTaps );
-		ADD_METHOD( GetRadarActual );
-		ADD_METHOD( GetRadarPossible );
-		ADD_METHOD( GetBestFullComboTapNoteScore );
-		ADD_METHOD( GetFailed );
-		ADD_METHOD( SetScore );
-		ADD_METHOD( GetCurMaxScore );
-		ADD_METHOD( SetCurMaxScore );
-		ADD_METHOD( SetDancePointLimits );
-		ADD_METHOD( FailPlayer );
-		ADD_METHOD( GetSongsPassed );
-		ADD_METHOD( GetSongsPlayed );
 	}
 };
 

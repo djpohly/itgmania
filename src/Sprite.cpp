@@ -1118,7 +1118,7 @@ void Sprite::AddImageCoords( float fX, float fY )
 class LunaSprite: public Luna<Sprite>
 {
 public:
-	static int Load( T* p, lua_State *L )
+	LUA_METHOD(Load)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L, 1) )
 		{
@@ -1136,7 +1136,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int LoadBackground( T* p, lua_State *L )
+	LUA_METHOD(LoadBackground)( T* p, lua_State *L )
 	{
 		RageTextureID ID( SArg(1) );
 		TEXTUREMAN->DisableOddDimensionWarning();
@@ -1144,7 +1144,7 @@ public:
 		TEXTUREMAN->EnableOddDimensionWarning();
 		return 1;
 	}
-	static int LoadBanner( T* p, lua_State *L )
+	LUA_METHOD(LoadBanner)( T* p, lua_State *L )
 	{
 		RageTextureID ID( SArg(1) );
 		TEXTUREMAN->DisableOddDimensionWarning();
@@ -1155,9 +1155,9 @@ public:
 
 	/* Commands that go in the tweening queue:
 	 * Commands that take effect immediately (ignoring the tweening queue): */
-	static int customtexturerect( T* p, lua_State *L )	{ p->SetCustomTextureRect( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
-	static int SetCustomImageRect( T* p, lua_State *L )	{ p->SetCustomImageRect( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
-	static int SetCustomPosCoords( T* p, lua_State *L )
+	LUA_METHOD(customtexturerect)( T* p, lua_State *L )	{ p->SetCustomTextureRect( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetCustomImageRect)( T* p, lua_State *L )	{ p->SetCustomImageRect( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetCustomPosCoords)( T* p, lua_State *L )
 	{
 		float coords[8];
 		for( int i=0; i<8; ++i )
@@ -1171,25 +1171,25 @@ public:
 		p->SetCustomPosCoords(coords);
 		COMMON_RETURN_SELF;
 	}
-	static int StopUsingCustomPosCoords( T* p, lua_State *L ) { p->StopUsingCustomPosCoords(); COMMON_RETURN_SELF; }
-	static int texcoordvelocity( T* p, lua_State *L )	{ p->SetTexCoordVelocity( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	static int get_use_effect_clock_for_texcoords(T* p, lua_State* L)
+	LUA_METHOD(StopUsingCustomPosCoords)( T* p, lua_State *L ) { p->StopUsingCustomPosCoords(); COMMON_RETURN_SELF; }
+	LUA_METHOD(texcoordvelocity)( T* p, lua_State *L )	{ p->SetTexCoordVelocity( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(get_use_effect_clock_for_texcoords)(T* p, lua_State* L)
 	{
 		lua_pushboolean(L, p->m_use_effect_clock_for_texcoords);
 		return 1;
 	}
-	static int set_use_effect_clock_for_texcoords(T* p, lua_State* L)
+	LUA_METHOD(set_use_effect_clock_for_texcoords)(T* p, lua_State* L)
 	{
 		p->m_use_effect_clock_for_texcoords= BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int scaletoclipped( T* p, lua_State *L )		{ p->ScaleToClipped( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	static int CropTo( T* p, lua_State *L )		{ p->CropTo( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	static int stretchtexcoords( T* p, lua_State *L )	{ p->StretchTexCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	static int addimagecoords( T* p, lua_State *L )		{ p->AddImageCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	static int setstate( T* p, lua_State *L )		{ p->SetState( IArg(1) ); COMMON_RETURN_SELF; }
-	static int GetState( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetState() ); return 1; }
-	static int SetStateProperties(T* p, lua_State* L)
+	LUA_METHOD(scaletoclipped)( T* p, lua_State *L )		{ p->ScaleToClipped( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(CropTo)( T* p, lua_State *L )		{ p->CropTo( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(stretchtexcoords)( T* p, lua_State *L )	{ p->StretchTexCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(addimagecoords)( T* p, lua_State *L )		{ p->AddImageCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(setstate)( T* p, lua_State *L )		{ p->SetState( IArg(1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetState)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetState() ); return 1; }
+	LUA_METHOD(SetStateProperties)(T* p, lua_State* L)
 	{
 		// States table example:
 		// {{Frame= 0, Delay= .016, {0, 0}, {.25, .25}}}
@@ -1266,16 +1266,16 @@ public:
 		p->SetStateProperties(new_states);
 		COMMON_RETURN_SELF;
 	}
-	static int GetAnimationLengthSeconds( T* p, lua_State *L ) { lua_pushnumber( L, p->GetAnimationLengthSeconds() ); return 1; }
-	static int SetSecondsIntoAnimation( T* p, lua_State *L )	{ p->SetSecondsIntoAnimation(FArg(0)); COMMON_RETURN_SELF; }
-	static int SetTexture( T* p, lua_State *L )
+	LUA_METHOD(GetAnimationLengthSeconds)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetAnimationLengthSeconds() ); return 1; }
+	LUA_METHOD(SetSecondsIntoAnimation)( T* p, lua_State *L )	{ p->SetSecondsIntoAnimation(FArg(0)); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetTexture)( T* p, lua_State *L )
 	{
 		RageTexture *pTexture = Luna<RageTexture>::check(L, 1);
 		pTexture = TEXTUREMAN->CopyTexture( pTexture );
 		p->SetTexture( pTexture );
 		COMMON_RETURN_SELF;
 	}
-	static int GetTexture( T* p, lua_State *L )
+	LUA_METHOD(GetTexture)( T* p, lua_State *L )
 	{
 		RageTexture *pTexture = p->GetTexture();
 		if( pTexture != nullptr )
@@ -1284,59 +1284,28 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	static int SetEffectMode( T* p, lua_State *L )
+	LUA_METHOD(SetEffectMode)( T* p, lua_State *L )
 	{
 		EffectMode em = Enum::Check<EffectMode>(L, 1);
 		p->SetEffectMode( em );
 		COMMON_RETURN_SELF;
 	}
-	static int GetNumStates( T* p, lua_State *L ) { lua_pushnumber( L, p->GetNumStates() ); return 1; }
-	static int SetAllStateDelays( T* p, lua_State *L )
+	LUA_METHOD(GetNumStates)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetNumStates() ); return 1; }
+	LUA_METHOD(SetAllStateDelays)( T* p, lua_State *L )
 	{
 		p->SetAllStateDelays(FArg(-1));
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(GetDecodeMovie, m_DecodeMovie);
-	static int SetDecodeMovie(T* p, lua_State *L)
+	LUA_DEFINE_METHOD(GetDecodeMovie, m_DecodeMovie);
+	LUA_METHOD(SetDecodeMovie)(T* p, lua_State *L)
 	{
 		p->m_DecodeMovie= BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int LoadFromCached( T* p, lua_State *L )
+	LUA_METHOD(LoadFromCached)( T* p, lua_State *L )
 	{
 		p->LoadFromCached( SArg(1), SArg(2) );
 		COMMON_RETURN_SELF;
-	}
-
-	LunaSprite()
-	{
-		ADD_METHOD( Load );
-		ADD_METHOD( LoadBanner );
-		ADD_METHOD( LoadBackground );
-		ADD_METHOD( LoadFromCached );
-		ADD_METHOD( customtexturerect );
-		ADD_METHOD( SetCustomImageRect );
-		ADD_METHOD( SetCustomPosCoords );
-		ADD_METHOD( StopUsingCustomPosCoords );
-		ADD_METHOD( texcoordvelocity );
-		ADD_METHOD(get_use_effect_clock_for_texcoords);
-		ADD_METHOD(set_use_effect_clock_for_texcoords);
-		ADD_METHOD( scaletoclipped );
-		ADD_METHOD( CropTo );
-		ADD_METHOD( stretchtexcoords );
-		ADD_METHOD( addimagecoords );
-		ADD_METHOD( setstate );
-		ADD_METHOD( GetState );
-		ADD_METHOD( SetStateProperties );
-		ADD_METHOD( GetAnimationLengthSeconds );
-		ADD_METHOD( SetSecondsIntoAnimation );
-		ADD_METHOD( SetTexture );
-		ADD_METHOD( GetTexture );
-		ADD_METHOD( SetEffectMode );
-		ADD_METHOD( GetNumStates );
-		ADD_METHOD( SetAllStateDelays );
-		ADD_METHOD(GetDecodeMovie);
-		ADD_METHOD(SetDecodeMovie);
 	}
 };
 

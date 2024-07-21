@@ -1033,39 +1033,39 @@ REGISTER_WITH_LUA_FUNCTION( register_REFRESH_DEFAULT );
 class LunaRageDisplay: public Luna<RageDisplay>
 {
 public:
-	static int GetDisplayWidth( T* p, lua_State *L )
+	LUA_METHOD(GetDisplayWidth)( T* p, lua_State *L )
 	{
 		VideoModeParams params = p->GetActualVideoModeParams();
 		LuaHelpers::Push( L, params.width );
 		return 1;
 	}
 
-	static int GetDisplayHeight( T* p, lua_State *L )
+	LUA_METHOD(GetDisplayHeight)( T* p, lua_State *L )
 	{
 		VideoModeParams params = p->GetActualVideoModeParams();
 		LuaHelpers::Push( L, params.height );
 		return 1;
 	}
 
-	static int GetFPS( T* p, lua_State *L )
+	LUA_METHOD(GetFPS)( T* p, lua_State *L )
 	{
 		lua_pushnumber(L, p->GetFPS());
 		return 1;
 	}
 
-	static int GetVPF( T* p, lua_State *L )
+	LUA_METHOD(GetVPF)( T* p, lua_State *L )
 	{
 		lua_pushnumber(L, p->GetVPF());
 		return 1;
 	}
 
-	static int GetCumFPS( T* p, lua_State *L )
+	LUA_METHOD(GetCumFPS)( T* p, lua_State *L )
 	{
 		lua_pushnumber(L, p->GetCumFPS());
 		return 1;
 	}
 
-	static int GetDisplaySpecs( T* p, lua_State *L )
+	LUA_METHOD(GetDisplaySpecs)( T* p, lua_State *L )
 	{
 		DisplaySpecs s;
 		p->GetDisplaySpecs(s);
@@ -1073,28 +1073,16 @@ public:
 		return 1;
 	}
 
-	static int SupportsRenderToTexture( T* p, lua_State *L )
+	LUA_METHOD(SupportsRenderToTexture)( T* p, lua_State *L )
 	{
 		lua_pushboolean(L, p->SupportsRenderToTexture());
 		return 1;
 	}
 
-	static int SupportsFullscreenBorderlessWindow( T* p, lua_State *L )
+	LUA_METHOD(SupportsFullscreenBorderlessWindow)( T* p, lua_State *L )
 	{
 		lua_pushboolean(L, p->SupportsFullscreenBorderlessWindow());
 		return 1;
-	}
-
-	LunaRageDisplay()
-	{
-		ADD_METHOD( GetDisplayWidth );
-		ADD_METHOD( GetDisplayHeight );
-		ADD_METHOD( GetFPS );
-		ADD_METHOD( GetVPF );
-		ADD_METHOD( GetCumFPS );
-		ADD_METHOD( GetDisplaySpecs );
-		ADD_METHOD( SupportsRenderToTexture );
-		ADD_METHOD( SupportsFullscreenBorderlessWindow );
 	}
 };
 

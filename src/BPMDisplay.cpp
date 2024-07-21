@@ -310,8 +310,8 @@ REGISTER_ACTOR_CLASS( SongBPMDisplay );
 class LunaBPMDisplay: public Luna<BPMDisplay>
 {
 public:
-	static int SetFromGameState( T* p, lua_State *L ) { p->SetFromGameState(); COMMON_RETURN_SELF; }
-	static int SetFromSong( T* p, lua_State *L )
+	LUA_METHOD(SetFromGameState)( T* p, lua_State *L ) { p->SetFromGameState(); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetFromSong)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->NoBPM(); }
 		else
@@ -321,7 +321,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int SetFromSteps( T* p, lua_State *L )
+	LUA_METHOD(SetFromSteps)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->NoBPM(); }
 		else
@@ -331,7 +331,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int SetFromCourse( T* p, lua_State *L )
+	LUA_METHOD(SetFromCourse)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->NoBPM(); }
 		else
@@ -341,16 +341,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int GetText( T* p, lua_State *L )		{ lua_pushstring( L, p->GetText() ); return 1; }
-
-	LunaBPMDisplay()
-	{
-		ADD_METHOD( SetFromGameState );
-		ADD_METHOD( SetFromSong );
-		ADD_METHOD( SetFromSteps );
-		ADD_METHOD( SetFromCourse );
-		ADD_METHOD( GetText );
-	}
+	LUA_METHOD(GetText)( T* p, lua_State *L )		{ lua_pushstring( L, p->GetText() ); return 1; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( BPMDisplay, BitmapText )

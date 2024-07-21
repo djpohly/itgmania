@@ -100,7 +100,7 @@ void DifficultyIcon::SetFromDifficulty( Difficulty dc )
 class LunaDifficultyIcon: public Luna<DifficultyIcon>
 {
 public:
-	static int SetFromSteps( T* p, lua_State *L )
+	LUA_METHOD(SetFromSteps)( T* p, lua_State *L )
 	{ 
 		if( lua_isnil(L,1) )
 		{
@@ -113,7 +113,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int SetFromTrail( T* p, lua_State *L )
+	LUA_METHOD(SetFromTrail)( T* p, lua_State *L )
 	{ 
 		if( lua_isnil(L,1) )
 		{
@@ -126,18 +126,9 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int Unset( T* p, lua_State *L )				{ p->Unset(); COMMON_RETURN_SELF; }
-	static int SetPlayer( T* p, lua_State *L )			{ p->SetPlayer( Enum::Check<PlayerNumber>(L, 1) ); COMMON_RETURN_SELF; }
-	static int SetFromDifficulty( T* p, lua_State *L )		{ p->SetFromDifficulty( Enum::Check<Difficulty>(L, 1) ); COMMON_RETURN_SELF; }
-
-	LunaDifficultyIcon()
-	{
-		ADD_METHOD( Unset );
-		ADD_METHOD( SetPlayer );
-		ADD_METHOD( SetFromSteps );
-		ADD_METHOD( SetFromTrail );
-		ADD_METHOD( SetFromDifficulty );
-	}
+	LUA_METHOD(Unset)( T* p, lua_State *L )				{ p->Unset(); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetPlayer)( T* p, lua_State *L )			{ p->SetPlayer( Enum::Check<PlayerNumber>(L, 1) ); COMMON_RETURN_SELF; }
+	LUA_METHOD(SetFromDifficulty)( T* p, lua_State *L )		{ p->SetFromDifficulty( Enum::Check<Difficulty>(L, 1) ); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( DifficultyIcon, Sprite )

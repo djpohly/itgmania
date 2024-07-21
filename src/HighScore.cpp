@@ -480,12 +480,12 @@ void Screenshot::LoadFromNode( const XNode* pNode )
 class LunaHighScore: public Luna<HighScore>
 {
 public:
-	static int GetName( T* p, lua_State *L )			{ lua_pushstring(L, p->GetName() ); return 1; }
-	static int GetScore( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetScore() ); return 1; }
-	static int GetPercentDP( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetPercentDP() ); return 1; }
-	static int GetDate( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDateTime().GetString() ); return 1; }
-	static int GetSurvivalSeconds( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetSurvivalSeconds() ); return 1; }
-	static int IsFillInMarker( T* p, lua_State *L )
+	LUA_METHOD(GetName)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetName() ); return 1; }
+	LUA_METHOD(GetScore)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetScore() ); return 1; }
+	LUA_METHOD(GetPercentDP)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetPercentDP() ); return 1; }
+	LUA_METHOD(GetDate)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDateTime().GetString() ); return 1; }
+	LUA_METHOD(GetSurvivalSeconds)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetSurvivalSeconds() ); return 1; }
+	LUA_METHOD(IsFillInMarker)( T* p, lua_State *L )
 	{
 		bool bIsFillInMarker = false;
 		FOREACH_PlayerNumber( pn )
@@ -493,37 +493,19 @@ public:
 		lua_pushboolean( L, bIsFillInMarker );
 		return 1;
 	}
-	static int GetMaxCombo( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetMaxCombo() ); return 1; }
-	static int GetModifiers( T* p, lua_State *L )			{ lua_pushstring(L, p->GetModifiers() ); return 1; }
-	static int GetTapNoteScore( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetTapNoteScore( Enum::Check<TapNoteScore>(L, 1) ) ); return 1; }
-	static int GetHoldNoteScore( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetHoldNoteScore( Enum::Check<HoldNoteScore>(L, 1) ) ); return 1; }
-	static int GetRadarValues( T* p, lua_State *L )
+	LUA_METHOD(GetMaxCombo)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetMaxCombo() ); return 1; }
+	LUA_METHOD(GetModifiers)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetModifiers() ); return 1; }
+	LUA_METHOD(GetTapNoteScore)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetTapNoteScore( Enum::Check<TapNoteScore>(L, 1) ) ); return 1; }
+	LUA_METHOD(GetHoldNoteScore)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetHoldNoteScore( Enum::Check<HoldNoteScore>(L, 1) ) ); return 1; }
+	LUA_METHOD(GetRadarValues)( T* p, lua_State *L )
 	{
 		RadarValues &rv = const_cast<RadarValues &>(p->GetRadarValues());
 		rv.PushSelf(L);
 		return 1;
 	}
-	DEFINE_METHOD( GetGrade, GetGrade() )
-	DEFINE_METHOD( GetStageAward, GetStageAward() )
-	DEFINE_METHOD( GetPeakComboAward, GetPeakComboAward() )
-
-	LunaHighScore()
-	{
-		ADD_METHOD( GetName );
-		ADD_METHOD( GetScore );
-		ADD_METHOD( GetPercentDP );
-		ADD_METHOD( GetDate );
-		ADD_METHOD( GetSurvivalSeconds );
-		ADD_METHOD( IsFillInMarker );
-		ADD_METHOD( GetModifiers );
-		ADD_METHOD( GetTapNoteScore );
-		ADD_METHOD( GetHoldNoteScore );
-		ADD_METHOD( GetRadarValues );
-		ADD_METHOD( GetGrade );
-		ADD_METHOD( GetMaxCombo );
-		ADD_METHOD( GetStageAward );
-		ADD_METHOD( GetPeakComboAward );
-	}
+	LUA_DEFINE_METHOD( GetGrade, GetGrade() )
+	LUA_DEFINE_METHOD( GetStageAward, GetStageAward() )
+	LUA_DEFINE_METHOD( GetPeakComboAward, GetPeakComboAward() )
 };
 
 LUA_REGISTER_CLASS( HighScore )
@@ -532,7 +514,7 @@ LUA_REGISTER_CLASS( HighScore )
 class LunaHighScoreList: public Luna<HighScoreList>
 {
 public:
-	static int GetHighScores( T* p, lua_State *L )
+	LUA_METHOD(GetHighScores)( T* p, lua_State *L )
 	{
 		lua_newtable(L);
 		for( int i = 0; i < (int) p->vHighScores.size(); ++i )
@@ -544,7 +526,7 @@ public:
 		return 1;
 	}
 
-	static int GetHighestScoreOfName( T* p, lua_State *L )
+	LUA_METHOD(GetHighestScoreOfName)( T* p, lua_State *L )
 	{
 		RString name= SArg(1);
 		for(std::size_t i= 0; i < p->vHighScores.size(); ++i)
@@ -559,7 +541,7 @@ public:
 		return 1;
 	}
 
-	static int GetRankOfName( T* p, lua_State *L )
+	LUA_METHOD(GetRankOfName)( T* p, lua_State *L )
 	{
 		RString name= SArg(1);
 		std::size_t rank= 0;
@@ -575,13 +557,6 @@ public:
 		// The themer is expected to check for validity before using.
 		lua_pushnumber(L, rank);
 		return 1;
-	}
-
-	LunaHighScoreList()
-	{
-		ADD_METHOD( GetHighScores );
-		ADD_METHOD( GetHighestScoreOfName );
-		ADD_METHOD( GetRankOfName );
 	}
 };
 

@@ -249,7 +249,7 @@ void ScreenSelectProfile::HandleScreenMessage( const ScreenMessage SM )
 class LunaScreenSelectProfile: public Luna<ScreenSelectProfile>
 {
 public:
-	static int SetProfileIndex( T* p, lua_State *L )
+	LUA_METHOD(SetProfileIndex)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		int iProfileIndex = IArg(2);
@@ -258,32 +258,24 @@ public:
 		return 1;
 	}
 
-	static int GetProfileIndex( T* p, lua_State *L )
+	LUA_METHOD(GetProfileIndex)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		LuaHelpers::Push( L, p->GetProfileIndex( pn ) );
 		return 1;
 	}
 
-	static int Finish( T* p, lua_State *L )
+	LUA_METHOD(Finish)( T* p, lua_State *L )
 	{
 		bool bRet = p->Finish();
 		LuaHelpers::Push( L, bRet );
 		return 1;
 	}
 
-	static int Cancel( T* p, lua_State *L )
+	LUA_METHOD(Cancel)( T* p, lua_State *L )
 	{
 		p->Cancel( SM_GoToPrevScreen );
 		return 1;
-	}
-
-	LunaScreenSelectProfile()
-	{
-		ADD_METHOD( SetProfileIndex );
-		ADD_METHOD( GetProfileIndex );
-		ADD_METHOD( Finish );
-		ADD_METHOD( Cancel );
 	}
 };
 

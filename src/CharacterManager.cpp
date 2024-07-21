@@ -126,7 +126,7 @@ Character* CharacterManager::GetCharacterFromID( RString sCharacterID )
 class LunaCharacterManager: public Luna<CharacterManager>
 {
 public:
-	static int GetCharacter( T* p, lua_State *L )
+	LUA_METHOD(GetCharacter)( T* p, lua_State *L )
 	{
 		Character *pCharacter = p->GetCharacterFromID(SArg(1));
 		if( pCharacter != nullptr )
@@ -136,7 +136,7 @@ public:
 
 		return 1;
 	}
-	static int GetRandomCharacter( T* p, lua_State *L )
+	LUA_METHOD(GetRandomCharacter)( T* p, lua_State *L )
 	{
 		Character *pCharacter = p->GetRandomCharacter();
 		if( pCharacter != nullptr )
@@ -146,7 +146,7 @@ public:
 
 		return 1;
 	}
-	static int GetAllCharacters( T* p, lua_State *L )
+	LUA_METHOD(GetAllCharacters)( T* p, lua_State *L )
 	{
 		std::vector<Character*> vChars;
 		p->GetCharacters(vChars);
@@ -154,21 +154,12 @@ public:
 		LuaHelpers::CreateTableFromArray(vChars, L);
 		return 1;
 	}
-	static int GetCharacterCount(T* p, lua_State *L)
+	LUA_METHOD(GetCharacterCount)(T* p, lua_State *L)
 	{
 		std::vector<Character*> chars;
 		p->GetCharacters(chars);
 		lua_pushnumber(L, chars.size());
 		return 1;
-	}
-
-	LunaCharacterManager()
-	{
-		ADD_METHOD( GetCharacter );
-		// sm-ssc adds:
-		ADD_METHOD( GetRandomCharacter );
-		ADD_METHOD( GetAllCharacters );
-		ADD_METHOD( GetCharacterCount );
 	}
 };
 

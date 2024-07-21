@@ -154,12 +154,7 @@ void CourseContentsList::SetItemFromGameState( Actor *pActor, int iCourseEntryIn
 class LunaCourseContentsList: public Luna<CourseContentsList>
 {
 public:
-	static int SetFromGameState( T* p, lua_State *L )			{ p->SetFromGameState(); COMMON_RETURN_SELF; }
-
-	LunaCourseContentsList()
-	{
-		ADD_METHOD( SetFromGameState );
-	}
+	LUA_METHOD(SetFromGameState)( T* p, lua_State *L )			{ p->SetFromGameState(); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( CourseContentsList, ActorScroller )

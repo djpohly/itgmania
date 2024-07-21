@@ -656,7 +656,7 @@ void RageSound::SetStopModeFromString( const RString &sStopMode )
 class LunaRageSound: public Luna<RageSound>
 {
 public:
-	static int get_length(T* p, lua_State* L)
+	LUA_METHOD(get_length)(T* p, lua_State* L)
 	{
 		RageSoundReader* reader= p->GetSoundReader();
 		if(reader == nullptr)
@@ -669,7 +669,7 @@ public:
 		}
 		return 1;
 	}
-	static int pitch( T* p, lua_State *L )
+	LUA_METHOD(pitch)( T* p, lua_State *L )
 	{
 		RageSoundParams params( p->GetParams() );
 		params.m_fPitch = FArg(1);
@@ -677,7 +677,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int speed( T* p, lua_State *L )
+	LUA_METHOD(speed)( T* p, lua_State *L )
 	{
 		RageSoundParams params( p->GetParams() );
 		params.m_fSpeed = FArg(1);
@@ -685,7 +685,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int volume( T* p, lua_State *L )
+	LUA_METHOD(volume)( T* p, lua_State *L )
 	{
 		RageSoundParams params( p->GetParams() );
 		params.m_Volume = FArg(1);
@@ -693,14 +693,14 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetProperty( T* p, lua_State *L )
+	LUA_METHOD(SetProperty)( T* p, lua_State *L )
 	{
 		LuaHelpers::Push( L, p->SetProperty(SArg(1), FArg(2)) );
 		return 1;
 	}
 
 	// Rename me and deprecate the above one? -DaisuMaster
-	static int SetParam( T* p, lua_State *L )
+	LUA_METHOD(SetParam)( T* p, lua_State *L )
 	{
 		RageSoundParams params( p->GetParams() );
 
@@ -718,23 +718,12 @@ public:
 	}
 
 	/*
-	static int SetStopMode( T* p, lua_State *L )
+	LUA_METHOD(SetStopMode)( T* p, lua_State *L )
 	{
 		LuaHelpers::Push( L, p->SetStopModeFromString(SArg(1)) );
 		return 1;
 	}
 	*/
-
-	LunaRageSound()
-	{
-		ADD_METHOD(get_length);
-		ADD_METHOD( pitch );
-		ADD_METHOD( speed );
-		ADD_METHOD( volume );
-		ADD_METHOD( SetProperty );
-		ADD_METHOD( SetParam );
-		//ADD_METHOD( SetStopMode );
-	}
 };
 
 LUA_REGISTER_CLASS( RageSound )

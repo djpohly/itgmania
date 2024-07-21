@@ -220,21 +220,21 @@ const TimingData &PlayerState::GetDisplayedTiming() const
 class LunaPlayerState: public Luna<PlayerState>
 {
 public:
-	static int ApplyPreferredOptionsToOtherLevels(T* p, lua_State* L)
+	LUA_METHOD(ApplyPreferredOptionsToOtherLevels)(T* p, lua_State* L)
 	{
 		p->m_PlayerOptions.Assign(ModsLevel_Preferred,
 			p->m_PlayerOptions.Get(ModsLevel_Preferred));
 		return 0;
 	}
-	DEFINE_METHOD( GetPlayerNumber, m_PlayerNumber );
-	static int GetSongPosition( T* p, lua_State *L )
+	LUA_DEFINE_METHOD( GetPlayerNumber, m_PlayerNumber );
+	LUA_METHOD(GetSongPosition)( T* p, lua_State *L )
 	{
 		p->m_Position.PushSelf(L);
 		return 1;
 	}
-	DEFINE_METHOD( GetMultiPlayerNumber, m_mp );
-	DEFINE_METHOD( GetPlayerController, m_PlayerController );
-	static int SetPlayerOptions( T* p, lua_State *L )
+	LUA_DEFINE_METHOD( GetMultiPlayerNumber, m_mp );
+	LUA_DEFINE_METHOD( GetPlayerController, m_PlayerController );
+	LUA_METHOD(SetPlayerOptions)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
 		PlayerOptions po;
@@ -242,13 +242,13 @@ public:
 		p->m_PlayerOptions.Assign( m, po );
 		return 0;
 	}
-	static int GetPlayerOptions( T* p, lua_State *L )
+	LUA_METHOD(GetPlayerOptions)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
 		p->m_PlayerOptions.Get(m).PushSelf(L);
 		return 1;
 	}
-	static int GetPlayerOptionsArray( T* p, lua_State *L )
+	LUA_METHOD(GetPlayerOptionsArray)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
 		std::vector<RString> s;
@@ -256,36 +256,20 @@ public:
 		LuaHelpers::CreateTableFromArray<RString>( s, L );
 		return 1;
 	}
-	static int GetPlayerOptionsString( T* p, lua_State *L )
+	LUA_METHOD(GetPlayerOptionsString)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
 		RString s = p->m_PlayerOptions.Get(m).GetString();
 		LuaHelpers::Push( L, s );
 		return 1;
 	}
-	static int GetCurrentPlayerOptions( T* p, lua_State *L )
+	LUA_METHOD(GetCurrentPlayerOptions)( T* p, lua_State *L )
 	{
 		p->m_PlayerOptions.GetCurrent().PushSelf(L);
 		return 1;
 	}
-	DEFINE_METHOD( GetHealthState, m_HealthState );
-	DEFINE_METHOD( GetSuperMeterLevel, m_fSuperMeter );
-
-	LunaPlayerState()
-	{
-		ADD_METHOD( ApplyPreferredOptionsToOtherLevels );
-		ADD_METHOD( GetPlayerNumber );
-		ADD_METHOD( GetMultiPlayerNumber );
-		ADD_METHOD( GetPlayerController );
-		ADD_METHOD( SetPlayerOptions );
-		ADD_METHOD( GetPlayerOptions );
-		ADD_METHOD( GetPlayerOptionsArray );
-		ADD_METHOD( GetPlayerOptionsString );
-		ADD_METHOD( GetCurrentPlayerOptions );
-		ADD_METHOD( GetSongPosition );
-		ADD_METHOD( GetHealthState );
-		ADD_METHOD( GetSuperMeterLevel );
-	}
+	LUA_DEFINE_METHOD( GetHealthState, m_HealthState );
+	LUA_DEFINE_METHOD( GetSuperMeterLevel, m_fSuperMeter );
 };
 
 LUA_REGISTER_CLASS( PlayerState )

@@ -609,17 +609,12 @@ void ScreenTextEntry::LoadFromTextEntrySettings( const TextEntrySettings &settin
 class LunaScreenTextEntry: public Luna<ScreenTextEntry>
 {
 public:
-	static int Load( T* p, lua_State *L )
+	LUA_METHOD(Load)( T* p, lua_State *L )
 	{
 		ScreenTextEntry::TextEntrySettings settings;
 		settings.FromStack( L );
 		p->LoadFromTextEntrySettings(settings);
 		return 0;
-	}
-
-	LunaScreenTextEntry()
-	{
-		ADD_METHOD( Load );
 	}
 };
 LUA_REGISTER_DERIVED_CLASS( ScreenTextEntry, ScreenWithMenuElements )

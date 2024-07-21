@@ -1738,7 +1738,7 @@ void MusicWheel::FinishChangingSorts()
 class LunaMusicWheel: public Luna<MusicWheel>
 {
 public:
-	static int ChangeSort( T* p, lua_State *L )
+	LUA_METHOD(ChangeSort)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { lua_pushboolean( L, false ); }
 		else
@@ -1748,16 +1748,16 @@ public:
 		}
 		return 1;
 	}
-	DEFINE_METHOD(GetSelectedSection, GetSelectedSection());
-	static int GetCurrentSections( T* p, lua_State *L )
+	LUA_DEFINE_METHOD(GetSelectedSection, GetSelectedSection());
+	LUA_METHOD(GetCurrentSections)( T* p, lua_State *L )
 	{
 		std::vector<RString> v;
 		p->GetCurrentSections(v);
 		LuaHelpers::CreateTableFromArray<RString>( v, L );
 		return 1;
 	}
-	static int IsRouletting( T* p, lua_State *L ){ lua_pushboolean( L, p->IsRouletting() ); return 1; }
-	static int SelectSong( T* p, lua_State *L )
+	LUA_METHOD(IsRouletting)( T* p, lua_State *L ){ lua_pushboolean( L, p->IsRouletting() ); return 1; }
+	LUA_METHOD(SelectSong)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { lua_pushboolean( L, false ); }
 		else
@@ -1767,7 +1767,7 @@ public:
 		}
 		return 1;
 	}
-	static int SelectCourse( T* p, lua_State *L )
+	LUA_METHOD(SelectCourse)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { lua_pushboolean( L, false ); }
 		else
@@ -1778,7 +1778,7 @@ public:
 		return 1;
 	}
 
-	static int Move(T* p, lua_State *L)
+	LUA_METHOD(Move)(T* p, lua_State *L)
 	{
 		if (lua_isnil(L, 1)) { p->Move(0); }
 		else
@@ -1786,17 +1786,6 @@ public:
 			p->Move(IArg(1));
 		}
 		return 1;
-	}
-
-	LunaMusicWheel()
-	{
-		ADD_METHOD( ChangeSort );
-		ADD_METHOD( GetSelectedSection );
-		ADD_METHOD( IsRouletting );
-		ADD_METHOD( SelectSong );
-		ADD_METHOD( SelectCourse );
-		ADD_METHOD( Move );
-		ADD_METHOD( GetCurrentSections );
 	}
 };
 

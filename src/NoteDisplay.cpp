@@ -1673,21 +1673,21 @@ void NoteColumnRenderer::NCR_TweenState::MakeWeightedAverage(
 
 struct LunaNCSplineHandler : Luna<NCSplineHandler>
 {
-	static int get_spline(T* p, lua_State* L)
+	LUA_METHOD(get_spline)(T* p, lua_State* L)
 	{
 		p->m_spline.PushSelf(L);
 		return 1;
 	}
-	DEFINE_METHOD(get_receptor_t, m_receptor_t);
-	DEFINE_METHOD(get_beats_per_t, m_beats_per_t);
+	LUA_DEFINE_METHOD(get_receptor_t, m_receptor_t);
+	LUA_DEFINE_METHOD(get_beats_per_t, m_beats_per_t);
 #define SET_T(member, name) \
-	static int name(T* p, lua_State* L) \
+	LUA_METHOD(name)(T* p, lua_State* L) \
 	{ \
 		p->member= FArg(1); \
 		COMMON_RETURN_SELF; \
 	}
 #define SET_B(member, name) \
-	static int name(T* p, lua_State* L) \
+	LUA_METHOD(name)(T* p, lua_State* L) \
 	{ \
 		p->member= BArg(1); \
 		COMMON_RETURN_SELF; \
@@ -1697,26 +1697,13 @@ struct LunaNCSplineHandler : Luna<NCSplineHandler>
 	SET_B(m_subtract_song_beat_from_curr, set_subtract_song_beat);
 #undef SET_T
 #undef SET_B
-	static int set_spline_mode(T* p, lua_State* L)
+	LUA_METHOD(set_spline_mode)(T* p, lua_State* L)
 	{
 		p->m_spline_mode= Enum::Check<NoteColumnSplineMode>(L, 1);
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD(get_spline_mode, m_spline_mode);
-	DEFINE_METHOD(get_subtract_song_beat, m_subtract_song_beat_from_curr);
-
-	LunaNCSplineHandler()
-	{
-		ADD_METHOD(get_spline);
-		ADD_METHOD(get_beats_per_t);
-		ADD_METHOD(set_beats_per_t);
-		ADD_METHOD(get_receptor_t);
-		ADD_METHOD(set_receptor_t);
-		ADD_METHOD(get_spline_mode);
-		ADD_METHOD(set_spline_mode);
-		ADD_METHOD(get_subtract_song_beat);
-		ADD_METHOD(set_subtract_song_beat);
-	}
+	LUA_DEFINE_METHOD(get_spline_mode, m_spline_mode);
+	LUA_DEFINE_METHOD(get_subtract_song_beat, m_subtract_song_beat_from_curr);
 };
 
 LUA_REGISTER_CLASS(NCSplineHandler);
@@ -1724,7 +1711,7 @@ LUA_REGISTER_CLASS(NCSplineHandler);
 struct LunaNoteColumnRenderer : Luna<NoteColumnRenderer>
 {
 #define GET_HANDLER(member, name) \
-	static int name(T* p, lua_State* L) \
+	LUA_METHOD(name)(T* p, lua_State* L) \
 	{ \
 		p->member->PushSelf(L); \
 		return 1; \
@@ -1733,13 +1720,6 @@ struct LunaNoteColumnRenderer : Luna<NoteColumnRenderer>
 	GET_HANDLER(GetRotHandler(), get_rot_handler);
 	GET_HANDLER(GetZoomHandler(), get_zoom_handler);
 #undef GET_HANDLER
-
-	LunaNoteColumnRenderer()
-	{
-		ADD_METHOD(get_pos_handler);
-		ADD_METHOD(get_rot_handler);
-		ADD_METHOD(get_zoom_handler);
-	}
 };
 
 LUA_REGISTER_DERIVED_CLASS(NoteColumnRenderer, Actor)

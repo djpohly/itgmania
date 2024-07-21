@@ -80,19 +80,13 @@ void RageTextureRenderTarget::FinishRenderingTo()
 class LunaRageTextureRenderTarget: public Luna<RageTextureRenderTarget>
 {
 public:
-	static int BeginRenderingTo( T* p, lua_State *L )
+	LUA_METHOD(BeginRenderingTo)( T* p, lua_State *L )
 	{
 		bool bPreserveTexture = !!luaL_opt( L, lua_toboolean, 1, false );
 		p->BeginRenderingTo( bPreserveTexture );
 		COMMON_RETURN_SELF;
 	}
-	static int FinishRenderingTo( T* p, lua_State *L )	{ p->FinishRenderingTo(); COMMON_RETURN_SELF; }
-
-	LunaRageTextureRenderTarget()
-	{
-		ADD_METHOD( BeginRenderingTo );
-		ADD_METHOD( FinishRenderingTo );
-	}
+	LUA_METHOD(FinishRenderingTo)( T* p, lua_State *L )	{ p->FinishRenderingTo(); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( RageTextureRenderTarget, RageTexture )

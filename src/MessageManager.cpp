@@ -294,7 +294,7 @@ void MessageSubscriber::UnsubscribeAll()
 class LunaMessageManager: public Luna<MessageManager>
 {
 public:
-	static int Broadcast( T* p, lua_State *L )
+	LUA_METHOD(Broadcast)( T* p, lua_State *L )
 	{
 		if( !lua_istable(L, 2) && !lua_isnoneornil(L, 2) )
 			luaL_typerror( L, 2, "table or nil" );
@@ -307,16 +307,10 @@ public:
 		p->Broadcast( msg );
 		COMMON_RETURN_SELF;
 	}
-	static int SetLogging(T* p, lua_State *L)
+	LUA_METHOD(SetLogging)(T* p, lua_State *L)
 	{
 		p->SetLogging(lua_toboolean(L, -1));
 		COMMON_RETURN_SELF;
-	}
-
-	LunaMessageManager()
-	{
-		ADD_METHOD( Broadcast );
-		ADD_METHOD( SetLogging );
 	}
 };
 

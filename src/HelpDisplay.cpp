@@ -70,7 +70,7 @@ void HelpDisplay::Update( float fDeltaTime )
 class LunaHelpDisplay: public Luna<HelpDisplay>
 {
 public:
-	static int settips( T* p, lua_State *L )
+	LUA_METHOD(settips)( T* p, lua_State *L )
 	{
 		luaL_checktype( L, 1, LUA_TTABLE );
 		lua_pushvalue( L, 1 );
@@ -96,7 +96,7 @@ public:
 
 		COMMON_RETURN_SELF;
 	}
-	static int SetTipsColonSeparated( T* p, lua_State *L )
+	LUA_METHOD(SetTipsColonSeparated)( T* p, lua_State *L )
 	{
 		std::vector<RString> vs;
 		split( SArg(1), "::", vs );
@@ -104,7 +104,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int gettips( T* p, lua_State *L )
+	LUA_METHOD(gettips)( T* p, lua_State *L )
 	{
 		std::vector<RString> arrayTips, arrayTipsAlt;
 		p->GetTips( arrayTips, arrayTipsAlt );
@@ -114,15 +114,7 @@ public:
 
 		return 2;
 	}
-	static int SetSecsBetweenSwitches( T* p, lua_State *L ) { p->SetSecsBetweenSwitches( FArg(1) ); COMMON_RETURN_SELF; }
-
-	LunaHelpDisplay()
-	{
-		ADD_METHOD( settips );
-		ADD_METHOD( SetTipsColonSeparated );
-		ADD_METHOD( gettips );
-		ADD_METHOD( SetSecsBetweenSwitches );
-	}
+	LUA_METHOD(SetSecsBetweenSwitches)( T* p, lua_State *L ) { p->SetSecsBetweenSwitches( FArg(1) ); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( HelpDisplay, BitmapText )

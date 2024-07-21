@@ -56,14 +56,22 @@ protected:
 		lua_setfield( L, iMetatable, "__tostring" );
 
 		// fill method table with methods from class T
-		for( unsigned i=0; i < m_aMethods.size(); i++ )
+		for( unsigned i=0; i < s_aMethods.size(); i++ )
 		{
-			const RegType *l = &m_aMethods[i];
+			const RegType *l = &s_aMethods[i];
 			lua_pushlightuserdata( L, (void*) l->mfunc );
 			lua_pushcclosure( L, thunk, 1 );
 			lua_setfield( L, iMethods, l->szName );
 		}
 	}
+
+	inline static std::vector<RegType> s_aMethods;
+
+	struct RegisterLuaMethod {
+		RegisterLuaMethod( const char *szName, binding_t *pFunc ) {
+			s_aMethods.push_back({ szName, pFunc });
+		}
+	};
 
 public:
 	virtual const RString &GetClassName() const { return m_sClassName; }
@@ -94,13 +102,6 @@ public:
 	 * base class, so we pick up the instance of the base class, if any. */
 	static void PushObject( Lua *L, const RString &sDerivedClassName, T* p );
 
-protected:
-	void AddMethod( const char *szName, int (*pFunc)(T *p, lua_State *L) )
-	{
-		RegType r = { szName, pFunc };
-		m_aMethods.push_back(r);
-	}
-
 private:
 	// member function dispatcher
 	static int thunk( Lua *L )
@@ -112,8 +113,6 @@ private:
 		binding_t *pFunc = (binding_t *) lua_touserdata( L, lua_upvalueindex(1) );
 		return pFunc( obj, L );  // call member function
 	}
-
-	std::vector<RegType> m_aMethods;
 
 	static int tostring_T( lua_State *L )
 	{
@@ -162,63 +161,38 @@ public:
 	/* Call PushSelf, so we always call the derived Luna<T>::Push. */ \
 	namespace LuaHelpers { template<> void Push<T*>( lua_State *L, T *const &pObject ) { if( pObject == nullptr ) lua_pushnil(L); else pObject->PushSelf( L ); } }
 
-#define DEFINE_METHOD( method_name, expr ) \
-	static int method_name( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
+#define LUA_DEFINE_METHOD( method_name, expr ) \
+	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
 
 #define COMMON_RETURN_SELF p->PushSelf(L); return 1;
 
 #define GET_SET_BOOL_METHOD(method_name, bool_name) \
-static int get_##method_name(T* p, lua_State* L) \
+LUA_METHOD(get_##method_name)(T* p, lua_State* L) \
 { \
 	lua_pushboolean(L, p->bool_name); \
 	return 1; \
 } \
-static int set_##method_name(T* p, lua_State* L) \
+LUA_METHOD(set_##method_name)(T* p, lua_State* L) \
 { \
 	p->bool_name= lua_toboolean(L, 1); \
 	COMMON_RETURN_SELF; \
 }
 
 #define GETTER_SETTER_BOOL_METHOD(bool_name) \
-static int get_##bool_name(T* p, lua_State* L) \
+LUA_METHOD(get_##bool_name)(T* p, lua_State* L) \
 { \
 	lua_pushboolean(L, p->get_##bool_name()); \
 	return 1; \
 } \
-static int set_##bool_name(T* p, lua_State* L) \
+LUA_METHOD(set_##bool_name)(T* p, lua_State* L) \
 { \
 	p->set_##bool_name(lua_toboolean(L, 1)); \
 	COMMON_RETURN_SELF; \
 }
 
-#define GET_SET_FLOAT_METHOD(method_name, float_name) \
-static int get_##method_name(T* p, lua_State* L) \
-{ \
-	lua_pushnumber(L, p->float_name); \
-	return 1; \
-} \
-static int set_##method_name(T* p, lua_State* L) \
-{ \
-	p->float_name= FArg(1); \
-	COMMON_RETURN_SELF; \
-}
-
-#define GETTER_SETTER_FLOAT_METHOD(float_name) \
-static int get_##float_name(T* p, lua_State* L) \
-{ \
-	lua_pushnumber(L, p->get_##float_name()); \
-	return 1; \
-} \
-static int set_##float_name(T* p, lua_State* L) \
-{ \
-	p->set_##float_name(FArg(1)); \
-	COMMON_RETURN_SELF; \
-}
-
-#define ADD_METHOD( method_name ) \
-	AddMethod( #method_name, method_name )
-#define ADD_GET_SET_METHODS(method_name) \
-	ADD_METHOD(get_##method_name); ADD_METHOD(set_##method_name);
+#define LUA_METHOD( name ) \
+	RegisterLuaMethod register_##name{#name, name}; \
+	static int name /* (parameter list) { body } */
 
 #define LUA_REGISTER_NAMESPACE( T ) \
 	static void Register##T( lua_State *L ) { luaL_register( L, #T, T##Table ); lua_pop( L, 1 ); } \

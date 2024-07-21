@@ -1211,7 +1211,7 @@ class LunaNoteField: public Luna<NoteField>
 {
 public:
 #define SET_CALLBACK_GENERIC(callback_name, member_name) \
-	static int callback_name(T* p, lua_State* L) \
+	LUA_METHOD(callback_name)(T* p, lua_State* L) \
 	{ \
 		if(lua_isnoneornil(L, 1)) \
 		{ \
@@ -1246,7 +1246,7 @@ public:
 		return col;
 	}
 
-	static int step(T* p, lua_State* L)
+	LUA_METHOD(step)(T* p, lua_State* L)
 	{
 		int col= check_column(L, 1, p->GetPlayerState()->m_PlayerNumber);
 		TapNoteScore tns= Enum::Check<TapNoteScore>(L, 2);
@@ -1254,14 +1254,14 @@ public:
 		return 0;
 	}
 
-	static int set_pressed(T* p, lua_State* L)
+	LUA_METHOD(set_pressed)(T* p, lua_State* L)
 	{
 		int col= check_column(L, 1, p->GetPlayerState()->m_PlayerNumber);
 		p->SetPressed(col, true);
 		return 0;
 	}
 
-	static int did_tap_note(T* p, lua_State* L)
+	LUA_METHOD(did_tap_note)(T* p, lua_State* L)
 	{
 		int col= check_column(L, 1, p->GetPlayerState()->m_PlayerNumber);
 		TapNoteScore tns= Enum::Check<TapNoteScore>(L, 2);
@@ -1270,7 +1270,7 @@ public:
 		return 0;
 	}
 
-	static int did_hold_note(T* p, lua_State* L)
+	LUA_METHOD(did_hold_note)(T* p, lua_State* L)
 	{
 		int col= check_column(L, 1, p->GetPlayerState()->m_PlayerNumber);
 		HoldNoteScore hns= Enum::Check<HoldNoteScore>(L, 2);
@@ -1279,7 +1279,7 @@ public:
 		return 0;
 	}
 
-	static int get_column_actors(T* p, lua_State* L)
+	LUA_METHOD(get_column_actors)(T* p, lua_State* L)
 	{
 		lua_createtable(L, p->m_ColumnRenderers.size(), 0);
 		for(std::size_t i= 0; i < p->m_ColumnRenderers.size(); ++i)
@@ -1290,38 +1290,22 @@ public:
 		return 1;
 	}
 
-	static int GetBeatBars(T* p, lua_State* L)
+	LUA_METHOD(GetBeatBars)(T* p, lua_State* L)
 	{
 		LuaHelpers::Push(L, p->GetBeatBars());
 		return 1;
 	};
 
-	static int SetBeatBars(T* p, lua_State* L)
+	LUA_METHOD(SetBeatBars)(T* p, lua_State* L)
 	{
 		p->SetBeatBars(BArg(1));
 		return 0;
 	}
 
-	static int SetBeatBarsAlpha(T* p, lua_State* L)
+	LUA_METHOD(SetBeatBarsAlpha)(T* p, lua_State* L)
 	{
 		p->SetBeatBarsAlpha(FArg(1), FArg(2), FArg(3), FArg(4));
 		return 0;
-	}
-
-	LunaNoteField()
-	{
-		ADD_METHOD(set_step_callback);
-		ADD_METHOD(set_set_pressed_callback);
-		ADD_METHOD(set_did_tap_note_callback);
-		ADD_METHOD(set_did_hold_note_callback);
-		ADD_METHOD(step);
-		ADD_METHOD(set_pressed);
-		ADD_METHOD(did_tap_note);
-		ADD_METHOD(did_hold_note);
-		ADD_METHOD(get_column_actors);
-		ADD_METHOD(GetBeatBars);
-		ADD_METHOD(SetBeatBars);
-		ADD_METHOD(SetBeatBarsAlpha);
 	}
 };
 

@@ -61,30 +61,16 @@ void SongPosition::Reset()
 class LunaSongPosition: public Luna<SongPosition>
 {
 public:
-	DEFINE_METHOD( GetMusicSecondsVisible, m_fMusicSecondsVisible );
-	DEFINE_METHOD( GetSongBeatVisible, m_fSongBeatVisible );
-	DEFINE_METHOD( GetMusicSeconds, m_fMusicSeconds );
-	DEFINE_METHOD( GetSongBeat, m_fSongBeat );
-	DEFINE_METHOD( GetSongBeatNoOffset, m_fSongBeatNoOffset );
-	DEFINE_METHOD( GetCurBPS, m_fCurBPS );
-	DEFINE_METHOD( GetFreeze, m_bFreeze );
-	DEFINE_METHOD( GetDelay, m_bDelay );
-	DEFINE_METHOD( GetWarpBeginRow, m_iWarpBeginRow );
-	DEFINE_METHOD( GetWarpDestination, m_fWarpDestination );
-
-	LunaSongPosition()
-	{
-		ADD_METHOD( GetMusicSecondsVisible );
-		ADD_METHOD( GetSongBeatVisible );
-		ADD_METHOD( GetMusicSeconds );
-		ADD_METHOD( GetSongBeat );
-		ADD_METHOD( GetSongBeatNoOffset );
-		ADD_METHOD( GetCurBPS );
-		ADD_METHOD( GetFreeze );
-		ADD_METHOD( GetDelay );
-		ADD_METHOD( GetWarpBeginRow );
-		ADD_METHOD( GetWarpDestination );
-	}
+	LUA_DEFINE_METHOD( GetMusicSecondsVisible, m_fMusicSecondsVisible );
+	LUA_DEFINE_METHOD( GetSongBeatVisible, m_fSongBeatVisible );
+	LUA_DEFINE_METHOD( GetMusicSeconds, m_fMusicSeconds );
+	LUA_DEFINE_METHOD( GetSongBeat, m_fSongBeat );
+	LUA_DEFINE_METHOD( GetSongBeatNoOffset, m_fSongBeatNoOffset );
+	LUA_DEFINE_METHOD( GetCurBPS, m_fCurBPS );
+	LUA_DEFINE_METHOD( GetFreeze, m_bFreeze );
+	LUA_DEFINE_METHOD( GetDelay, m_bDelay );
+	LUA_DEFINE_METHOD( GetWarpBeginRow, m_iWarpBeginRow );
+	LUA_DEFINE_METHOD( GetWarpDestination, m_fWarpDestination );
 };
 
 LUA_REGISTER_CLASS( SongPosition );

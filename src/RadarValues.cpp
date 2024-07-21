@@ -112,12 +112,7 @@ void RadarValues::FromString( RString sRadarValues )
 class LunaRadarValues: public Luna<RadarValues>
 {
 public:
-	static int GetValue( T* p, lua_State *L ) { lua_pushnumber( L, (*p)[Enum::Check<RadarCategory>(L, 1)] ); return 1; }
-
-	LunaRadarValues()
-	{
-		ADD_METHOD( GetValue );
-	}
+	LUA_METHOD(GetValue)( T* p, lua_State *L ) { lua_pushnumber( L, (*p)[Enum::Check<RadarCategory>(L, 1)] ); return 1; }
 };
 
 LUA_REGISTER_CLASS( RadarValues )

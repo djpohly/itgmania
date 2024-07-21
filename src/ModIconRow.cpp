@@ -185,12 +185,7 @@ void ModIconRow::SetFromGameState()
 class LunaModIconRow: public Luna<ModIconRow>
 {
 public:
-	static int Load( T* p, lua_State *L )		{ p->Load( SArg(1), Enum::Check<PlayerNumber>(L, 2) ); COMMON_RETURN_SELF; }
-
-	LunaModIconRow()
-	{
-		ADD_METHOD( Load );
-	}
+	LUA_METHOD(Load)( T* p, lua_State *L )		{ p->Load( SArg(1), Enum::Check<PlayerNumber>(L, 2) ); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( ModIconRow, ActorFrame )

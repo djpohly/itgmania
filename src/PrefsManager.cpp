@@ -564,7 +564,7 @@ RString PrefsManager::GetPreferencesSection() const
 class LunaPrefsManager: public Luna<PrefsManager>
 {
 public:
-	static int GetPreference( T* p, lua_State *L )
+	LUA_METHOD(GetPreference)( T* p, lua_State *L )
 	{
 		RString sName = SArg(1);
 		IPreference *pPref = IPreference::GetPreferenceByName( sName );
@@ -578,7 +578,7 @@ public:
 		pPref->PushValue( L );
 		return 1;
 	}
-	static int SetPreference( T* p, lua_State *L )
+	LUA_METHOD(SetPreference)( T* p, lua_State *L )
 	{
 		RString sName = SArg(1);
 
@@ -598,7 +598,7 @@ public:
 		pPref->SetFromStack( L );
 		COMMON_RETURN_SELF;
 	}
-	static int SetPreferenceToDefault( T* p, lua_State *L )
+	LUA_METHOD(SetPreferenceToDefault)( T* p, lua_State *L )
 	{
 		RString sName = SArg(1);
 
@@ -618,7 +618,7 @@ public:
 		LOG->Trace( "Restored preference \"%s\" to default \"%s\"", sName.c_str(), pPref->ToString().c_str() );
 		COMMON_RETURN_SELF;
 	}
-	static int PreferenceExists( T* p, lua_State *L )
+	LUA_METHOD(PreferenceExists)( T* p, lua_State *L )
 	{
 		RString sName = SArg(1);
 
@@ -632,16 +632,7 @@ public:
 		return 1;
 	}
 
-	static int SavePreferences( T* p, lua_State *L ) { p->SavePrefsToDisk(); COMMON_RETURN_SELF; }
-
-	LunaPrefsManager()
-	{
-		ADD_METHOD( GetPreference );
-		ADD_METHOD( SetPreference );
-		ADD_METHOD( SetPreferenceToDefault );
-		ADD_METHOD( PreferenceExists );
-		ADD_METHOD( SavePreferences );
-	}
+	LUA_METHOD(SavePreferences)( T* p, lua_State *L ) { p->SavePrefsToDisk(); COMMON_RETURN_SELF; }
 };
 
 LUA_REGISTER_CLASS( PrefsManager )

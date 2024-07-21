@@ -2693,38 +2693,38 @@ Profile* GameState::GetEditLocalProfile()
 class LunaGameState: public Luna<GameState>
 {
 public:
-	DEFINE_METHOD( IsPlayerEnabled,			IsPlayerEnabled(Enum::Check<PlayerNumber>(L, 1)) )
-	DEFINE_METHOD( IsHumanPlayer,			IsHumanPlayer(Enum::Check<PlayerNumber>(L, 1)) )
-	DEFINE_METHOD( GetPlayerDisplayName,		GetPlayerDisplayName(Enum::Check<PlayerNumber>(L, 1)) )
-	DEFINE_METHOD( GetMasterPlayerNumber,		GetMasterPlayerNumber() )
-	DEFINE_METHOD( GetMultiplayer,			m_bMultiplayer )
-	static int SetMultiplayer( T* p, lua_State *L )
+	LUA_DEFINE_METHOD( IsPlayerEnabled,			IsPlayerEnabled(Enum::Check<PlayerNumber>(L, 1)) )
+	LUA_DEFINE_METHOD( IsHumanPlayer,			IsHumanPlayer(Enum::Check<PlayerNumber>(L, 1)) )
+	LUA_DEFINE_METHOD( GetPlayerDisplayName,		GetPlayerDisplayName(Enum::Check<PlayerNumber>(L, 1)) )
+	LUA_DEFINE_METHOD( GetMasterPlayerNumber,		GetMasterPlayerNumber() )
+	LUA_DEFINE_METHOD( GetMultiplayer,			m_bMultiplayer )
+	LUA_METHOD(SetMultiplayer)( T* p, lua_State *L )
 	{
 		p->m_bMultiplayer = BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD( InStepEditor,			m_bInStepEditor );
-	DEFINE_METHOD( GetNumMultiplayerNoteFields,	m_iNumMultiplayerNoteFields )
-	DEFINE_METHOD( ShowW1,				ShowW1() )
+	LUA_DEFINE_METHOD( InStepEditor,			m_bInStepEditor );
+	LUA_DEFINE_METHOD( GetNumMultiplayerNoteFields,	m_iNumMultiplayerNoteFields )
+	LUA_DEFINE_METHOD( ShowW1,				ShowW1() )
 
-	static int SetNumMultiplayerNoteFields( T* p, lua_State *L )
+	LUA_METHOD(SetNumMultiplayerNoteFields)( T* p, lua_State *L )
 	{
 		p->m_iNumMultiplayerNoteFields = IArg(1);
 		COMMON_RETURN_SELF;
 	}
-	static int GetPlayerState( T* p, lua_State *L )
+	LUA_METHOD(GetPlayerState)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		p->m_pPlayerState[pn]->PushSelf(L);
 		return 1;
 	}
-	static int GetMultiPlayerState( T* p, lua_State *L )
+	LUA_METHOD(GetMultiPlayerState)( T* p, lua_State *L )
 	{
 		MultiPlayer mp = Enum::Check<MultiPlayer>(L, 1);
 		p->m_pMultiPlayerState[mp]->PushSelf(L);
 		return 1;
 	}
-	static int ApplyGameCommand( T* p, lua_State *L )
+	LUA_METHOD(ApplyGameCommand)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = PLAYER_INVALID;
 		if( lua_gettop(L) >= 2 && !lua_isnil(L,2) ) {
@@ -2741,14 +2741,14 @@ public:
 		p->ApplyGameCommand(SArg(1),pn);
 		COMMON_RETURN_SELF;
 	}
-	static int GetCurrentSong( T* p, lua_State *L )			{ if(p->m_pCurSong) p->m_pCurSong->PushSelf(L); else lua_pushnil(L); return 1; }
-	static int SetCurrentSong( T* p, lua_State *L )
+	LUA_METHOD(GetCurrentSong)( T* p, lua_State *L )			{ if(p->m_pCurSong) p->m_pCurSong->PushSelf(L); else lua_pushnil(L); return 1; }
+	LUA_METHOD(SetCurrentSong)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->m_pCurSong.Set(nullptr); }
 		else { Song *pS = Luna<Song>::check( L, 1, true ); p->m_pCurSong.Set( pS ); }
 		COMMON_RETURN_SELF;
 	}
-	static int CanSafelyEnterGameplay(T* p, lua_State* L)
+	LUA_METHOD(CanSafelyEnterGameplay)(T* p, lua_State* L)
 	{
 		RString reason;
 		bool can= p->CanSafelyEnterGameplay(reason);
@@ -2767,7 +2767,7 @@ public:
 			luaL_error(L, "No style set and AutoSetStyle is false, cannot set steps/trail.");
 		}
 	}
-	static int GetCurrentSteps( T* p, lua_State *L )
+	LUA_METHOD(GetCurrentSteps)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		Steps *pSteps = p->m_pCurSteps[pn];
@@ -2775,7 +2775,7 @@ public:
 		else		 { lua_pushnil(L); }
 		return 1;
 	}
-	static int SetCurrentSteps( T* p, lua_State *L )
+	LUA_METHOD(SetCurrentSteps)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		if(lua_isnil(L,2))
@@ -2791,14 +2791,14 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int GetCurrentCourse( T* p, lua_State *L )		{ if(p->m_pCurCourse) p->m_pCurCourse->PushSelf(L); else lua_pushnil(L); return 1; }
-	static int SetCurrentCourse( T* p, lua_State *L )
+	LUA_METHOD(GetCurrentCourse)( T* p, lua_State *L )		{ if(p->m_pCurCourse) p->m_pCurCourse->PushSelf(L); else lua_pushnil(L); return 1; }
+	LUA_METHOD(SetCurrentCourse)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->m_pCurCourse.Set(nullptr); }
 		else { Course *pC = Luna<Course>::check(L,1); p->m_pCurCourse.Set( pC ); }
 		COMMON_RETURN_SELF;
 	}
-	static int GetCurrentTrail( T* p, lua_State *L )
+	LUA_METHOD(GetCurrentTrail)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		Trail *pTrail = p->m_pCurTrail[pn];
@@ -2806,7 +2806,7 @@ public:
 		else		 { lua_pushnil(L); }
 		return 1;
 	}
-	static int SetCurrentTrail( T* p, lua_State *L )
+	LUA_METHOD(SetCurrentTrail)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		if(lua_isnil(L,2))
@@ -2822,115 +2822,115 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int GetPreferredSong( T* p, lua_State *L )		{ if(p->m_pPreferredSong) p->m_pPreferredSong->PushSelf(L); else lua_pushnil(L); return 1; }
-	static int SetPreferredSong( T* p, lua_State *L )
+	LUA_METHOD(GetPreferredSong)( T* p, lua_State *L )		{ if(p->m_pPreferredSong) p->m_pPreferredSong->PushSelf(L); else lua_pushnil(L); return 1; }
+	LUA_METHOD(SetPreferredSong)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->m_pPreferredSong = nullptr; }
 		else { Song *pS = Luna<Song>::check(L,1); p->m_pPreferredSong = pS; }
 		COMMON_RETURN_SELF;
 	}
-	static int SetTemporaryEventMode( T* p, lua_State *L )	{ p->m_bTemporaryEventMode = BArg(1); COMMON_RETURN_SELF; }
-	static int Env( T* p, lua_State *L )	{ p->m_Environment->PushSelf(L); return 1; }
-	static int GetEditSourceSteps( T* p, lua_State *L )
+	LUA_METHOD(SetTemporaryEventMode)( T* p, lua_State *L )	{ p->m_bTemporaryEventMode = BArg(1); COMMON_RETURN_SELF; }
+	LUA_METHOD(Env)( T* p, lua_State *L )	{ p->m_Environment->PushSelf(L); return 1; }
+	LUA_METHOD(GetEditSourceSteps)( T* p, lua_State *L )
 	{
 		Steps *pSteps = p->m_pEditSourceSteps;
 		if( pSteps ) { pSteps->PushSelf(L); }
 		else		 { lua_pushnil(L); }
 		return 1;
 	}
-	static int SetPreferredDifficulty( T* p, lua_State *L )
+	LUA_METHOD(SetPreferredDifficulty)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>( L, 1 );
 		Difficulty dc = Enum::Check<Difficulty>( L, 2 );
 		p->m_PreferredDifficulty[pn].Set( dc );
 		COMMON_RETURN_SELF;
 	}
-	DEFINE_METHOD( GetPreferredDifficulty,		m_PreferredDifficulty[Enum::Check<PlayerNumber>(L, 1)] )
-	DEFINE_METHOD( AnyPlayerHasRankingFeats,	AnyPlayerHasRankingFeats() )
-	DEFINE_METHOD( IsCourseMode,			IsCourseMode() )
-	DEFINE_METHOD( IsBattleMode,			IsBattleMode() )
-	DEFINE_METHOD( IsDemonstration,			m_bDemonstrationOrJukebox )
-	DEFINE_METHOD( GetPlayMode,			m_PlayMode )
-	DEFINE_METHOD( GetSortOrder,			m_SortOrder )
-	DEFINE_METHOD( GetCurrentStageIndex,		m_iCurrentStageIndex )
-	DEFINE_METHOD( IsGoalComplete,			IsGoalComplete(Enum::Check<PlayerNumber>(L, 1)) )
-	DEFINE_METHOD( PlayerIsUsingModifier,		PlayerIsUsingModifier(Enum::Check<PlayerNumber>(L, 1), SArg(2)) )
-	DEFINE_METHOD( GetCourseSongIndex,		GetCourseSongIndex() )
-	DEFINE_METHOD( GetLoadingCourseSongIndex,	GetLoadingCourseSongIndex() )
-	DEFINE_METHOD( GetSmallestNumStagesLeftForAnyHumanPlayer, GetSmallestNumStagesLeftForAnyHumanPlayer() )
-	DEFINE_METHOD( IsAnExtraStage,			IsAnExtraStage() )
-	DEFINE_METHOD( IsExtraStage,			IsExtraStage() )
-	DEFINE_METHOD( IsExtraStage2,			IsExtraStage2() )
-	DEFINE_METHOD( GetCurrentStage,			GetCurrentStage() )
-	DEFINE_METHOD( HasEarnedExtraStage,		HasEarnedExtraStage() )
-	DEFINE_METHOD( GetEarnedExtraStage,		GetEarnedExtraStage() )
-	DEFINE_METHOD( GetEasiestStepsDifficulty,	GetEasiestStepsDifficulty() )
-	DEFINE_METHOD( GetHardestStepsDifficulty,	GetHardestStepsDifficulty() )
-	DEFINE_METHOD( IsEventMode,			IsEventMode() )
-	DEFINE_METHOD( GetNumPlayersEnabled,		GetNumPlayersEnabled() )
-	/*DEFINE_METHOD( GetSongBeat,			m_Position.m_fSongBeat )
-	DEFINE_METHOD( GetSongBeatVisible,		m_Position.m_fSongBeatVisible )
-	DEFINE_METHOD( GetSongBPS,			m_Position.m_fCurBPS )
-	DEFINE_METHOD( GetSongFreeze,			m_Position.m_bFreeze )
-	DEFINE_METHOD( GetSongDelay,			m_Position.m_bDelay )*/
-	static int GetSongPosition( T* p, lua_State *L )
+	LUA_DEFINE_METHOD( GetPreferredDifficulty,		m_PreferredDifficulty[Enum::Check<PlayerNumber>(L, 1)] )
+	LUA_DEFINE_METHOD( AnyPlayerHasRankingFeats,	AnyPlayerHasRankingFeats() )
+	LUA_DEFINE_METHOD( IsCourseMode,			IsCourseMode() )
+	LUA_DEFINE_METHOD( IsBattleMode,			IsBattleMode() )
+	LUA_DEFINE_METHOD( IsDemonstration,			m_bDemonstrationOrJukebox )
+	LUA_DEFINE_METHOD( GetPlayMode,			m_PlayMode )
+	LUA_DEFINE_METHOD( GetSortOrder,			m_SortOrder )
+	LUA_DEFINE_METHOD( GetCurrentStageIndex,		m_iCurrentStageIndex )
+	LUA_DEFINE_METHOD( IsGoalComplete,			IsGoalComplete(Enum::Check<PlayerNumber>(L, 1)) )
+	LUA_DEFINE_METHOD( PlayerIsUsingModifier,		PlayerIsUsingModifier(Enum::Check<PlayerNumber>(L, 1), SArg(2)) )
+	LUA_DEFINE_METHOD( GetCourseSongIndex,		GetCourseSongIndex() )
+	LUA_DEFINE_METHOD( GetLoadingCourseSongIndex,	GetLoadingCourseSongIndex() )
+	LUA_DEFINE_METHOD( GetSmallestNumStagesLeftForAnyHumanPlayer, GetSmallestNumStagesLeftForAnyHumanPlayer() )
+	LUA_DEFINE_METHOD( IsAnExtraStage,			IsAnExtraStage() )
+	LUA_DEFINE_METHOD( IsExtraStage,			IsExtraStage() )
+	LUA_DEFINE_METHOD( IsExtraStage2,			IsExtraStage2() )
+	LUA_DEFINE_METHOD( GetCurrentStage,			GetCurrentStage() )
+	LUA_DEFINE_METHOD( HasEarnedExtraStage,		HasEarnedExtraStage() )
+	LUA_DEFINE_METHOD( GetEarnedExtraStage,		GetEarnedExtraStage() )
+	LUA_DEFINE_METHOD( GetEasiestStepsDifficulty,	GetEasiestStepsDifficulty() )
+	LUA_DEFINE_METHOD( GetHardestStepsDifficulty,	GetHardestStepsDifficulty() )
+	LUA_DEFINE_METHOD( IsEventMode,			IsEventMode() )
+	LUA_DEFINE_METHOD( GetNumPlayersEnabled,		GetNumPlayersEnabled() )
+	/*LUA_DEFINE_METHOD( GetSongBeat,			m_Position.m_fSongBeat )
+	LUA_DEFINE_METHOD( GetSongBeatVisible,		m_Position.m_fSongBeatVisible )
+	LUA_DEFINE_METHOD( GetSongBPS,			m_Position.m_fCurBPS )
+	LUA_DEFINE_METHOD( GetSongFreeze,			m_Position.m_bFreeze )
+	LUA_DEFINE_METHOD( GetSongDelay,			m_Position.m_bDelay )*/
+	LUA_METHOD(GetSongPosition)( T* p, lua_State *L )
 	{
 		p->m_Position.PushSelf(L);
 		return 1;
 	}
-	DEFINE_METHOD( GetLastGameplayDuration, m_DanceDuration )
-	DEFINE_METHOD( GetGameplayLeadIn,		m_bGameplayLeadIn )
-	DEFINE_METHOD( GetCoins,			m_iCoins )
-	DEFINE_METHOD( IsSideJoined,			m_bSideIsJoined[Enum::Check<PlayerNumber>(L, 1)] )
-	DEFINE_METHOD( GetCoinsNeededToJoin,		GetCoinsNeededToJoin() )
-	DEFINE_METHOD( EnoughCreditsToJoin,		EnoughCreditsToJoin() )
-	DEFINE_METHOD( PlayersCanJoin,			PlayersCanJoin() )
-	DEFINE_METHOD( GetNumSidesJoined,		GetNumSidesJoined() )
-	DEFINE_METHOD( GetCoinMode,			GetCoinMode() )
-	DEFINE_METHOD( GetPremium,			GetPremium() )
-	DEFINE_METHOD( GetSongOptionsString,		m_SongOptions.GetCurrent().GetString() )
-	static int GetSongOptions( T* p, lua_State *L )
+	LUA_DEFINE_METHOD( GetLastGameplayDuration, m_DanceDuration )
+	LUA_DEFINE_METHOD( GetGameplayLeadIn,		m_bGameplayLeadIn )
+	LUA_DEFINE_METHOD( GetCoins,			m_iCoins )
+	LUA_DEFINE_METHOD( IsSideJoined,			m_bSideIsJoined[Enum::Check<PlayerNumber>(L, 1)] )
+	LUA_DEFINE_METHOD( GetCoinsNeededToJoin,		GetCoinsNeededToJoin() )
+	LUA_DEFINE_METHOD( EnoughCreditsToJoin,		EnoughCreditsToJoin() )
+	LUA_DEFINE_METHOD( PlayersCanJoin,			PlayersCanJoin() )
+	LUA_DEFINE_METHOD( GetNumSidesJoined,		GetNumSidesJoined() )
+	LUA_DEFINE_METHOD( GetCoinMode,			GetCoinMode() )
+	LUA_DEFINE_METHOD( GetPremium,			GetPremium() )
+	LUA_DEFINE_METHOD( GetSongOptionsString,		m_SongOptions.GetCurrent().GetString() )
+	LUA_METHOD(GetSongOptions)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
 		RString s = p->m_SongOptions.Get(m).GetString();
 		LuaHelpers::Push( L, s );
 		return 1;
 	}
-	static int GetSongOptionsObject( T* p, lua_State *L )
+	LUA_METHOD(GetSongOptionsObject)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
 		p->m_SongOptions.Get(m).PushSelf(L);
 		return 1;
 	}
-	static int GetDefaultSongOptions( T* p, lua_State *L )
+	LUA_METHOD(GetDefaultSongOptions)( T* p, lua_State *L )
 	{
 		SongOptions so;
 		p->GetDefaultSongOptions( so );
 		lua_pushstring(L, so.GetString());
 		return 1;
 	}
-	static int ApplyPreferredSongOptionsToOtherLevels(T* p, lua_State* L)
+	LUA_METHOD(ApplyPreferredSongOptionsToOtherLevels)(T* p, lua_State* L)
 	{
 		p->m_SongOptions.Assign(ModsLevel_Preferred,
 			p->m_SongOptions.Get(ModsLevel_Preferred));
 		return 0;
 	}
-	static int ApplyStageModifiers( T* p, lua_State *L )
+	LUA_METHOD(ApplyStageModifiers)( T* p, lua_State *L )
 	{
 		p->ApplyStageModifiers( Enum::Check<PlayerNumber>(L, 1), SArg(2) );
 		COMMON_RETURN_SELF;
 	}
-	static int ApplyPreferredModifiers( T* p, lua_State *L )
+	LUA_METHOD(ApplyPreferredModifiers)( T* p, lua_State *L )
 	{
 		p->ApplyPreferredModifiers( Enum::Check<PlayerNumber>(L, 1), SArg(2) );
 		COMMON_RETURN_SELF;
 	}
-	static int ClearStageModifiersIllegalForCourse( T* p, lua_State *L )
+	LUA_METHOD(ClearStageModifiersIllegalForCourse)( T* p, lua_State *L )
 	{
 		p->ClearStageModifiersIllegalForCourse();
 		COMMON_RETURN_SELF;
 	}
-	static int SetSongOptions( T* p, lua_State *L )
+	LUA_METHOD(SetSongOptions)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
 
@@ -2940,25 +2940,25 @@ public:
 		p->m_SongOptions.Assign( m, so );
 		COMMON_RETURN_SELF;
 	}
-	static int GetStageResult( T* p, lua_State *L )
+	LUA_METHOD(GetStageResult)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		LuaHelpers::Push( L, p->GetStageResult(pn) );
 		return 1;
 	}
-	static int IsWinner( T* p, lua_State *L )
+	LUA_METHOD(IsWinner)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		lua_pushboolean(L, p->GetStageResult(pn)==RESULT_WIN); return 1;
 	}
-	static int IsDraw( T* p, lua_State *L )
+	LUA_METHOD(IsDraw)( T* p, lua_State *L )
 	{
 		lua_pushboolean(L, p->GetStageResult(PLAYER_1)==RESULT_DRAW); return 1;
 	}
-	static int GetCurrentGame( T* p, lua_State *L )			{ const_cast<Game*>(p->GetCurrentGame())->PushSelf( L ); return 1; }
-	DEFINE_METHOD( GetEditCourseEntryIndex,		m_iEditCourseEntryIndex )
-	DEFINE_METHOD( GetEditLocalProfileID,		m_sEditLocalProfileID.Get() )
-	static int GetEditLocalProfile( T* p, lua_State *L )
+	LUA_METHOD(GetCurrentGame)( T* p, lua_State *L )			{ const_cast<Game*>(p->GetCurrentGame())->PushSelf( L ); return 1; }
+	LUA_DEFINE_METHOD( GetEditCourseEntryIndex,		m_iEditCourseEntryIndex )
+	LUA_DEFINE_METHOD( GetEditLocalProfileID,		m_sEditLocalProfileID.Get() )
+	LUA_METHOD(GetEditLocalProfile)( T* p, lua_State *L )
 	{
 		Profile *pProfile = p->GetEditLocalProfile();
 		if( pProfile )
@@ -2968,7 +2968,7 @@ public:
 		return 1;
 	}
 
-	static int GetCurrentStepsCredits( T* t, lua_State *L )
+	LUA_METHOD(GetCurrentStepsCredits)( T* t, lua_State *L )
 	{
 		const Song* pSong = t->m_pCurSong;
 		if( pSong == nullptr )
@@ -2998,9 +2998,9 @@ public:
 		return vpStepsToShow.size()*2;
 	}
 
-	static int SetPreferredSongGroup( T* p, lua_State *L ) { p->m_sPreferredSongGroup.Set( SArg(1) ); COMMON_RETURN_SELF; }
-	DEFINE_METHOD( GetPreferredSongGroup, m_sPreferredSongGroup.Get() );
-	static int GetHumanPlayers( T* p, lua_State *L )
+	LUA_METHOD(SetPreferredSongGroup)( T* p, lua_State *L ) { p->m_sPreferredSongGroup.Set( SArg(1) ); COMMON_RETURN_SELF; }
+	LUA_DEFINE_METHOD( GetPreferredSongGroup, m_sPreferredSongGroup.Get() );
+	LUA_METHOD(GetHumanPlayers)( T* p, lua_State *L )
 	{
 		std::vector<PlayerNumber> vHP;
 		FOREACH_HumanPlayer( pn )
@@ -3008,7 +3008,7 @@ public:
 		LuaHelpers::CreateTableFromArray( vHP, L );
 		return 1;
 	}
-	static int GetEnabledPlayers(T* , lua_State *L )
+	LUA_METHOD(GetEnabledPlayers)(T* , lua_State *L )
 	{
 		std::vector<PlayerNumber> vEP;
 		FOREACH_EnabledPlayer( pn )
@@ -3016,14 +3016,14 @@ public:
 		LuaHelpers::CreateTableFromArray( vEP, L );
 		return 1;
 	}
-	static int GetCurrentStyle( T* p, lua_State *L )
+	LUA_METHOD(GetCurrentStyle)( T* p, lua_State *L )
 	{
 		PlayerNumber pn= Enum::Check<PlayerNumber>(L, 1, true, true);
 		Style *pStyle = const_cast<Style *> (p->GetCurrentStyle(pn));
 		LuaHelpers::Push( L, pStyle );
 		return 1;
 	}
-	static int IsAnyHumanPlayerUsingMemoryCard( T* , lua_State *L )
+	LUA_METHOD(IsAnyHumanPlayerUsingMemoryCard)( T* , lua_State *L )
 	{
 		bool bUsingMemoryCard = false;
 		FOREACH_HumanPlayer( pn )
@@ -3034,47 +3034,47 @@ public:
 		lua_pushboolean(L, bUsingMemoryCard );
 		return 1;
 	}
-	static int GetNumStagesForCurrentSongAndStepsOrCourse( T* , lua_State *L )
+	LUA_METHOD(GetNumStagesForCurrentSongAndStepsOrCourse)( T* , lua_State *L )
 	{
 		lua_pushnumber(L, GAMESTATE->GetNumStagesForCurrentSongAndStepsOrCourse() );
 		return 1;
 	}
-	static int GetNumStagesLeft( T* p, lua_State *L )
+	LUA_METHOD(GetNumStagesLeft)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
 		lua_pushnumber(L, p->GetNumStagesLeft(pn));
 		return 1;
 	}
-	static int GetGameSeed( T* p, lua_State *L )			{ LuaHelpers::Push( L, p->m_iGameSeed ); return 1; }
-	static int GetStageSeed( T* p, lua_State *L )			{ LuaHelpers::Push( L, p->m_iStageSeed ); return 1; }
-	static int SaveLocalData( T* p, lua_State *L )			{ p->SaveLocalData(); COMMON_RETURN_SELF; }
+	LUA_METHOD(GetGameSeed)( T* p, lua_State *L )			{ LuaHelpers::Push( L, p->m_iGameSeed ); return 1; }
+	LUA_METHOD(GetStageSeed)( T* p, lua_State *L )			{ LuaHelpers::Push( L, p->m_iStageSeed ); return 1; }
+	LUA_METHOD(SaveLocalData)( T* p, lua_State *L )			{ p->SaveLocalData(); COMMON_RETURN_SELF; }
 
-	static int SetJukeboxUsesModifiers( T* p, lua_State *L )
+	LUA_METHOD(SetJukeboxUsesModifiers)( T* p, lua_State *L )
 	{
 		p->m_bJukeboxUsesModifiers = BArg(1); COMMON_RETURN_SELF;
 	}
-	static int Reset( T* p, lua_State *L )				{ p->Reset(); COMMON_RETURN_SELF; }
-	static int JoinPlayer( T* p, lua_State *L )				{ p->JoinPlayer(Enum::Check<PlayerNumber>(L, 1)); COMMON_RETURN_SELF; }
-	static int UnjoinPlayer( T* p, lua_State *L )				{ p->UnjoinPlayer(Enum::Check<PlayerNumber>(L, 1)); COMMON_RETURN_SELF; }
-	static int JoinInput( T* p, lua_State *L )
+	LUA_METHOD(Reset)( T* p, lua_State *L )				{ p->Reset(); COMMON_RETURN_SELF; }
+	LUA_METHOD(JoinPlayer)( T* p, lua_State *L )				{ p->JoinPlayer(Enum::Check<PlayerNumber>(L, 1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(UnjoinPlayer)( T* p, lua_State *L )				{ p->UnjoinPlayer(Enum::Check<PlayerNumber>(L, 1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(JoinInput)( T* p, lua_State *L )
 	{
 		lua_pushboolean(L, p->JoinInput(Enum::Check<PlayerNumber>(L, 1)));
 		return 1;
 	}
-	static int GetSongPercent( T* p, lua_State *L )				{ lua_pushnumber(L, p->GetSongPercent(FArg(1))); return 1; }
-	DEFINE_METHOD( GetCurMusicSeconds,	m_Position.m_fMusicSeconds )
+	LUA_METHOD(GetSongPercent)( T* p, lua_State *L )				{ lua_pushnumber(L, p->GetSongPercent(FArg(1))); return 1; }
+	LUA_DEFINE_METHOD( GetCurMusicSeconds,	m_Position.m_fMusicSeconds )
 
-	DEFINE_METHOD( GetWorkoutGoalComplete,		m_bWorkoutGoalComplete )
-	static int GetCharacter( T* p, lua_State *L )				{ p->m_pCurCharacters[Enum::Check<PlayerNumber>(L, 1)]->PushSelf(L); return 1; }
-	static int SetCharacter( T* p, lua_State *L ){
+	LUA_DEFINE_METHOD( GetWorkoutGoalComplete,		m_bWorkoutGoalComplete )
+	LUA_METHOD(GetCharacter)( T* p, lua_State *L )				{ p->m_pCurCharacters[Enum::Check<PlayerNumber>(L, 1)]->PushSelf(L); return 1; }
+	LUA_METHOD(SetCharacter)( T* p, lua_State *L ){
 		Character* c = CHARMAN->GetCharacterFromID(SArg(2));
 		if (c)
 			p->m_pCurCharacters[Enum::Check<PlayerNumber>(L, 1)] = c;
 		COMMON_RETURN_SELF;
 	}
-	static int GetExpandedSectionName( T* p, lua_State *L )				{ lua_pushstring(L, p->sExpandedSectionName); return 1; }
-	static int AddStageToPlayer( T* p, lua_State *L )				{ p->AddStageToPlayer(Enum::Check<PlayerNumber>(L, 1)); COMMON_RETURN_SELF; }
-	static int InsertCoin( T* p, lua_State *L )
+	LUA_METHOD(GetExpandedSectionName)( T* p, lua_State *L )				{ lua_pushstring(L, p->sExpandedSectionName); return 1; }
+	LUA_METHOD(AddStageToPlayer)( T* p, lua_State *L )				{ p->AddStageToPlayer(Enum::Check<PlayerNumber>(L, 1)); COMMON_RETURN_SELF; }
+	LUA_METHOD(InsertCoin)( T* p, lua_State *L )
 	{
 		int numCoins = IArg(1);
 		if (GAMESTATE->m_iCoins + numCoins >= 0)
@@ -3086,32 +3086,32 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	static int InsertCredit( T* p, lua_State *L )
+	LUA_METHOD(InsertCredit)( T* p, lua_State *L )
 	{
 		StepMania::InsertCredit();
 		COMMON_RETURN_SELF;
 	}
-	static int CurrentOptionsDisqualifyPlayer( T* p, lua_State *L )	{ lua_pushboolean(L, p->CurrentOptionsDisqualifyPlayer(Enum::Check<PlayerNumber>(L, 1))); return 1; }
+	LUA_METHOD(CurrentOptionsDisqualifyPlayer)( T* p, lua_State *L )	{ lua_pushboolean(L, p->CurrentOptionsDisqualifyPlayer(Enum::Check<PlayerNumber>(L, 1))); return 1; }
 
-	static int ResetPlayerOptions( T* p, lua_State *L )
+	LUA_METHOD(ResetPlayerOptions)( T* p, lua_State *L )
 	{
 		p->ResetPlayerOptions(Enum::Check<PlayerNumber>(L, 1));
 		COMMON_RETURN_SELF;
 	}
 
-	static int RefreshNoteSkinData( T* p, lua_State *L )
+	LUA_METHOD(RefreshNoteSkinData)( T* p, lua_State *L )
 	{
 		NOTESKIN->RefreshNoteSkinData(p->m_pCurGame);
 		COMMON_RETURN_SELF;
 	}
 
-	static int Dopefish( T* p, lua_State *L )
+	LUA_METHOD(Dopefish)( T* p, lua_State *L )
 	{
 		lua_pushboolean(L, p->m_bDopefish);
 		return 1;
 	}
 
-	static int LoadProfiles( T* p, lua_State *L )
+	LUA_METHOD(LoadProfiles)( T* p, lua_State *L )
 	{
 		bool LoadEdits = true;
 		if(lua_isboolean(L, 1))
@@ -3123,27 +3123,27 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int SaveProfiles( T* p, lua_State *L )
+	LUA_METHOD(SaveProfiles)( T* p, lua_State *L )
 	{
 		p->SavePlayerProfiles();
 		SCREENMAN->ZeroNextUpdate();
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetFailTypeExplicitlySet(T* p, lua_State* L)
+	LUA_METHOD(SetFailTypeExplicitlySet)(T* p, lua_State* L)
 	{
 		p->m_bFailTypeWasExplicitlySet= true;
 		COMMON_RETURN_SELF;
 	}
 
-	static int StoreRankingName( T* p, lua_State *L )
+	LUA_METHOD(StoreRankingName)( T* p, lua_State *L )
 	{
 		p->StoreRankingName(Enum::Check<PlayerNumber>(L, 1), SArg(2));
 		COMMON_RETURN_SELF;
 	}
 
-	DEFINE_METHOD( HaveProfileToLoad, HaveProfileToLoad() )
-	DEFINE_METHOD( HaveProfileToSave, HaveProfileToSave() )
+	LUA_DEFINE_METHOD( HaveProfileToLoad, HaveProfileToLoad() )
+	LUA_DEFINE_METHOD( HaveProfileToSave, HaveProfileToSave() )
 
 	static bool AreStyleAndPlayModeCompatible( T* p, lua_State* L, const Style *style, PlayMode pm )
 	{
@@ -3186,7 +3186,7 @@ public:
 		}
 	}
 
-	static int SetCurrentStyle( T* p, lua_State *L )
+	LUA_METHOD(SetCurrentStyle)( T* p, lua_State *L )
 	{
 		const Style* pStyle = nullptr;
 		if( lua_isstring(L,1) )
@@ -3227,7 +3227,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetCurrentPlayMode( T* p, lua_State *L )
+	LUA_METHOD(SetCurrentPlayMode)( T* p, lua_State *L )
 	{
 		PlayMode pm = Enum::Check<PlayMode>( L, 1 );
 		if( AreStyleAndPlayModeCompatible( p, L, p->GetCurrentStyle(PLAYER_INVALID), pm ) )
@@ -3237,7 +3237,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	static int SetStepsForEditMode(T* p, lua_State *L)
+	LUA_METHOD(SetStepsForEditMode)(T* p, lua_State *L)
 	{
 		// Arg forms:
 		// 1.  Edit existing steps:
@@ -3290,7 +3290,7 @@ public:
 		return 0;
 	}
 
-	static int GetAutoGenFarg(T* p, lua_State *L)
+	LUA_METHOD(GetAutoGenFarg)(T* p, lua_State *L)
 	{
 		int i= IArg(1) - 1;
 		if(i < 0) { lua_pushnil(L); return 1; }
@@ -3299,7 +3299,7 @@ public:
 		lua_pushnumber(L, p->GetAutoGenFarg(si));
 		return 1;
 	}
-	static int SetAutoGenFarg(T* p, lua_State* L)
+	LUA_METHOD(SetAutoGenFarg)(T* p, lua_State* L)
 	{
 		int i= IArg(1) - 1;
 		if(i < 0)
@@ -3315,140 +3315,11 @@ public:
 		p->m_autogen_fargs[si]= v;
 		COMMON_RETURN_SELF;
 	}
-	static int prepare_song_for_gameplay(T* p, lua_State* L)
+	LUA_METHOD(prepare_song_for_gameplay)(T* p, lua_State* L)
 	{
 		int result= p->prepare_song_for_gameplay();
 		lua_pushstring(L, prepare_song_failures[result]);
 		return 1;
-	}
-
-	LunaGameState()
-	{
-		ADD_METHOD( IsPlayerEnabled );
-		ADD_METHOD( IsHumanPlayer );
-		ADD_METHOD( GetPlayerDisplayName );
-		ADD_METHOD( GetMasterPlayerNumber );
-		ADD_METHOD( GetMultiplayer );
-		ADD_METHOD( SetMultiplayer );
-		ADD_METHOD( InStepEditor );
-		ADD_METHOD( GetNumMultiplayerNoteFields );
-		ADD_METHOD( SetNumMultiplayerNoteFields );
-		ADD_METHOD( ShowW1 );
-		ADD_METHOD( GetPlayerState );
-		ADD_METHOD( GetMultiPlayerState );
-		ADD_METHOD( ApplyGameCommand );
-		ADD_METHOD( CanSafelyEnterGameplay );
-		ADD_METHOD( GetCurrentSong );
-		ADD_METHOD( SetCurrentSong );
-		ADD_METHOD( GetCurrentSteps );
-		ADD_METHOD( SetCurrentSteps );
-		ADD_METHOD( GetCurrentCourse );
-		ADD_METHOD( SetCurrentCourse );
-		ADD_METHOD( GetCurrentTrail );
-		ADD_METHOD( SetCurrentTrail );
-		ADD_METHOD( SetPreferredSong );
-		ADD_METHOD( GetPreferredSong );
-		ADD_METHOD( SetTemporaryEventMode );
-		ADD_METHOD( Env );
-		ADD_METHOD( GetEditSourceSteps );
-		ADD_METHOD( SetPreferredDifficulty );
-		ADD_METHOD( GetPreferredDifficulty );
-		ADD_METHOD( AnyPlayerHasRankingFeats );
-		ADD_METHOD( IsCourseMode );
-		ADD_METHOD( IsBattleMode );
-		ADD_METHOD( IsDemonstration );
-		ADD_METHOD( GetPlayMode );
-		ADD_METHOD( GetSortOrder );
-		ADD_METHOD( GetCurrentStageIndex );
-		ADD_METHOD( IsGoalComplete );
-		ADD_METHOD( PlayerIsUsingModifier );
-		ADD_METHOD( GetCourseSongIndex );
-		ADD_METHOD( GetLoadingCourseSongIndex );
-		ADD_METHOD( GetSmallestNumStagesLeftForAnyHumanPlayer );
-		ADD_METHOD( IsAnExtraStage );
-		ADD_METHOD( IsExtraStage );
-		ADD_METHOD( IsExtraStage2 );
-		ADD_METHOD( GetCurrentStage );
-		ADD_METHOD( HasEarnedExtraStage );
-		ADD_METHOD( GetEarnedExtraStage );
-		ADD_METHOD( GetEasiestStepsDifficulty );
-		ADD_METHOD( GetHardestStepsDifficulty );
-		ADD_METHOD( IsEventMode );
-		ADD_METHOD( GetNumPlayersEnabled );
-		/*ADD_METHOD( GetSongBeat );
-		ADD_METHOD( GetSongBeatVisible );
-		ADD_METHOD( GetSongBPS );
-		ADD_METHOD( GetSongFreeze );
-		ADD_METHOD( GetSongDelay );*/
-		ADD_METHOD( GetSongPosition );
-		ADD_METHOD( GetLastGameplayDuration );
-		ADD_METHOD( GetGameplayLeadIn );
-		ADD_METHOD( GetCoins );
-		ADD_METHOD( IsSideJoined );
-		ADD_METHOD( GetCoinsNeededToJoin );
-		ADD_METHOD( EnoughCreditsToJoin );
-		ADD_METHOD( PlayersCanJoin );
-		ADD_METHOD( GetNumSidesJoined );
-		ADD_METHOD( GetCoinMode );
-		ADD_METHOD( GetPremium );
-		ADD_METHOD( GetSongOptionsString );
-		ADD_METHOD( GetSongOptions );
-		ADD_METHOD( GetSongOptionsObject );
-		ADD_METHOD( GetDefaultSongOptions );
-		ADD_METHOD( ApplyPreferredSongOptionsToOtherLevels );
-		ADD_METHOD( ApplyPreferredModifiers );
-		ADD_METHOD( ApplyStageModifiers );
-		ADD_METHOD( ClearStageModifiersIllegalForCourse );
-		ADD_METHOD( SetSongOptions );
-		ADD_METHOD( GetStageResult );
-		ADD_METHOD( IsWinner );
-		ADD_METHOD( IsDraw );
-		ADD_METHOD( GetCurrentGame );
-		ADD_METHOD( GetEditCourseEntryIndex );
-		ADD_METHOD( GetEditLocalProfileID );
-		ADD_METHOD( GetEditLocalProfile );
-		ADD_METHOD( GetCurrentStepsCredits );
-		ADD_METHOD( SetPreferredSongGroup );
-		ADD_METHOD( GetPreferredSongGroup );
-		ADD_METHOD( GetHumanPlayers );
-		ADD_METHOD( GetEnabledPlayers );
-		ADD_METHOD( GetCurrentStyle );
-		ADD_METHOD( IsAnyHumanPlayerUsingMemoryCard );
-		ADD_METHOD( GetNumStagesForCurrentSongAndStepsOrCourse );
-		ADD_METHOD( GetNumStagesLeft );
-		ADD_METHOD( GetGameSeed );
-		ADD_METHOD( GetStageSeed );
-		ADD_METHOD( SaveLocalData );
-		ADD_METHOD( SetJukeboxUsesModifiers );
-		ADD_METHOD( GetWorkoutGoalComplete );
-		ADD_METHOD( Reset );
-		ADD_METHOD( JoinPlayer );
-		ADD_METHOD( UnjoinPlayer );
-		ADD_METHOD( JoinInput );
-		ADD_METHOD( GetSongPercent );
-		ADD_METHOD( GetCurMusicSeconds );
-		ADD_METHOD( GetCharacter );
-		ADD_METHOD( SetCharacter );
-		ADD_METHOD( GetExpandedSectionName );
-		ADD_METHOD( AddStageToPlayer );
-		ADD_METHOD( InsertCoin );
-		ADD_METHOD( InsertCredit );
-		ADD_METHOD( CurrentOptionsDisqualifyPlayer );
-		ADD_METHOD( ResetPlayerOptions );
-		ADD_METHOD( RefreshNoteSkinData );
-		ADD_METHOD( Dopefish );
-		ADD_METHOD( LoadProfiles );
-		ADD_METHOD( SaveProfiles );
-		ADD_METHOD( HaveProfileToLoad );
-		ADD_METHOD( HaveProfileToSave );
-		ADD_METHOD( SetFailTypeExplicitlySet );
-		ADD_METHOD( StoreRankingName );
-		ADD_METHOD( SetCurrentStyle );
-		ADD_METHOD( SetCurrentPlayMode );
-		ADD_METHOD( SetStepsForEditMode );
-		ADD_METHOD( GetAutoGenFarg );
-		ADD_METHOD( SetAutoGenFarg );
-		ADD_METHOD(prepare_song_for_gameplay);
 	}
 };
 
