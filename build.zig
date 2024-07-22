@@ -282,8 +282,13 @@ pub fn build(b: *std.Build) !void {
     _ = helper.makeLib(@import("extern/zlib-build.zig"));
 
     exe.root_module.addCMacro("UNIX", "");
-    // Not sure why this isn't working in config.hpp
+    // Not handled by config.hpp
     exe.root_module.addCMacro("HAVE_FCNTL_H", "1");
+    exe.root_module.addCMacro("BACKTRACE_METHOD_X86_LINUX", "1");
+    exe.root_module.addCMacro("BACKTRACE_METHOD_TEXT", "x86 custom backtrace");
+    exe.root_module.addCMacro("BACKTRACE_LOOKUP_METHOD_DLADDR", "1");
+    exe.root_module.addCMacro("BACKTRACE_LOOKUP_METHOD_TEXT", "dladdr");
+    exe.root_module.addCMacro("CPU_X86_64", "1");
 
     exe.linkSystemLibrary("GL");
     exe.linkSystemLibrary("GLU");
