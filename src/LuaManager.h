@@ -60,6 +60,8 @@ private:
 extern LuaManager *LUA;
 
 
+#define COMMON_RETURN_SELF p->PushSelf(L); return 1;
+
 /** @brief Utilities for working with Lua. */
 namespace LuaHelpers
 {
@@ -133,6 +135,100 @@ namespace LuaHelpers
 		bool bRet = LuaHelpers::FromStack( L, val, -1 );
 		lua_pop( L, 1 );
 		return bRet;
+	}
+
+	inline bool CheckBoolean( lua_State *L, int numArg )
+	{
+		luaL_checktype( L, numArg, LUA_TBOOLEAN );
+		return !!lua_toboolean( L, numArg );
+	}
+
+	/* BIArg is like BArg, except 1 is accepted as a true value and (as a special case)
+	* 0 is accepted as a false value.  This is to help transitions where "cmd,0" is
+	* used to mean "cmd,false". */
+	inline bool CheckIntBoolean (lua_State *L, int iArg )
+	{
+		luaL_checkany( L, iArg );
+		int iType = lua_type( L, iArg );
+		if( iType == LUA_TNUMBER )
+		{
+			return lua_tointeger(L, iArg) != 0;
+		}
+
+		return CheckBoolean( L, iArg );
+	}
+
+	template<typename T> T Arg(lua_State* L, int n);
+
+	template<>
+	inline float Arg(lua_State* L, int n) {
+		return (float) luaL_checknumber(L, n);
+	}
+	template<>
+	inline double Arg(lua_State* L, int n) {
+		return luaL_checknumber(L, n);
+	}
+	template<>
+	inline int Arg(lua_State* L, int n) {
+		return luaL_checkint(L, n);
+	}
+	template<>
+	inline bool Arg(lua_State* L, int n) {
+		return CheckBoolean(L, n);
+	}
+	template<>
+	inline RString Arg(lua_State* L, int n) {
+		return luaL_checkstring(L, n);
+	}
+
+	template<class T, typename R, typename A>
+	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)(A)) {
+		Push(L, (p->*pfn)(Arg<A>(L, 1)));
+		return 1;
+	}
+
+	template<class T, typename R, typename A>
+	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)(A) const) {
+		return WrapMethod(L, p, (R (T::*)(A)) pfn);
+	}
+
+	template<class T, typename R>
+	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)()) {
+		Push(L, (p->*pfn)());
+		return 1;
+	}
+
+	template<class T, typename R>
+	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)() const) {
+		return WrapMethod(L, p, (R (T::*)()) pfn);
+	}
+
+	template<class T, typename A>
+	inline int WrapMethod(lua_State *L, T *p, void (T::*pfn)(A const&)) {
+		(p->*pfn)(Arg<A>(L, 1));
+		COMMON_RETURN_SELF;
+	}
+
+	template<class T, typename A>
+	inline int WrapMethod(lua_State *L, T *p, void (T::*pfn)(A)) {
+		(p->*pfn)(Arg<A>(L, 1));
+		COMMON_RETURN_SELF;
+	}
+
+	template<class T, typename A>
+	inline int WrapMethod(lua_State *L, T *p, void (T::*pfn)(A) const) {
+		return WrapMethod(L, p, (void (T::*)(A)) pfn);
+	}
+
+	template<class T>
+	inline int WrapMethod(lua_State *L, T *p, void (T::*pfn)()) {
+		(p->*pfn)();
+		COMMON_RETURN_SELF;
+	}
+
+	template<class T>
+	inline int WrapMethod(lua_State *L, T *p, void (T::*pfn)() const) {
+		return WrapMethod(L, p, (void (T::*)()) pfn);
 	}
 
 	template<class T>
@@ -216,27 +312,6 @@ struct RegisterLuaFunction { RegisterLuaFunction( RegisterWithLuaFn pfn ) { LuaM
 #define REGISTER_WITH_LUA_FUNCTION( Fn ) \
 	static RegisterLuaFunction register##Fn( Fn );
 
-inline bool MyLua_checkboolean (lua_State *L, int numArg)
-{
-	luaL_checktype( L, numArg, LUA_TBOOLEAN );
-	return !!lua_toboolean( L, numArg );
-}
-
-/* BIArg is like BArg, except 1 is accepted as a true value and (as a special case)
- * 0 is accepted as a false value.  This is to help transitions where "cmd,0" is
- * used to mean "cmd,false". */
-inline bool MyLua_checkintboolean( lua_State *L, int iArg )
-{
-	luaL_checkany( L, iArg );
-	int iType = lua_type( L, iArg );
-	if( iType == LUA_TNUMBER )
-	{
-		return lua_tointeger(L, iArg) != 0;
-	}
-
-	return MyLua_checkboolean( L, iArg );
-}
-
 // Checks the table at index to verify that it contains strings.
 inline bool TableContainsOnlyStrings(lua_State* L, int index)
 {
@@ -258,9 +333,9 @@ inline bool TableContainsOnlyStrings(lua_State* L, int index)
 }
 
 #define SArg(n) (luaL_checkstring(L,(n)))
-#define BIArg(n) (MyLua_checkintboolean(L,(n)))
+#define BIArg(n) (LuaHelpers::CheckIntBoolean(L,(n)))
 #define IArg(n) (luaL_checkint(L,(n)))
-#define BArg(n) (MyLua_checkboolean(L,(n)))
+#define BArg(n) (LuaHelpers::CheckBoolean(L,(n)))
 #define FArg(n) ((float) luaL_checknumber(L,(n)))
 
 // SafeFArg is for places that need to get a number off the lua stack, but

@@ -164,8 +164,6 @@ public:
 #define LUA_DEFINE_METHOD( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
 
-#define COMMON_RETURN_SELF p->PushSelf(L); return 1;
-
 #define GET_SET_BOOL_METHOD(method_name, bool_name) \
 LUA_METHOD(get_##method_name)(T* p, lua_State* L) \
 { \
@@ -193,6 +191,10 @@ LUA_METHOD(set_##bool_name)(T* p, lua_State* L) \
 #define LUA_METHOD( name ) \
 	RegisterLuaMethod register_##name{#name, name}; \
 	static int name /* (parameter list) { body } */
+#define LUA_SIMPLE2(luaname, cname) \
+	RegisterLuaMethod register_##luaname{#luaname, luaname}; \
+	static int luaname(T *p, lua_State *L) { return LuaHelpers::WrapMethod(L, p, &T::cname); }
+#define LUA_SIMPLE(name) LUA_SIMPLE2(name, name)
 
 #define LUA_REGISTER_NAMESPACE( T ) \
 	static void Register##T( lua_State *L ) { luaL_register( L, #T, T##Table ); lua_pop( L, 1 ); } \
