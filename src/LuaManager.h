@@ -158,32 +158,11 @@ namespace LuaHelpers
 		return CheckBoolean( L, iArg );
 	}
 
-	template<typename T> T Arg(lua_State* L, int n);
-
-	template<>
-	inline float Arg(lua_State* L, int n) {
-		return (float) luaL_checknumber(L, n);
-	}
-	template<>
-	inline double Arg(lua_State* L, int n) {
-		return luaL_checknumber(L, n);
-	}
-	template<>
-	inline int Arg(lua_State* L, int n) {
-		return luaL_checkint(L, n);
-	}
-	template<>
-	inline bool Arg(lua_State* L, int n) {
-		return CheckBoolean(L, n);
-	}
-	template<>
-	inline RString Arg(lua_State* L, int n) {
-		return luaL_checkstring(L, n);
-	}
-
 	template<class T, typename R, typename A>
 	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)(A)) {
-		Push(L, (p->*pfn)(Arg<A>(L, 1)));
+		A arg;
+		FromStack(L, arg, 1);
+		Push(L, (p->*pfn)(arg));
 		return 1;
 	}
 
@@ -205,13 +184,17 @@ namespace LuaHelpers
 
 	template<class T, typename A>
 	inline int WrapMethod(lua_State *L, T *p, void (T::*pfn)(A const&)) {
-		(p->*pfn)(Arg<A>(L, 1));
+		A arg;
+		FromStack(L, arg, 1);
+		(p->*pfn)(arg);
 		COMMON_RETURN_SELF;
 	}
 
 	template<class T, typename A>
 	inline int WrapMethod(lua_State *L, T *p, void (T::*pfn)(A)) {
-		(p->*pfn)(Arg<A>(L, 1));
+		A arg;
+		FromStack(L, arg, 1);
+		(p->*pfn)(arg);
 		COMMON_RETURN_SELF;
 	}
 
