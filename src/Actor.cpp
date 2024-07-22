@@ -1609,7 +1609,7 @@ Actor::TweenInfo &Actor::TweenInfo::operator=( const TweenInfo &rhs )
 class LunaActor : public Luna<Actor>
 {
 public:
-	LUA_SIMPLE2(name, SetName)
+	LUA_SIMPLE2(name, SetName);
 	LUA_METHOD(sleep)( T* p, lua_State *L )
 	{
 		float fTime = FArg(1);

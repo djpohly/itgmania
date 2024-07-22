@@ -381,7 +381,7 @@ public:
 	float GetElapsedTimeFromBeatNoOffset( float fBeat ) const;
 	float GetDisplayedBeat( float fBeat ) const;
 
-	bool HasBpmChanges() const { return GetTimingSegments(SEGMENT_BPM).size() > 1; }
+	bool HasBPMChanges() const { return GetTimingSegments(SEGMENT_BPM).size() > 1; }
 	bool HasStops() const { return !GetTimingSegments(SEGMENT_STOP).empty(); }
 	bool HasDelays() const { return !GetTimingSegments(SEGMENT_DELAY).empty(); }
 	bool HasWarps() const { return !GetTimingSegments(SEGMENT_WARP).empty(); }

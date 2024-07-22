@@ -2063,7 +2063,7 @@ bool Song::HasSignificantBpmChangesOrStops() const
 		if( m_fSpecifiedBPMMin != m_fSpecifiedBPMMax )
 			return true;
 	}
-	else if( m_SongTiming.HasBpmChanges() )
+	else if( m_SongTiming.HasBPMChanges() )
 	{
 		return true;
 	}

@@ -192,8 +192,8 @@ LUA_METHOD(set_##bool_name)(T* p, lua_State* L) \
 	RegisterLuaMethod register_##name{#name, name}; \
 	static int name /* (parameter list) { body } */
 #define LUA_SIMPLE2(luaname, cname) \
-	RegisterLuaMethod register_##luaname{#luaname, luaname}; \
-	static int luaname(T *p, lua_State *L) { return LuaHelpers::WrapMethod(L, p, &T::cname); }
+	static int luaname(T *p, lua_State *L) { return LuaHelpers::WrapMethod(L, p, &T::cname); } \
+	RegisterLuaMethod register_##luaname{#luaname, luaname}
 #define LUA_SIMPLE(name) LUA_SIMPLE2(name, name)
 
 #define LUA_REGISTER_NAMESPACE( T ) \

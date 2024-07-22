@@ -205,13 +205,13 @@ void MenuTimer::SetText( float fSeconds )
 class LunaMenuTimer: public Luna<MenuTimer>
 {
 public:
-	LUA_SIMPLE(SetSeconds)
-	LUA_SIMPLE(GetSeconds)
-	LUA_SIMPLE2(start, Start)
-	LUA_SIMPLE2(pause, Pause)
-	LUA_SIMPLE2(disable, Disable)
-	LUA_SIMPLE2(silent, EnableSilent)
-	LUA_SIMPLE2(stealth, EnableStealth)
+	LUA_SIMPLE(SetSeconds);
+	LUA_SIMPLE(GetSeconds);
+	LUA_SIMPLE2(start, Start);
+	LUA_SIMPLE2(pause, Pause);
+	LUA_SIMPLE2(disable, Disable);
+	LUA_SIMPLE2(silent, EnableSilent);
+	LUA_SIMPLE2(stealth, EnableStealth);
 };
 
 LUA_REGISTER_DERIVED_CLASS( MenuTimer, ActorFrame )

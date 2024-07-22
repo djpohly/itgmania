@@ -595,7 +595,7 @@ bool Steps::HasSignificantTimingChanges() const
 		timing->HasSpeedChanges() || timing->HasScrollChanges() )
 		return true;
 
-	if( timing->HasBpmChanges() )
+	if( timing->HasBPMChanges() )
 	{
 		// check to see if these changes are significant.
 		DisplayBpms bpms;

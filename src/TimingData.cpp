@@ -1343,13 +1343,13 @@ void TimingSegmentSetToLuaTable(TimingData* td, TimingSegmentType tst, lua_State
 class LunaTimingData: public Luna<TimingData>
 {
 public:
-	LUA_METHOD(HasStops)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasStops()); return 1; }
-	LUA_METHOD(HasDelays)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasDelays()); return 1; }
-	LUA_METHOD(HasBPMChanges)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasBpmChanges()); return 1; }
-	LUA_METHOD(HasWarps)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasWarps()); return 1; }
-	LUA_METHOD(HasFakes)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasFakes()); return 1; }
-	LUA_METHOD(HasSpeedChanges)( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasSpeedChanges()); return 1; }
-	LUA_METHOD(HasScrollChanges)( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasScrollChanges()); return 1; }
+	LUA_SIMPLE(HasStops);
+	LUA_SIMPLE(HasDelays);
+	LUA_SIMPLE(HasBPMChanges);
+	LUA_SIMPLE(HasWarps);
+	LUA_SIMPLE(HasFakes);
+	LUA_SIMPLE(HasSpeedChanges);
+	LUA_SIMPLE(HasScrollChanges);
 #define GET_FUNCTION(get_name, segment_name) \
 	LUA_METHOD(get_name)(T* p, lua_State* L) \
 	{ \
@@ -1398,11 +1398,11 @@ public:
 		LuaHelpers::CreateTableFromArray(fBPMs, L);
 		return 1;
 	}
-	LUA_METHOD(HasNegativeBPMs)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasWarps()); return 1; }
+	LUA_SIMPLE2(HasNegativeBPMs, HasWarps);
 	// formerly in Song.cpp in sm-ssc private beta 1.x:
-	LUA_METHOD(GetBPMAtBeat)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetBPMAtBeat(FArg(1))); return 1; }
-	LUA_METHOD(GetBeatFromElapsedTime)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetBeatFromElapsedTime(FArg(1))); return 1; }
-	LUA_METHOD(GetElapsedTimeFromBeat)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetElapsedTimeFromBeat(FArg(1))); return 1; }
+	LUA_SIMPLE(GetBPMAtBeat);
+	LUA_SIMPLE(GetBeatFromElapsedTime);
+	LUA_SIMPLE(GetElapsedTimeFromBeat);
 };
 
 LUA_REGISTER_CLASS( TimingData )
