@@ -53,24 +53,10 @@ bool TrailEntry::ContainsTransformOrTurn() const
 class LunaTrailEntry: public Luna<TrailEntry>
 {
 public:
-	LUA_METHOD(GetSong)( T* p, lua_State *L )
-	{
-		if( p->pSong )
-			p->pSong->PushSelf(L);
-		else
-			lua_pushnil(L);
-		return 1;
-	}
-	LUA_METHOD(GetSteps)( T* p, lua_State *L )
-	{
-		if( p->pSteps )
-			p->pSteps->PushSelf(L);
-		else
-			lua_pushnil(L);
-		return 1;
-	}
-	LUA_DEFINE_METHOD( IsSecret, bSecret );
-	LUA_DEFINE_METHOD( GetNormalModifiers, Modifiers );
+	LUA_GETTER(GetSong, pSong);
+	LUA_GETTER(GetSteps, pSteps);
+	LUA_GETTER(IsSecret, bSecret);
+	LUA_GETTER(GetNormalModifiers, Modifiers);
 };
 
 LUA_REGISTER_CLASS( TrailEntry )
@@ -214,10 +200,10 @@ bool Trail::ContainsSong( const Song *pSong ) const
 class LunaTrail: public Luna<Trail>
 {
 public:
-	LUA_METHOD(GetDifficulty)( T* p, lua_State *L )		{ LuaHelpers::Push(L, p->m_CourseDifficulty ); return 1; }
-	LUA_METHOD(GetMeter)( T* p, lua_State *L )		{ LuaHelpers::Push(L, p->GetMeter() ); return 1; }
-	LUA_METHOD(GetTotalMeter)( T* p, lua_State *L )		{ LuaHelpers::Push(L, p->GetTotalMeter() ); return 1; }
-	LUA_METHOD(GetStepsType)( T* p, lua_State *L )	{ LuaHelpers::Push(L, p->m_StepsType ); return 1; }
+	LUA_GETTER(GetDifficulty, m_CourseDifficulty);
+	LUA_SIMPLE(GetMeter);
+	LUA_SIMPLE(GetTotalMeter);
+	LUA_GETTER(GetStepsType, m_StepsType);
 	LUA_METHOD(GetRadarValues)( T* p, lua_State *L )
 	{
 		RadarValues &rv = const_cast<RadarValues &>(p->GetRadarValues());

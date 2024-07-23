@@ -519,7 +519,7 @@ int WheelBase::FirstVisibleIndex()
 class LunaWheelBase: public Luna<WheelBase>
 {
 public:
-	LUA_METHOD(Move)( T* p, lua_State *L ){ p->Move( IArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(Move);
 	LUA_METHOD(GetWheelItem)( T* p, lua_State *L )
 	{
 		int iItem = IArg(1);
@@ -531,18 +531,18 @@ public:
 
 		return 1;
 	}
-	LUA_METHOD(IsSettled)( T* p, lua_State *L ){ lua_pushboolean( L, p->IsSettled() ); return 1; }
-	LUA_METHOD(SetOpenSection)( T* p, lua_State *L ){ p->SetOpenSection( SArg(1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetCurrentIndex)( T* p, lua_State *L ){ lua_pushnumber( L, p->GetCurrentIndex() ); return 1; }
-	LUA_METHOD(GetNumItems)( T* p, lua_State *L ){ lua_pushnumber( L, p->GetNumItems() ); return 1; }
+	LUA_SIMPLE(IsSettled);
+	LUA_SIMPLE(SetOpenSection);
+	LUA_SIMPLE(GetCurrentIndex);
+	LUA_SIMPLE(GetNumItems);
 	// evil shit
 	//LUA_METHOD(ChangeMusic)( T* p, lua_State *L ){ p->ChangeMusicUnlessLocked( IArg(1) ); return 0; }
 
-	LUA_DEFINE_METHOD( GetSelectedType,		GetSelectedType() )
-	LUA_DEFINE_METHOD( GetWheelState,		GetWheelState() )
+	LUA_SIMPLE(GetSelectedType);
+	LUA_SIMPLE(GetWheelState);
 
 	// deprecated; use GetWheelState instead:
-	LUA_METHOD(IsLocked)( T* p, lua_State *L ){ lua_pushboolean( L, p->WheelIsLocked() ); return 1; }
+	LUA_SIMPLE2(IsLocked, WheelIsLocked);
 };
 
 LUA_REGISTER_DERIVED_CLASS( WheelBase, ActorFrame )

@@ -90,7 +90,7 @@ void TextBanner::SetFromSong( const Song *pSong )
 class LunaTextBanner: public Luna<TextBanner>
 {
 public:
-	LUA_METHOD(Load)( T* p, lua_State *L ) { p->Load( SArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(Load);
 	LUA_METHOD(SetFromSong)( T* p, lua_State *L )
 	{
 		Song *pSong = Luna<Song>::check(L,1);

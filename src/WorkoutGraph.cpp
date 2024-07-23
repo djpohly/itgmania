@@ -126,8 +126,8 @@ void WorkoutGraph::SetFromGameStateAndHighlightSong( int iSongIndex )
 class LunaWorkoutGraph: public Luna<WorkoutGraph>
 {
 public:
-	LUA_METHOD(SetFromCurrentWorkout)( T* p, lua_State *L )			{ p->SetFromCurrentWorkout(); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetFromGameStateAndHighlightSong)( T* p, lua_State *L )	{ p->SetFromGameStateAndHighlightSong(IArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(SetFromCurrentWorkout);
+	LUA_SIMPLE(SetFromGameStateAndHighlightSong);
 };
 
 LUA_REGISTER_DERIVED_CLASS( WorkoutGraph, ActorFrame )

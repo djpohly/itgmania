@@ -114,11 +114,7 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(IsLoaded)(T* p, lua_State *L)
-	{
-		lua_pushboolean(L, p->IsLoaded());
-		return 1;
-	}
+	LUA_SIMPLE(IsLoaded);
 };
 LUA_REGISTER_DERIVED_CLASS( WheelItemBase, ActorFrame )
 // lua end

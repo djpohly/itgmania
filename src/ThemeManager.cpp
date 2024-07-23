@@ -1328,7 +1328,7 @@ RString ThemeManager::GetBlankGraphicPath()
 class LunaThemeManager: public Luna<ThemeManager>
 {
 public:
-	LUA_METHOD(ReloadMetrics)( T* p, lua_State *L )		{ p->ReloadMetrics(); return 0; }
+	LUA_SIMPLE(ReloadMetrics);
 
 	LUA_METHOD(HasMetric)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasMetric(SArg(1),SArg(2))); return 1; }
 	LUA_METHOD(GetMetric)( T* p, lua_State *L )
@@ -1391,16 +1391,16 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(GetNumSelectableThemes)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetNumSelectableThemes() ); return 1; }
+	LUA_SIMPLE(GetNumSelectableThemes);
 
-	LUA_DEFINE_METHOD( GetCurrentThemeDirectory, GetCurThemeDir() );
-	LUA_DEFINE_METHOD( GetCurLanguage, GetCurLanguage() );
-	LUA_METHOD(GetThemeDisplayName)( T* p, lua_State *L )			{  lua_pushstring(L, p->GetThemeDisplayName(p->GetCurThemeName())); return 1; }
-	LUA_METHOD(GetThemeAuthor)( T* p, lua_State *L )			{  lua_pushstring(L, p->GetThemeAuthor(p->GetCurThemeName())); return 1; }
-	LUA_DEFINE_METHOD( DoesThemeExist, DoesThemeExist(SArg(1)) );
-	LUA_DEFINE_METHOD( IsThemeSelectable, IsThemeSelectable(SArg(1)) );
-	LUA_DEFINE_METHOD( DoesLanguageExist, DoesLanguageExist(SArg(1)) );
-	LUA_DEFINE_METHOD( GetCurThemeName, GetCurThemeName() );
+	LUA_SIMPLE2(GetCurrentThemeDirectory, GetCurThemeDir);
+	LUA_SIMPLE(GetCurLanguage);
+	LUA_SIMPLE(GetThemeDisplayName);
+	LUA_SIMPLE(GetThemeAuthor);
+	LUA_SIMPLE(DoesThemeExist);
+	LUA_SIMPLE(IsThemeSelectable);
+	LUA_SIMPLE(DoesLanguageExist);
+	LUA_SIMPLE(GetCurThemeName);
 
 	static void PushMetricNamesInGroup(IniFile const& ini, lua_State* L)
 	{
