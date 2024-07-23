@@ -341,7 +341,6 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(GetText)( T* p, lua_State *L )		{ lua_pushstring( L, p->GetText() ); return 1; }
 };
 
 LUA_REGISTER_DERIVED_CLASS( BPMDisplay, BitmapText )
