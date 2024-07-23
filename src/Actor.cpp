@@ -1680,8 +1680,8 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(stoptweening)( T* p, lua_State *L )		{ p->StopTweening(); COMMON_RETURN_SELF; }
-	LUA_METHOD(finishtweening)( T* p, lua_State *L )		{ p->FinishTweening(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(stoptweening, StopTweening);
+	LUA_SIMPLE2(finishtweening, FinishTweening);
 	LUA_METHOD(hurrytweening)( T* p, lua_State *L )
 	{
 		float time= FArg(1);
@@ -1692,38 +1692,38 @@ public:
 		p->HurryTweening(time);
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(GetTweenTimeLeft)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetTweenTimeLeft() ); return 1; }
-	LUA_METHOD(x)( T* p, lua_State *L )			{ p->SetX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(y)( T* p, lua_State *L )			{ p->SetY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(z)( T* p, lua_State *L )			{ p->SetZ(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(GetTweenTimeLeft);
+	LUA_SIMPLE2(x, SetX);
+	LUA_SIMPLE2(y, SetY);
+	LUA_SIMPLE2(z, SetZ);
 	LUA_METHOD(xy)( T* p, lua_State *L )			{ p->SetXY(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	LUA_METHOD(addx)( T* p, lua_State *L )			{ p->AddX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(addy)( T* p, lua_State *L )			{ p->AddY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(addz)( T* p, lua_State *L )			{ p->AddZ(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(zoom)( T* p, lua_State *L )			{ p->SetZoom(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(zoomx)( T* p, lua_State *L )			{ p->SetZoomX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(zoomy)( T* p, lua_State *L )			{ p->SetZoomY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(zoomz)( T* p, lua_State *L )			{ p->SetZoomZ(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(addx, AddX);
+	LUA_SIMPLE2(addy, AddY);
+	LUA_SIMPLE2(addz, AddZ);
+	LUA_SIMPLE2(zoom, SetZoom);
+	LUA_SIMPLE2(zoomx, SetZoomX);
+	LUA_SIMPLE2(zoomy, SetZoomY);
+	LUA_SIMPLE2(zoomz, SetZoomZ);
 	LUA_METHOD(zoomto)( T* p, lua_State *L )			{ p->ZoomTo(FArg(1), FArg(2)); COMMON_RETURN_SELF; }
-	LUA_METHOD(zoomtowidth)( T* p, lua_State *L )		{ p->ZoomToWidth(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(zoomtoheight)( T* p, lua_State *L )		{ p->ZoomToHeight(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(zoomtowidth, ZoomToWidth);
+	LUA_SIMPLE2(zoomtoheight, ZoomToHeight);
 	LUA_METHOD(setsize)( T* p, lua_State *L )		{ p->SetWidth(FArg(1)); p->SetHeight(FArg(2)); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetWidth)( T* p, lua_State *L )		{ p->SetWidth(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetHeight)( T* p, lua_State *L )		{ p->SetHeight(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(basealpha)( T* p, lua_State *L )		{ p->SetBaseAlpha(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(basezoom)( T* p, lua_State *L )		{ p->SetBaseZoom(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(basezoomx)( T* p, lua_State *L )		{ p->SetBaseZoomX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(basezoomy)( T* p, lua_State *L )		{ p->SetBaseZoomY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(basezoomz)( T* p, lua_State *L )		{ p->SetBaseZoomZ(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(SetWidth);
+	LUA_SIMPLE(SetHeight);
+	LUA_SIMPLE2(basealpha, SetBaseAlpha);
+	LUA_SIMPLE2(basezoom, SetBaseZoom);
+	LUA_SIMPLE2(basezoomx, SetBaseZoomX);
+	LUA_SIMPLE2(basezoomy, SetBaseZoomY);
+	LUA_SIMPLE2(basezoomz, SetBaseZoomZ);
 	LUA_METHOD(stretchto)( T* p, lua_State *L )		{ p->StretchTo( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(cropleft)( T* p, lua_State *L )		{ p->SetCropLeft(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(croptop)( T* p, lua_State *L )		{ p->SetCropTop(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(cropright)( T* p, lua_State *L )		{ p->SetCropRight(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(cropbottom)( T* p, lua_State *L )		{ p->SetCropBottom(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(fadeleft)( T* p, lua_State *L )		{ p->SetFadeLeft(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(fadetop)( T* p, lua_State *L )		{ p->SetFadeTop(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(faderight)( T* p, lua_State *L )		{ p->SetFadeRight(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(fadebottom)( T* p, lua_State *L )		{ p->SetFadeBottom(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(cropleft, SetCropLeft);
+	LUA_SIMPLE2(croptop, SetCropTop);
+	LUA_SIMPLE2(cropright, SetCropRight);
+	LUA_SIMPLE2(cropbottom, SetCropBottom);
+	LUA_SIMPLE2(fadeleft, SetFadeLeft);
+	LUA_SIMPLE2(fadetop, SetFadeTop);
+	LUA_SIMPLE2(faderight, SetFadeRight);
+	LUA_SIMPLE2(fadebottom, SetFadeBottom);
 	LUA_METHOD(diffuse)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuse( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(diffuseupperleft)( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseUpperLeft( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(diffuseupperright)( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseUpperRight( c ); COMMON_RETURN_SELF; }
@@ -1738,24 +1738,24 @@ public:
 	LUA_METHOD(glow)( T* p, lua_State *L )			{ RageColor c; c.FromStackCompat( L, 1 ); p->SetGlow( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(aux)( T* p, lua_State *L )			{ p->SetAux( FArg(1) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(getaux)( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetAux() ); return 1; }
-	LUA_METHOD(rotationx)( T* p, lua_State *L )		{ p->SetRotationX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(rotationy)( T* p, lua_State *L )		{ p->SetRotationY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(rotationz)( T* p, lua_State *L )		{ p->SetRotationZ(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(addrotationx)( T* p, lua_State *L )		{ p->AddRotationX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(addrotationy)( T* p, lua_State *L )		{ p->AddRotationY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(addrotationz)( T* p, lua_State *L )		{ p->AddRotationZ(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(rotationx, SetRotationX);
+	LUA_SIMPLE2(rotationy, SetRotationY);
+	LUA_SIMPLE2(rotationz, SetRotationZ);
+	LUA_SIMPLE2(addrotationx, AddRotationX);
+	LUA_SIMPLE2(addrotationy, AddRotationY);
+	LUA_SIMPLE2(addrotationz, AddRotationZ);
 	LUA_METHOD(getrotation)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetRotationX()); lua_pushnumber(L, p->GetRotationY()); lua_pushnumber(L, p->GetRotationZ()); return 3; }
-	LUA_METHOD(baserotationx)( T* p, lua_State *L )		{ p->SetBaseRotationX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(baserotationy)( T* p, lua_State *L )		{ p->SetBaseRotationY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(baserotationz)( T* p, lua_State *L )		{ p->SetBaseRotationZ(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(skewx)( T* p, lua_State *L )			{ p->SetSkewX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(skewy)( T* p, lua_State *L )			{ p->SetSkewY(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(heading)( T* p, lua_State *L )		{ p->AddRotationH(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(pitch)( T* p, lua_State *L )			{ p->AddRotationP(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(roll)( T* p, lua_State *L )			{ p->AddRotationR(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(shadowlength)( T* p, lua_State *L )		{ p->SetShadowLength(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(shadowlengthx)( T* p, lua_State *L )		{ p->SetShadowLengthX(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(shadowlengthy)( T* p, lua_State *L )		{ p->SetShadowLengthY(FArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(baserotationx, SetBaseRotationX);
+	LUA_SIMPLE2(baserotationy, SetBaseRotationY);
+	LUA_SIMPLE2(baserotationz, SetBaseRotationZ);
+	LUA_SIMPLE2(skewx, SetSkewX);
+	LUA_SIMPLE2(skewy, SetSkewY);
+	LUA_SIMPLE2(heading, AddRotationH);
+	LUA_SIMPLE2(pitch, AddRotationP);
+	LUA_SIMPLE2(roll, AddRotationR);
+	LUA_SIMPLE2(shadowlength, SetShadowLength);
+	LUA_SIMPLE2(shadowlengthx, SetShadowLengthX);
+	LUA_SIMPLE2(shadowlengthy, SetShadowLengthY);
 	LUA_METHOD(shadowcolor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetShadowColor( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(horizalign)( T* p, lua_State *L )		{ p->SetHorizAlign(Enum::Check<HorizAlign>(L, 1)); COMMON_RETURN_SELF; }
 	LUA_METHOD(vertalign)( T* p, lua_State *L )		{ p->SetVertAlign(Enum::Check<VertAlign>(L, 1)); COMMON_RETURN_SELF; }
@@ -1774,7 +1774,7 @@ public:
 	LUA_METHOD(pulse)( T* p, lua_State *L )			{ p->SetEffectPulse(2.0f, 0.5f, 1.0f); COMMON_RETURN_SELF; }
 	LUA_METHOD(spin)( T* p, lua_State *L )			{ p->SetEffectSpin(RageVector3(0,0,180)); COMMON_RETURN_SELF; }
 	LUA_METHOD(vibrate)( T* p, lua_State *L )			{ p->SetEffectVibrate(RageVector3(10,10,10)); COMMON_RETURN_SELF; }
-	LUA_METHOD(stopeffect)( T* p, lua_State *L )		{ p->StopEffect(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(stopeffect, StopEffect);
 	LUA_METHOD(effectcolor1)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetEffectColor1( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(effectcolor2)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetEffectColor2( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(effectperiod)( T* p, lua_State *L )
@@ -1816,8 +1816,8 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(effectoffset)( T* p, lua_State *L )		{ p->SetEffectOffset(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(effectclock)( T* p, lua_State *L )		{ p->SetEffectClockString(SArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(effectoffset, SetEffectOffset);
+	LUA_SIMPLE2(effectclock, SetEffectClockString);
 	LUA_METHOD(effectmagnitude)( T* p, lua_State *L )	{ p->SetEffectMagnitude( RageVector3(FArg(1),FArg(2),FArg(3)) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(geteffectmagnitude)( T* p, lua_State *L )	{ RageVector3 v = p->GetEffectMagnitude(); lua_pushnumber(L, v[0]); lua_pushnumber(L, v[1]); lua_pushnumber(L, v[2]); return 3; }
 	GETTER_SETTER_BOOL_METHOD(tween_uses_effect_delta);
@@ -1826,23 +1826,23 @@ public:
 	LUA_METHOD(animate)( T* p, lua_State *L )		{ p->EnableAnimation(BIArg(1)); COMMON_RETURN_SELF; }
 	LUA_METHOD(play)( T* p, lua_State *L )			{ p->EnableAnimation(true); COMMON_RETURN_SELF; }
 	LUA_METHOD(pause)( T* p, lua_State *L )			{ p->EnableAnimation(false); COMMON_RETURN_SELF; }
-	LUA_METHOD(setstate)( T* p, lua_State *L )		{ p->SetState(IArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetNumStates)( T* p, lua_State *L )		{ LuaHelpers::Push( L, p->GetNumStates() ); return 1; }
+	LUA_SIMPLE2(setstate, SetState);
+	LUA_SIMPLE(GetNumStates);
 	LUA_METHOD(texturetranslate)( T* p, lua_State *L )	{ p->SetTextureTranslate(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	LUA_METHOD(texturewrapping)( T* p, lua_State *L )	{ p->SetTextureWrapping(BIArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetTextureFiltering)( T* p, lua_State *L )	{ p->SetTextureFiltering(BArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(blend)( T* p, lua_State *L )			{ p->SetBlendMode( Enum::Check<BlendMode>(L, 1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(zbuffer)( T* p, lua_State *L )		{ p->SetUseZBuffer(BIArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(ztest)( T* p, lua_State *L )			{ p->SetZTestMode((BIArg(1))?ZTEST_WRITE_ON_PASS:ZTEST_OFF); COMMON_RETURN_SELF; }
-	LUA_METHOD(ztestmode)( T* p, lua_State *L )		{ p->SetZTestMode( Enum::Check<ZTestMode>(L, 1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(zwrite)( T* p, lua_State *L )			{ p->SetZWrite(BIArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(zbias)( T* p, lua_State *L )			{ p->SetZBias(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(clearzbuffer)( T* p, lua_State *L )		{ p->SetClearZBuffer(BIArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(backfacecull)( T* p, lua_State *L )		{ p->SetCullMode((BIArg(1)) ? CULL_BACK : CULL_NONE); COMMON_RETURN_SELF; }
-	LUA_METHOD(cullmode)( T* p, lua_State *L )		{ p->SetCullMode( Enum::Check<CullMode>(L, 1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(visible)( T* p, lua_State *L )		{ p->SetVisible(BIArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(hibernate)( T* p, lua_State *L )		{ p->SetHibernate(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(draworder)( T* p, lua_State *L )		{ p->SetDrawOrder(IArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(texturewrapping, SetTextureWrapping);
+	LUA_SIMPLE(SetTextureFiltering);
+	LUA_SIMPLE2(blend, SetBlendMode);
+	LUA_SIMPLE2(zbuffer, SetUseZBuffer);
+	LUA_SIMPLE2(ztest, SetZTestMode);
+	LUA_SIMPLE2(ztestmode, SetZTestMode);
+	LUA_SIMPLE2(zwrite, SetZWrite);
+	LUA_SIMPLE2(zbias, SetZBias);
+	LUA_SIMPLE2(clearzbuffer, SetClearZBuffer);
+	LUA_SIMPLE2(backfacecull, SetCullMode);
+	LUA_SIMPLE2(cullmode, SetCullMode);
+	LUA_SIMPLE2(visible, SetVisible);
+	LUA_SIMPLE2(hibernate, SetHibernate);
+	LUA_SIMPLE2(draworder, SetDrawOrder);
 	LUA_METHOD(playcommand)( T* p, lua_State *L )
 	{
 		if( !lua_istable(L, 2) && !lua_isnoneornil(L, 2) )
@@ -1857,8 +1857,8 @@ public:
 
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(queuecommand)( T* p, lua_State *L )		{ p->QueueCommand(SArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(queuemessage)( T* p, lua_State *L )		{ p->QueueMessage(SArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(queuecommand, QueueCommand);
+	LUA_SIMPLE2(queuemessage, QueueMessage);
 	LUA_METHOD(addcommand)( T* p, lua_State *L )
 	{
 		LuaReference *pRef = new LuaReference;
@@ -1894,58 +1894,38 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_METHOD(GetX)( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetX() ); return 1; }
-	LUA_METHOD(GetY)( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetY() ); return 1; }
-	LUA_METHOD(GetZ)( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetZ() ); return 1; }
-	LUA_METHOD(GetDestX)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetDestX() ); return 1; }
-	LUA_METHOD(GetDestY)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetDestY() ); return 1; }
-	LUA_METHOD(GetDestZ)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetDestZ() ); return 1; }
-	LUA_METHOD(GetWidth)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetUnzoomedWidth() ); return 1; }
-	LUA_METHOD(GetHeight)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetUnzoomedHeight() ); return 1; }
-	LUA_METHOD(GetZoomedWidth)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetZoomedWidth() ); return 1; }
-	LUA_METHOD(GetZoomedHeight)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetZoomedHeight() ); return 1; }
-	LUA_METHOD(GetZoom)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetZoom() ); return 1; }
-	LUA_METHOD(GetZoomX)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetZoomX() ); return 1; }
-	LUA_METHOD(GetZoomY)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetZoomY() ); return 1; }
-	LUA_METHOD(GetZoomZ)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetZoomZ() ); return 1; }
-	LUA_METHOD(GetBaseZoomX)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetBaseZoomX() ); return 1; }
-	LUA_METHOD(GetBaseZoomY)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetBaseZoomY() ); return 1; }
-	LUA_METHOD(GetBaseZoomZ)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetBaseZoomZ() ); return 1; }
-	LUA_METHOD(GetRotationX)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetRotationX() ); return 1; }
-	LUA_METHOD(GetRotationY)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetRotationY() ); return 1; }
-	LUA_METHOD(GetRotationZ)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetRotationZ() ); return 1; }
-	LUA_METHOD(GetSecsIntoEffect)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetSecsIntoEffect() ); return 1; }
-	LUA_METHOD(GetEffectDelta)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetEffectDelta() ); return 1; }
+	LUA_SIMPLE(GetX);
+	LUA_SIMPLE(GetY);
+	LUA_SIMPLE(GetZ);
+	LUA_SIMPLE(GetDestX);
+	LUA_SIMPLE(GetDestY);
+	LUA_SIMPLE(GetDestZ);
+	LUA_SIMPLE2(GetWidth, GetUnzoomedWidth);
+	LUA_SIMPLE2(GetHeight, GetUnzoomedHeight);
+	LUA_SIMPLE(GetZoomedWidth);
+	LUA_SIMPLE(GetZoomedHeight);
+	LUA_SIMPLE(GetZoom);
+	LUA_SIMPLE(GetZoomX);
+	LUA_SIMPLE(GetZoomY);
+	LUA_SIMPLE(GetZoomZ);
+	LUA_SIMPLE(GetBaseZoomX);
+	LUA_SIMPLE(GetBaseZoomY);
+	LUA_SIMPLE(GetBaseZoomZ);
+	LUA_SIMPLE(GetRotationX);
+	LUA_SIMPLE(GetRotationY);
+	LUA_SIMPLE(GetRotationZ);
+	LUA_SIMPLE(GetSecsIntoEffect);
+	LUA_SIMPLE(GetEffectDelta);
 	LUA_DEFINE_METHOD( GetDiffuse, GetDiffuse() )
 	LUA_DEFINE_METHOD( GetGlow, GetGlow() )
-	LUA_METHOD(GetDiffuseAlpha)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetDiffuseAlpha() ); return 1; }
-	LUA_METHOD(GetVisible)( T* p, lua_State *L )		{ lua_pushboolean( L, p->GetVisible() ); return 1; }
-	LUA_METHOD(GetHAlign)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetHorizAlign() ); return 1; }
-	LUA_METHOD(GetVAlign)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetVertAlign() ); return 1; }
+	LUA_SIMPLE(GetDiffuseAlpha);
+	LUA_SIMPLE(GetVisible);
+	LUA_SIMPLE2(GetHAlign, GetHorizAlign);
+	LUA_SIMPLE2(GetVAlign, GetVertAlign);
 
-	LUA_METHOD(GetName)( T* p, lua_State *L )		{ lua_pushstring( L, p->GetName() ); return 1; }
-	LUA_METHOD(GetParent)( T* p, lua_State *L )
-	{
-		Actor *pParent = p->GetParent();
-		if( pParent == nullptr )
-			lua_pushnil( L );
-		else
-			pParent->PushSelf(L);
-		return 1;
-	}
-	LUA_METHOD(GetFakeParent)(T* p, lua_State *L)
-	{
-		Actor* fake= p->GetFakeParent();
-		if(fake == nullptr)
-		{
-			lua_pushnil(L);
-		}
-		else
-		{
-			fake->PushSelf(L);
-		}
-		return 1;
-	}
+	LUA_SIMPLE(GetName);
+	LUA_SIMPLE(GetParent);
+	LUA_SIMPLE(GetFakeParent);
 	LUA_METHOD(SetFakeParent)(T* p, lua_State* L)
 	{
 		if(lua_isnoneornil(L, 1))

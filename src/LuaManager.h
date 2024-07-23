@@ -168,6 +168,14 @@ namespace LuaHelpers
 	}
 
 	template<class T, typename R, typename A>
+	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)(A const&)) {
+		A arg;
+		FromStack(L, arg, 1);
+		Push(L, (p->*pfn)(arg));
+		return 1;
+	}
+
+	template<class T, typename R, typename A>
 	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)(A) const) {
 		return WrapMethod(L, p, (R (T::*)(A)) pfn);
 	}

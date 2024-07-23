@@ -52,18 +52,7 @@ namespace LuaHelpers
 	template<> bool FromStack<int>( Lua *L, int &Object, int iOffset );
 	template<> bool FromStack<unsigned int>( Lua *L, unsigned int &Object, int iOffset );
 	template<> bool FromStack<RString>( Lua *L, RString &Object, int iOffset );
-	template<> bool FromStack<RectF>( lua_State *L, RectF &Object, int iOffset ) {
-		float left, top, right, bottom;
-		if (FromStack(L, left, iOffset + 0)
-			&& FromStack(L, top, iOffset + 1)
-			&& FromStack(L, right, iOffset + 2)
-			&& FromStack(L, bottom, iOffset + 3))
-		{
-			Object = RectF(left, top, right, bottom);
-			return true;
-		}
-		return false;
-	}
+	template<> bool FromStack<RectF>( lua_State *L, RectF &Object, int iOffset );
 
 	bool InReportScriptError= false;
 }
@@ -118,6 +107,19 @@ namespace LuaHelpers
 			Object.clear();
 
 		return pStr != nullptr;
+	}
+	template<> bool FromStack<RectF>( lua_State *L, RectF &Object, int iOffset )
+	{
+		float left, top, right, bottom;
+		if (FromStack(L, left, iOffset + 0)
+			&& FromStack(L, top, iOffset + 1)
+			&& FromStack(L, right, iOffset + 2)
+			&& FromStack(L, bottom, iOffset + 3))
+		{
+			Object = RectF(left, top, right, bottom);
+			return true;
+		}
+		return false;
 	}
 }
 

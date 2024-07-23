@@ -830,19 +830,8 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_METHOD(SetEffectMode)( T* p, lua_State *L )
-	{
-		EffectMode em = Enum::Check<EffectMode>(L, 1);
-		p->SetEffectMode( em );
-		COMMON_RETURN_SELF;
-	}
-
-	LUA_METHOD(SetTextureMode)( T* p, lua_State *L )
-	{
-		TextureMode tm = Enum::Check<TextureMode>(L, 1);
-		p->SetTextureMode( tm );
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(SetEffectMode);
+	LUA_SIMPLE(SetTextureMode);
 
 	LUA_METHOD(SetLineWidth)( T* p, lua_State *L )
 	{
@@ -893,11 +882,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_METHOD(GetDestDrawMode)( T* p, lua_State* L )
-	{
-		Enum::Push(L, p->GetDestDrawMode());
-		return 1;
-	}
+	LUA_SIMPLE(GetDestDrawMode);
 
 	LUA_METHOD(GetDestFirstToDraw)( T* p, lua_State* L )
 	{
@@ -906,17 +891,8 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(GetDestNumToDraw)( T* p, lua_State* L )
-	{
-		lua_pushnumber(L, p->GetDestNumToDraw());
-		return 1;
-	}
-
-	LUA_METHOD(GetCurrDrawMode)( T* p, lua_State* L )
-	{
-		Enum::Push(L, p->GetCurrDrawMode());
-		return 1;
-	}
+	LUA_SIMPLE(GetDestNumToDraw);
+	LUA_SIMPLE(GetCurrDrawMode);
 
 	LUA_METHOD(GetCurrFirstToDraw)( T* p, lua_State* L )
 	{
@@ -925,11 +901,7 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(GetCurrNumToDraw)( T* p, lua_State* L )
-	{
-		lua_pushnumber(L, p->GetCurrNumToDraw());
-		return 1;
-	}
+	LUA_SIMPLE(GetCurrNumToDraw);
 
 	LUA_METHOD(LoadTexture)( T* p, lua_State *L )
 	{
@@ -959,12 +931,7 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(SetVertsFromSplines)(T* p, lua_State* L)
-	{
-		p->SetVertsFromSplines();
-		COMMON_RETURN_SELF;
-	}
-
+	LUA_SIMPLE(SetVertsFromSplines);
 	LUA_DEFINE_METHOD(GetUseAnimationState, _use_animation_state);
 	LUA_METHOD(SetUseAnimationState)(T* p, lua_State *L)
 	{
@@ -1108,11 +1075,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 	LUA_DEFINE_METHOD(GetAnimationLengthSeconds, GetAnimationLengthSeconds());
-	LUA_METHOD(SetSecondsIntoAnimation)(T* p, lua_State *L)
-	{
-		p->SetSecondsIntoAnimation(FArg(1));
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(SetSecondsIntoAnimation);
 	LUA_METHOD(GetNumQuadStates)(T* p, lua_State *L)
 	{
 		lua_pushnumber(L, p->GetNumQuadStates());
