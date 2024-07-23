@@ -624,8 +624,8 @@ public:
 		p->RunCommandsOnChildren( cmds, &ParamTable );
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(propagate)( T* p, lua_State *L )			{ p->SetPropagateCommands( BIArg(1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(fov)( T* p, lua_State *L )				{ p->SetFOV( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(propagate, SetPropagateCommands);
+	LUA_SIMPLE2(fov, SetFOV);
 	LUA_METHOD(SetUpdateRate)( T* p, lua_State *L )
 	{
 		float rate= FArg(1);
@@ -637,7 +637,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 	LUA_DEFINE_METHOD(GetUpdateRate, GetUpdateRate());
-	LUA_METHOD(SetFOV)( T* p, lua_State *L )				{ p->SetFOV( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(SetFOV);
 	LUA_METHOD(vanishpoint)( T* p, lua_State *L )			{ p->SetVanishPoint( FArg(1), FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(GetChild)( T* p, lua_State *L )
 	{
@@ -649,8 +649,8 @@ public:
 		p->PushChildrenTable( L );
 		return 1;
 	}
-	LUA_METHOD(GetNumChildren)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumChildren() ); return 1; }
-	LUA_METHOD(SetDrawByZPosition)( T* p, lua_State *L )	{ p->SetDrawByZPosition( BArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(GetNumChildren);
+	LUA_SIMPLE(SetDrawByZPosition);
 	LUA_METHOD(SetDrawFunction)( T* p, lua_State *L )
 	{
 		if(lua_isnil(L,1))
@@ -670,11 +670,7 @@ public:
 		p->SetDrawFunction( ref );
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(GetDrawFunction)( T* p, lua_State *L )
-	{
-		p->GetDrawFunction().PushSelf(L);
-		return 1;
-	}
+	LUA_SIMPLE(GetDrawFunction);
 	LUA_METHOD(SetUpdateFunction)( T* p, lua_State *L )
 	{
 		if(lua_isnil(L,1))
@@ -694,9 +690,9 @@ public:
 		p->SetUpdateFunction( ref );
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(SortByDrawOrder)( T* p, lua_State *L )		{ p->SortByDrawOrder(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(SortByDrawOrder);
 
-	//LUA_METHOD(CustomLighting)( T* p, lua_State *L )			{ p->SetCustomLighting(BArg(1)); COMMON_RETURN_SELF; }
+	//LUA_SIMPLE2(CustomLighting, SetCustomLighting);
 	LUA_METHOD(SetAmbientLightColor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetAmbientLightColor( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(SetDiffuseLightColor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseLightColor( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(SetSpecularLightColor)( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetSpecularLightColor( c ); COMMON_RETURN_SELF; }

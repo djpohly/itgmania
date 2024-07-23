@@ -1833,7 +1833,7 @@ public:
 	LUA_SIMPLE(SetTextureFiltering);
 	LUA_SIMPLE2(blend, SetBlendMode);
 	LUA_SIMPLE2(zbuffer, SetUseZBuffer);
-	LUA_SIMPLE2(ztest, SetZTestMode);
+	LUA_METHOD(ztest)( T* p, lua_State *L )			{ p->SetZTestMode((BIArg(1))?ZTEST_WRITE_ON_PASS:ZTEST_OFF); COMMON_RETURN_SELF; }
 	LUA_SIMPLE2(ztestmode, SetZTestMode);
 	LUA_SIMPLE2(zwrite, SetZWrite);
 	LUA_SIMPLE2(zbias, SetZBias);
