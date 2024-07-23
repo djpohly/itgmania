@@ -841,19 +841,13 @@ public:
 	LUA_METHOD(PlayOnce)( T* p, lua_State *L )
 	{
 		RString sPath = SArg(1);
-		if(lua_toboolean(L, 2) && PREFSMAN->m_MuteActions)
+		if(!(lua_toboolean(L, 2) && PREFSMAN->m_MuteActions))
 		{
-			COMMON_RETURN_SELF;
+			p->PlayOnce( sPath );
 		}
-		p->PlayOnce( sPath );
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(PlayAnnouncer)( T* p, lua_State *L )
-	{
-		RString sPath = SArg(1);
-		p->PlayOnceFromAnnouncer( sPath );
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE2(PlayAnnouncer, PlayOnceFromAnnouncer);
 	LUA_METHOD(GetPlayerBalance)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
@@ -895,7 +889,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_METHOD(StopMusic)( T* p, lua_State *L )			{ p->StopMusic(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(StopMusic);
 	LUA_METHOD(IsTimingDelayed)( T* p, lua_State *L )	{ lua_pushboolean( L, g_Playing->m_bTimingDelayed ); return 1; }
 };
 

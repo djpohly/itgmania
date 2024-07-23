@@ -49,17 +49,8 @@ void GradeDisplay::SetGrade( Grade grade )
 class LunaGradeDisplay: public Luna<GradeDisplay>
 {
 public:
-	LUA_METHOD(Load)( T* p, lua_State *L )
-	{
-		p->Load( SArg(1) );
-		COMMON_RETURN_SELF;
-	}
-	LUA_METHOD(SetGrade)( T* p, lua_State *L )
-	{
-		Grade g = Enum::Check<Grade>(L, 1);
-		p->SetGrade( g );
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(Load);
+	LUA_SIMPLE(SetGrade);
 };
 
 LUA_REGISTER_DERIVED_CLASS( GradeDisplay, ActorFrame )

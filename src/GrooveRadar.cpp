@@ -244,7 +244,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(SetEmpty)( T* p, lua_State *L )		{ p->SetEmpty( Enum::Check<PlayerNumber>(L, 1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(SetEmpty);
 };
 
 LUA_REGISTER_DERIVED_CLASS( GrooveRadar, ActorFrame )

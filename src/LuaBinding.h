@@ -173,6 +173,8 @@ public:
 #define LUA_DEFINE_METHOD( method_name, expr ) LUA_GETTER( method_name, expr )
 #define LUA_GETTER( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
+#define LUA_SETTER( method_name, expr ) \
+	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::FromStack( L, p->expr, 1 ); COMMON_RETURN_SELF; }
 
 #define GET_SET_BOOL_METHOD(method_name, bool_name) \
 LUA_METHOD(get_##method_name)(T* p, lua_State* L) \

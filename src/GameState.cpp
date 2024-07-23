@@ -2694,15 +2694,11 @@ class LunaGameState: public Luna<GameState>
 {
 public:
 	LUA_DEFINE_METHOD( IsPlayerEnabled,			IsPlayerEnabled(Enum::Check<PlayerNumber>(L, 1)) )
-	LUA_DEFINE_METHOD( IsHumanPlayer,			IsHumanPlayer(Enum::Check<PlayerNumber>(L, 1)) )
-	LUA_DEFINE_METHOD( GetPlayerDisplayName,		GetPlayerDisplayName(Enum::Check<PlayerNumber>(L, 1)) )
-	LUA_DEFINE_METHOD( GetMasterPlayerNumber,		GetMasterPlayerNumber() )
-	LUA_DEFINE_METHOD( GetMultiplayer,			m_bMultiplayer )
-	LUA_METHOD(SetMultiplayer)( T* p, lua_State *L )
-	{
-		p->m_bMultiplayer = BArg(1);
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(IsHumanPlayer);
+	LUA_SIMPLE(GetPlayerDisplayName);
+	LUA_SIMPLE(GetMasterPlayerNumber);
+	LUA_GETTER(GetMultiplayer, m_bMultiplayer);
+	LUA_SETTER(SetMultiplayer, m_bMultiplayer);
 	LUA_DEFINE_METHOD( InStepEditor,			m_bInStepEditor );
 	LUA_DEFINE_METHOD( GetNumMultiplayerNoteFields,	m_iNumMultiplayerNoteFields )
 	LUA_DEFINE_METHOD( ShowW1,				ShowW1() )

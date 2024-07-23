@@ -924,28 +924,27 @@ bool GameCommand::IsZero() const
 class LunaGameCommand: public Luna<GameCommand>
 {
 public:
-	LUA_METHOD(GetName)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sName ); return 1; }
-	LUA_METHOD(GetText)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sText ); return 1; }
-	LUA_METHOD(GetIndex)( T* p, lua_State *L )	{ lua_pushnumber(L, p->m_iIndex ); return 1; }
-	LUA_METHOD(GetMultiPlayer)( T* p, lua_State *L )	{ lua_pushnumber(L, p->m_MultiPlayer); return 1; }
+	LUA_GETTER(GetName, m_sName);
+	LUA_GETTER(GetText, m_sText);
+	LUA_GETTER(GetIndex, m_iIndex);
+	LUA_GETTER(GetMultiPlayer, m_MultiPlayer);
 	LUA_METHOD(GetStyle)( T* p, lua_State *L )	{ if(p->m_pStyle== nullptr) lua_pushnil(L); else {Style *pStyle = (Style*)p->m_pStyle; pStyle->PushSelf(L);} return 1; }
-	LUA_METHOD(GetScreen)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sScreen ); return 1; }
-	LUA_METHOD(GetProfileID)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sProfileID ); return 1; }
-	LUA_METHOD(GetSong)( T* p, lua_State *L )	{ if(p->m_pSong== nullptr) lua_pushnil(L); else p->m_pSong->PushSelf(L); return 1; }
-	LUA_METHOD(GetSteps)( T* p, lua_State *L )	{ if(p->m_pSteps== nullptr) lua_pushnil(L); else p->m_pSteps->PushSelf(L); return 1; }
-	LUA_METHOD(GetCourse)( T* p, lua_State *L )	{ if(p->m_pCourse== nullptr) lua_pushnil(L); else p->m_pCourse->PushSelf(L); return 1; }
-	LUA_METHOD(GetTrail)( T* p, lua_State *L )	{ if(p->m_pTrail== nullptr) lua_pushnil(L); else p->m_pTrail->PushSelf(L); return 1; }
-	LUA_METHOD(GetCharacter)( T* p, lua_State *L )	{ if(p->m_pCharacter== nullptr) lua_pushnil(L); else p->m_pCharacter->PushSelf(L); return 1; }
-	LUA_METHOD(GetSongGroup)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sSongGroup ); return 1; }
-	LUA_METHOD(GetUrl)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sUrl ); return 1; }
-	LUA_METHOD(GetAnnouncer)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sAnnouncer ); return 1; }
-	LUA_METHOD(GetPreferredModifiers)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sPreferredModifiers ); return 1; }
-	LUA_METHOD(GetStageModifiers)( T* p, lua_State *L )	{ lua_pushstring(L, p->m_sStageModifiers ); return 1; }
-
-	LUA_DEFINE_METHOD( GetCourseDifficulty,	m_CourseDifficulty )
-	LUA_DEFINE_METHOD( GetDifficulty,	m_dc )
-	LUA_DEFINE_METHOD( GetPlayMode,		m_pm )
-	LUA_DEFINE_METHOD( GetSortOrder,	m_SortOrder )
+	LUA_GETTER(GetScreen, m_sScreen);
+	LUA_GETTER(GetProfileID, m_sProfileID);
+	LUA_GETTER(GetSong, m_pSong);
+	LUA_GETTER(GetSteps, m_pSteps);
+	LUA_GETTER(GetCourse, m_pCourse);
+	LUA_GETTER(GetTrail, m_pTrail);
+	LUA_GETTER(GetCharacter, m_pCharacter);
+	LUA_GETTER(GetSongGroup, m_sSongGroup);
+	LUA_GETTER(GetUrl, m_sUrl);
+	LUA_GETTER(GetAnnouncer, m_sAnnouncer);
+	LUA_GETTER(GetPreferredModifiers, m_sPreferredModifiers);
+	LUA_GETTER(GetStageModifiers, m_sStageModifiers);
+	LUA_GETTER(GetCourseDifficulty, m_CourseDifficulty)
+	LUA_GETTER(GetDifficulty, m_dc)
+	LUA_GETTER(GetPlayMode, m_pm)
+	LUA_GETTER(GetSortOrder, m_SortOrder)
 };
 
 LUA_REGISTER_CLASS( GameCommand )

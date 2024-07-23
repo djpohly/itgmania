@@ -480,11 +480,11 @@ void Screenshot::LoadFromNode( const XNode* pNode )
 class LunaHighScore: public Luna<HighScore>
 {
 public:
-	LUA_METHOD(GetName)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetName() ); return 1; }
-	LUA_METHOD(GetScore)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetScore() ); return 1; }
-	LUA_METHOD(GetPercentDP)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetPercentDP() ); return 1; }
+	LUA_SIMPLE(GetName);
+	LUA_SIMPLE(GetScore);
+	LUA_SIMPLE(GetPercentDP);
 	LUA_METHOD(GetDate)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDateTime().GetString() ); return 1; }
-	LUA_METHOD(GetSurvivalSeconds)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetSurvivalSeconds() ); return 1; }
+	LUA_SIMPLE(GetSurvivalSeconds);
 	LUA_METHOD(IsFillInMarker)( T* p, lua_State *L )
 	{
 		bool bIsFillInMarker = false;
@@ -493,19 +493,19 @@ public:
 		lua_pushboolean( L, bIsFillInMarker );
 		return 1;
 	}
-	LUA_METHOD(GetMaxCombo)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetMaxCombo() ); return 1; }
-	LUA_METHOD(GetModifiers)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetModifiers() ); return 1; }
-	LUA_METHOD(GetTapNoteScore)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetTapNoteScore( Enum::Check<TapNoteScore>(L, 1) ) ); return 1; }
-	LUA_METHOD(GetHoldNoteScore)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetHoldNoteScore( Enum::Check<HoldNoteScore>(L, 1) ) ); return 1; }
+	LUA_SIMPLE(GetMaxCombo);
+	LUA_SIMPLE(GetModifiers);
+	LUA_SIMPLE(GetTapNoteScore);
+	LUA_SIMPLE(GetHoldNoteScore);
 	LUA_METHOD(GetRadarValues)( T* p, lua_State *L )
 	{
 		RadarValues &rv = const_cast<RadarValues &>(p->GetRadarValues());
 		rv.PushSelf(L);
 		return 1;
 	}
-	LUA_DEFINE_METHOD( GetGrade, GetGrade() )
-	LUA_DEFINE_METHOD( GetStageAward, GetStageAward() )
-	LUA_DEFINE_METHOD( GetPeakComboAward, GetPeakComboAward() )
+	LUA_SIMPLE(GetGrade);
+	LUA_SIMPLE(GetStageAward);
+	LUA_SIMPLE(GetPeakComboAward);
 };
 
 LUA_REGISTER_CLASS( HighScore )

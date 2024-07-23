@@ -114,7 +114,7 @@ public:
 
 		return 2;
 	}
-	LUA_METHOD(SetSecsBetweenSwitches)( T* p, lua_State *L ) { p->SetSecsBetweenSwitches( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(SetSecsBetweenSwitches);
 };
 
 LUA_REGISTER_DERIVED_CLASS( HelpDisplay, BitmapText )
