@@ -2093,50 +2093,17 @@ bool Song::IsMarathon() const
 class LunaSong: public Luna<Song>
 {
 public:
-	LUA_METHOD(GetDisplayFullTitle)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetDisplayFullTitle() ); return 1;
-	}
-	LUA_METHOD(GetTranslitFullTitle)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetTranslitFullTitle() ); return 1;
-	}
-	LUA_METHOD(GetDisplayMainTitle)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetDisplayMainTitle() ); return 1;
-	}
-	LUA_METHOD(GetMainTitle)(T* p, lua_State* L)
-	{
-		lua_pushstring(L, p->GetMainTitle()); return 1;
-	}
-	LUA_METHOD(GetTranslitMainTitle)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetTranslitMainTitle() ); return 1;
-	}
-	LUA_METHOD(GetDisplaySubTitle)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetDisplaySubTitle() ); return 1;
-	}
-	LUA_METHOD(GetTranslitSubTitle)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetTranslitSubTitle() ); return 1;
-	}
-	LUA_METHOD(GetDisplayArtist)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetDisplayArtist() ); return 1;
-	}
-	LUA_METHOD(GetTranslitArtist)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetTranslitArtist() ); return 1;
-	}
-	LUA_METHOD(GetGenre)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->m_sGenre ); return 1;
-	}
-	LUA_METHOD(GetOrigin)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->m_sOrigin ); return 1;
-	}
+	LUA_SIMPLE(GetDisplayFullTitle);
+	LUA_SIMPLE(GetTranslitFullTitle);
+	LUA_SIMPLE(GetDisplayMainTitle);
+	LUA_SIMPLE(GetMainTitle);
+	LUA_SIMPLE(GetTranslitMainTitle);
+	LUA_SIMPLE(GetDisplaySubTitle);
+	LUA_SIMPLE(GetTranslitSubTitle);
+	LUA_SIMPLE(GetDisplayArtist);
+	LUA_SIMPLE(GetTranslitArtist);
+	LUA_GETTER(GetGenre, m_sGenre );
+	LUA_GETTER(GetOrigin, m_sOrigin );
 	LUA_METHOD(GetAllSteps)( T* p, lua_State *L )
 	{
 		const std::vector<Steps*> &v = p->GetAllSteps();
@@ -2191,12 +2158,7 @@ public:
 			lua_pushnil(L);
 		return 1;
 	}
-	LUA_METHOD(GetPreviewMusicPath)(T* p, lua_State* L)
-	{
-		RString s= p->GetPreviewMusicPath();
-		lua_pushstring(L, s);
-		return 1;
-	}
+	LUA_SIMPLE(GetPreviewMusicPath);
 	LUA_METHOD(GetJacketPath)( T* p, lua_State *L )
 	{
 		RString s = p->GetJacketPath();
@@ -2242,62 +2204,17 @@ public:
 			lua_pushnil(L);
 		return 1;
 	}
-	LUA_METHOD(GetSongFilePath)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->GetSongFilePath() );
-		return 1;
-	}
-	LUA_METHOD(IsTutorial)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->IsTutorial());
-		return 1;
-	}
-	LUA_METHOD(IsEnabled)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->GetEnabled());
-		return 1;
-	}
-	LUA_METHOD(IsCustomSong)(T* p, lua_State* L)
-	{
-		lua_pushboolean(L, p->m_LoadedFromProfile != ProfileSlot_Invalid);
-		return 1;
-	}
-	LUA_METHOD(GetGroupName)( T* p, lua_State *L )
-	{
-		lua_pushstring(L, p->m_sGroupName);
-		return 1;
-	}
-	LUA_METHOD(MusicLengthSeconds)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->m_fMusicLengthSeconds);
-		return 1;
-	}
-	LUA_METHOD(GetSampleStart)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->GetPreviewStartSeconds());
-		return 1;
-	}
-	LUA_METHOD(GetSampleLength)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->m_fMusicSampleLengthSeconds);
-		return 1;
-	}
-	LUA_METHOD(IsLong)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->IsLong());
-		return 1;
-	}
-	LUA_METHOD(IsMarathon)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->IsMarathon());
-		return 1;
-	}
-	LUA_METHOD(HasStepsType)( T* p, lua_State *L )
-	{
-		StepsType st = Enum::Check<StepsType>(L, 1);
-		lua_pushboolean( L, p->HasStepsType(st) );
-		return 1;
-	}
+	LUA_SIMPLE(GetSongFilePath);
+	LUA_SIMPLE(IsTutorial);
+	LUA_SIMPLE2(IsEnabled, GetEnabled);
+	LUA_GETTER(IsCustomSong, m_LoadedFromProfile != ProfileSlot_Invalid);
+	LUA_GETTER(GetGroupName, m_sGroupName);
+	LUA_GETTER(MusicLengthSeconds, m_fMusicLengthSeconds);
+	LUA_SIMPLE2(GetSampleStart, GetPreviewStartSeconds);
+	LUA_GETTER(GetSampleLength, m_fMusicSampleLengthSeconds);
+	LUA_SIMPLE(IsLong);
+	LUA_SIMPLE(IsMarathon);
+	LUA_SIMPLE(HasStepsType);
 	LUA_METHOD(HasStepsTypeAndDifficulty)( T* p, lua_State *L )
 	{
 		StepsType st = Enum::Check<StepsType>(L, 1);
@@ -2305,11 +2222,7 @@ public:
 		lua_pushboolean( L, p->HasStepsTypeAndDifficulty(st, dc) );
 		return 1;
 	}
-	LUA_METHOD(IsStepsUsingDifferentTiming)(T* p, lua_State *L)
-	{
-		lua_pushboolean(L, p->IsStepsUsingDifferentTiming(Luna<Steps>::check( L, 1, true )));
-		return 1;
-	}
+	LUA_SIMPLE(IsStepsUsingDifferentTiming);
 	/* TODO: HasStepsTypeAndDifficulty and GetOneSteps should be in
 	 * a SongUtil Lua table and a method of Steps. */
 	LUA_METHOD(GetOneSteps)( T* p, lua_State *L )
@@ -2352,74 +2265,28 @@ public:
 		return 1;
 	}
 	// has functions
-	LUA_METHOD(HasMusic)( T* p, lua_State *L )			{ lua_pushboolean(L, p->HasMusic()); return 1; }
-	LUA_METHOD(HasBanner)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasBanner()); return 1; }
-	LUA_METHOD(HasBackground)( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasBackground()); return 1; }
-	LUA_METHOD(HasPreviewVid)( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasPreviewVid()); return 1; }
-	LUA_METHOD(HasJacket)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasJacket()); return 1; }
-	LUA_METHOD(HasDisc)( T* p, lua_State *L )			{ lua_pushboolean(L, p->HasDisc()); return 1; }
-	LUA_METHOD(HasCDImage)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasCDImage()); return 1; }
-	LUA_METHOD(HasCDTitle)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasCDTitle()); return 1; }
-	LUA_METHOD(HasBGChanges)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasBGChanges()); return 1; }
-	LUA_METHOD(HasLyrics)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasLyrics()); return 1; }
+	LUA_SIMPLE(HasMusic);
+	LUA_SIMPLE(HasBanner);
+	LUA_SIMPLE(HasBackground);
+	LUA_SIMPLE(HasPreviewVid);
+	LUA_SIMPLE(HasJacket);
+	LUA_SIMPLE(HasDisc);
+	LUA_SIMPLE(HasCDImage);
+	LUA_SIMPLE(HasCDTitle);
+	LUA_SIMPLE(HasBGChanges);
+	LUA_SIMPLE(HasLyrics);
 	// functions that AJ loves
-	LUA_METHOD(HasSignificantBPMChangesOrStops)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->HasSignificantBpmChangesOrStops());
-		return 1;
-	}
-	LUA_METHOD(HasEdits)( T* p, lua_State *L )
-	{
-		StepsType st = Enum::Check<StepsType>(L, 1);
-		lua_pushboolean(L, p->HasEdits( st ));
-		return 1;
-	}
-	LUA_METHOD(IsEasy)( T* p, lua_State *L )
-	{
-		StepsType st = Enum::Check<StepsType>(L, 1);
-		lua_pushboolean(L, p->IsEasy( st ));
-		return 1;
-	}
-	LUA_METHOD(GetStepsSeconds)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->GetStepsSeconds());
-		return 1;
-	}
-	LUA_METHOD(NormallyDisplayed)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->NormallyDisplayed());
-		return 1;
-	}
-	LUA_METHOD(ShowInDemonstrationAndRanking)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->ShowInDemonstrationAndRanking());
-		return 1;
-	}
-	LUA_METHOD(GetFirstSecond)(T* p, lua_State *L)
-	{
-		lua_pushnumber(L, p->GetFirstSecond());
-		return 1;
-	}
-	LUA_METHOD(GetLastSecond)(T* p, lua_State *L)
-	{
-		lua_pushnumber(L, p->GetLastSecond());
-		return 1;
-	}
-	LUA_METHOD(GetFirstBeat)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->GetFirstBeat());
-		return 1;
-	}
-	LUA_METHOD(GetLastBeat)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->GetLastBeat());
-		return 1;
-	}
-	LUA_METHOD(HasAttacks)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->HasAttacks());
-		return 1;
-	}
+	LUA_SIMPLE2(HasSignificantBPMChangesOrStops, HasSignificantBpmChangesOrStops);
+	LUA_SIMPLE(HasEdits);
+	LUA_SIMPLE(IsEasy);
+	LUA_SIMPLE(GetStepsSeconds);
+	LUA_SIMPLE(NormallyDisplayed);
+	LUA_SIMPLE(ShowInDemonstrationAndRanking);
+	LUA_SIMPLE(GetFirstSecond);
+	LUA_SIMPLE(GetLastSecond);
+	LUA_SIMPLE(GetFirstBeat);
+	LUA_SIMPLE(GetLastBeat);
+	LUA_SIMPLE(HasAttacks);
 	LUA_METHOD(GetDisplayBpms)( T* p, lua_State *L )
 	{
 		DisplayBpms temp;
@@ -2446,11 +2313,7 @@ public:
 		lua_pushboolean( L, temp.BpmIsConstant() );
 		return 1;
 	}
-	LUA_METHOD(IsDisplayBpmRandom)( T* p, lua_State *L )
-	{
-		lua_pushboolean( L, p->m_DisplayBPMType == DISPLAY_BPM_RANDOM );
-		return 1;
-	}
+	LUA_GETTER(IsDisplayBpmRandom, m_DisplayBPMType == DISPLAY_BPM_RANDOM);
 	LUA_METHOD(ReloadFromSongDir)(T* p, lua_State* L)
 	{
 		p->ReloadFromSongDir();

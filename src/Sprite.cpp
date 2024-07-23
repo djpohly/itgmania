@@ -1155,8 +1155,8 @@ public:
 
 	/* Commands that go in the tweening queue:
 	 * Commands that take effect immediately (ignoring the tweening queue): */
-	LUA_METHOD(customtexturerect)( T* p, lua_State *L )	{ p->SetCustomTextureRect( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetCustomImageRect)( T* p, lua_State *L )	{ p->SetCustomImageRect( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(customtexturerect, SetCustomTextureRect);
+	LUA_SIMPLE(SetCustomImageRect);
 	LUA_METHOD(SetCustomPosCoords)( T* p, lua_State *L )
 	{
 		float coords[8];
@@ -1171,24 +1171,16 @@ public:
 		p->SetCustomPosCoords(coords);
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(StopUsingCustomPosCoords)( T* p, lua_State *L ) { p->StopUsingCustomPosCoords(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(StopUsingCustomPosCoords);
 	LUA_METHOD(texcoordvelocity)( T* p, lua_State *L )	{ p->SetTexCoordVelocity( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(get_use_effect_clock_for_texcoords)(T* p, lua_State* L)
-	{
-		lua_pushboolean(L, p->m_use_effect_clock_for_texcoords);
-		return 1;
-	}
-	LUA_METHOD(set_use_effect_clock_for_texcoords)(T* p, lua_State* L)
-	{
-		p->m_use_effect_clock_for_texcoords= BArg(1);
-		COMMON_RETURN_SELF;
-	}
+	LUA_GETTER(get_use_effect_clock_for_texcoords, m_use_effect_clock_for_texcoords);
+	LUA_SETTER(set_use_effect_clock_for_texcoords, m_use_effect_clock_for_texcoords);
 	LUA_METHOD(scaletoclipped)( T* p, lua_State *L )		{ p->ScaleToClipped( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(CropTo)( T* p, lua_State *L )		{ p->CropTo( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(stretchtexcoords)( T* p, lua_State *L )	{ p->StretchTexCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(addimagecoords)( T* p, lua_State *L )		{ p->AddImageCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(setstate)( T* p, lua_State *L )		{ p->SetState( IArg(1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetState)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetState() ); return 1; }
+	LUA_SIMPLE2(setstate, SetState);
+	LUA_SIMPLE(GetState);
 	LUA_METHOD(SetStateProperties)(T* p, lua_State* L)
 	{
 		// States table example:
@@ -1266,8 +1258,8 @@ public:
 		p->SetStateProperties(new_states);
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(GetAnimationLengthSeconds)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetAnimationLengthSeconds() ); return 1; }
-	LUA_METHOD(SetSecondsIntoAnimation)( T* p, lua_State *L )	{ p->SetSecondsIntoAnimation(FArg(0)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(GetAnimationLengthSeconds);
+	LUA_SIMPLE(SetSecondsIntoAnimation);
 	LUA_METHOD(SetTexture)( T* p, lua_State *L )
 	{
 		RageTexture *pTexture = Luna<RageTexture>::check(L, 1);
@@ -1284,24 +1276,11 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	LUA_METHOD(SetEffectMode)( T* p, lua_State *L )
-	{
-		EffectMode em = Enum::Check<EffectMode>(L, 1);
-		p->SetEffectMode( em );
-		COMMON_RETURN_SELF;
-	}
-	LUA_METHOD(GetNumStates)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetNumStates() ); return 1; }
-	LUA_METHOD(SetAllStateDelays)( T* p, lua_State *L )
-	{
-		p->SetAllStateDelays(FArg(-1));
-		COMMON_RETURN_SELF;
-	}
-	LUA_DEFINE_METHOD(GetDecodeMovie, m_DecodeMovie);
-	LUA_METHOD(SetDecodeMovie)(T* p, lua_State *L)
-	{
-		p->m_DecodeMovie= BArg(1);
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(SetEffectMode);
+	LUA_SIMPLE(GetNumStates);
+	LUA_SIMPLE(SetAllStateDelays);
+	LUA_GETTER(GetDecodeMovie, m_DecodeMovie);
+	LUA_SETTER(SetDecodeMovie, m_DecodeMovie);
 	LUA_METHOD(LoadFromCached)( T* p, lua_State *L )
 	{
 		p->LoadFromCached( SArg(1), SArg(2) );

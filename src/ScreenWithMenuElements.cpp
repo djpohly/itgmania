@@ -372,12 +372,8 @@ class LunaScreenWithMenuElements: public Luna<ScreenWithMenuElements>
 {
 public:
 	LUA_METHOD(Cancel)( T* p, lua_State *L )		{ p->Cancel( SM_GoToPrevScreen ); COMMON_RETURN_SELF; }
-	LUA_METHOD(IsTransitioning)( T* p, lua_State *L ) { lua_pushboolean( L, p->IsTransitioning() ); return 1; }
-	LUA_METHOD(SetAllowLateJoin)( T* p, lua_State *L )
-	{
-		p->m_bShouldAllowLateJoin= BArg(1);
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(IsTransitioning);
+	LUA_SETTER(SetAllowLateJoin, m_bShouldAllowLateJoin);
 
 	LUA_METHOD(StartTransitioningScreen)( T* p, lua_State *L )
 	{

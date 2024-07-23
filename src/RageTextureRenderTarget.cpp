@@ -86,7 +86,7 @@ public:
 		p->BeginRenderingTo( bPreserveTexture );
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(FinishRenderingTo)( T* p, lua_State *L )	{ p->FinishRenderingTo(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(FinishRenderingTo);
 };
 
 LUA_REGISTER_DERIVED_CLASS( RageTextureRenderTarget, RageTexture )

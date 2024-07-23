@@ -421,12 +421,12 @@ void Screen::InternalRemoveCallback(callback_key_t key)
 class LunaScreen: public Luna<Screen>
 {
 public:
-	LUA_METHOD(GetNextScreenName)( T* p, lua_State *L ) { lua_pushstring(L, p->GetNextScreenName() ); return 1; }
-	LUA_METHOD(SetNextScreenName)( T* p, lua_State *L ) { p->SetNextScreenName(SArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetPrevScreenName)( T* p, lua_State *L ) { lua_pushstring(L, p->GetPrevScreen() ); return 1; }
-	LUA_METHOD(SetPrevScreenName)( T* p, lua_State *L ) { p->SetPrevScreenName(SArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(lockinput)( T* p, lua_State *L ) { p->SetLockInputSecs(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_DEFINE_METHOD( GetScreenType,	GetScreenType() )
+	LUA_SIMPLE(GetNextScreenName);
+	LUA_SIMPLE(SetNextScreenName);
+	LUA_SIMPLE2(GetPrevScreenName, GetPrevScreen);
+	LUA_SIMPLE(SetPrevScreenName);
+	LUA_SIMPLE2(lockinput, SetLockInputSecs);
+	LUA_SIMPLE(GetScreenType);
 
 	LUA_METHOD(PostScreenMessage)( T* p, lua_State *L )
 	{

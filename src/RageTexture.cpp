@@ -88,9 +88,9 @@ const RectF *RageTexture::GetTextureCoordRect( int iFrameNo ) const
 class LunaRageTexture: public Luna<RageTexture>
 {
 public:
-	LUA_METHOD(position)( T* p, lua_State *L )		{ p->SetPosition( FArg(1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(loop)( T* p, lua_State *L )			{ p->SetLooping( BIArg(1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(rate)( T* p, lua_State *L )			{ p->SetPlaybackRate( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(position, SetPosition);
+	LUA_SIMPLE2(loop, SetLooping);
+	LUA_SIMPLE2(rate, SetPlaybackRate);
 	LUA_METHOD(GetTextureCoordRect)( T* p, lua_State *L )
 	{
 		const RectF *pRect = p->GetTextureCoordRect( IArg(1) );
@@ -98,25 +98,17 @@ public:
 		lua_pushnumber( L, pRect->top );
 		lua_pushnumber( L, pRect->right );
 		lua_pushnumber( L, pRect->bottom );
-		return 4;
+		return 4;  // TODO: refactor Push<> to return int?
 	}
-	LUA_METHOD(GetNumFrames)(T* p, lua_State* L)
-	{
-		lua_pushnumber(L, p->GetNumFrames());
-		return 1;
-	}
-	LUA_METHOD(Reload)(T* p, lua_State* L)
-	{
-		p->Reload();
-		COMMON_RETURN_SELF;
-	}
-	LUA_DEFINE_METHOD(GetSourceWidth, GetSourceWidth());
-	LUA_DEFINE_METHOD(GetSourceHeight, GetSourceHeight());
-	LUA_DEFINE_METHOD(GetTextureWidth, GetTextureWidth());
-	LUA_DEFINE_METHOD(GetTextureHeight, GetTextureHeight());
-	LUA_DEFINE_METHOD(GetImageWidth, GetImageWidth());
-	LUA_DEFINE_METHOD(GetImageHeight, GetImageHeight());
-	LUA_DEFINE_METHOD(GetPath, GetID().filename);
+	LUA_SIMPLE(GetNumFrames);
+	LUA_SIMPLE(Reload);
+	LUA_SIMPLE(GetSourceWidth);
+	LUA_SIMPLE(GetSourceHeight);
+	LUA_SIMPLE(GetTextureWidth);
+	LUA_SIMPLE(GetTextureHeight);
+	LUA_SIMPLE(GetImageWidth);
+	LUA_SIMPLE(GetImageHeight);
+	LUA_GETTER(GetPath, GetID().filename);
 };
 
 LUA_REGISTER_CLASS( RageTexture )

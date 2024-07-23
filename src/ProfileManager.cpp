@@ -1302,21 +1302,12 @@ void ProfileManager::SetStatsPrefix(RString const& prefix)
 class LunaProfileManager: public Luna<ProfileManager>
 {
 public:
-	LUA_METHOD(GetStatsPrefix)(T* p, lua_State* L)
-	{
-		lua_pushstring(L, p->GetStatsPrefix().c_str());
-		return 1;
-	}
-	LUA_METHOD(SetStatsPrefix)(T* p, lua_State* L)
-	{
-		RString prefix= SArg(1);
-		p->SetStatsPrefix(prefix);
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(GetStatsPrefix);
+	LUA_SIMPLE(SetStatsPrefix);
 	LUA_METHOD(IsPersistentProfile)( T* p, lua_State *L )	{ lua_pushboolean(L, p->IsPersistentProfile(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
 	LUA_METHOD(GetProfile)( T* p, lua_State *L )				{ PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1); Profile* pP = p->GetProfile(pn); ASSERT(pP != nullptr); pP->PushSelf(L); return 1; }
-	LUA_METHOD(GetMachineProfile)( T* p, lua_State *L )		{ p->GetMachineProfile()->PushSelf(L); return 1; }
-	LUA_METHOD(SaveMachineProfile)( T* p, lua_State * )		{ p->SaveMachineProfile(); return 0; }
+	LUA_SIMPLE(GetMachineProfile);
+	LUA_SIMPLE(SaveMachineProfile);
 	LUA_METHOD(GetLocalProfile)( T* p, lua_State *L )
 	{
 		Profile *pProfile = p->GetLocalProfile(SArg(1));
@@ -1351,13 +1342,13 @@ public:
 		lua_pushstring(L, p->GetLocalProfileIDFromIndex(index) );
 		return 1;
 	}
-	LUA_METHOD(GetLocalProfileIndexFromID)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetLocalProfileIndexFromID(SArg(1)) ); return 1; }
-	LUA_METHOD(GetNumLocalProfiles)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetNumLocalProfiles() ); return 1; }
-	LUA_METHOD(GetProfileDir)( T* p, lua_State *L ) { lua_pushstring(L, p->GetProfileDir(Enum::Check<ProfileSlot>(L, 1)) ); return 1; }
+	LUA_SIMPLE(GetLocalProfileIndexFromID);
+	LUA_SIMPLE(GetNumLocalProfiles);
+	LUA_SIMPLE(GetProfileDir);
 	LUA_METHOD(IsSongNew)( T* p, lua_State *L )	{ lua_pushboolean(L, p->IsSongNew(Luna<Song>::check(L,1)) ); return 1; }
-	LUA_METHOD(ProfileWasLoadedFromMemoryCard)( T* p, lua_State *L )	{ lua_pushboolean(L, p->ProfileWasLoadedFromMemoryCard(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	LUA_METHOD(LastLoadWasTamperedOrCorrupt)( T* p, lua_State *L ) { lua_pushboolean(L, p->LastLoadWasTamperedOrCorrupt(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	LUA_METHOD(GetPlayerName)( T* p, lua_State *L )				{ PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1); lua_pushstring(L, p->GetPlayerName(pn)); return 1; }
+	LUA_SIMPLE(ProfileWasLoadedFromMemoryCard);
+	LUA_SIMPLE(LastLoadWasTamperedOrCorrupt);
+	LUA_SIMPLE(GetPlayerName);
 
 	LUA_METHOD(LocalProfileIDToDir)( T* , lua_State *L )
 	{
@@ -1365,9 +1356,9 @@ public:
 		lua_pushstring( L, dir );
 		return 1;
 	}
-	LUA_METHOD(SaveProfile)( T* p, lua_State *L ) { lua_pushboolean( L, p->SaveProfile(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	LUA_METHOD(SaveLocalProfile)( T* p, lua_State *L ) { lua_pushboolean( L, p->SaveLocalProfile(SArg(1)) ); return 1; }
-	LUA_METHOD(ProfileFromMemoryCardIsNew)( T* p, lua_State *L ) { lua_pushboolean( L, p->ProfileFromMemoryCardIsNew(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
+	LUA_SIMPLE(SaveProfile);
+	LUA_SIMPLE(SaveLocalProfile);
+	LUA_SIMPLE(ProfileFromMemoryCardIsNew);
 	LUA_METHOD(GetSongNumTimesPlayed)( T* p, lua_State *L )
 	{
 		lua_pushnumber(L, p->GetSongNumTimesPlayed(Luna<Song>::check(L,1),Enum::Check<ProfileSlot>(L, 2)) );

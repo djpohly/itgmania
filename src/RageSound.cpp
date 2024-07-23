@@ -718,11 +718,7 @@ public:
 	}
 
 	/*
-	LUA_METHOD(SetStopMode)( T* p, lua_State *L )
-	{
-		LuaHelpers::Push( L, p->SetStopModeFromString(SArg(1)) );
-		return 1;
-	}
+	LUA_SIMPLE2(SetStopMode, SetStopModeFromString(SArg(1)));
 	*/
 };
 

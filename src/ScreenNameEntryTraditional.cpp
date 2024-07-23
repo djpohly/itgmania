@@ -255,21 +255,8 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(Finish)( T* p, lua_State *L )
-	{
-		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
-		bool bRet = p->Finish( pn );
-		LuaHelpers::Push( L, bRet );
-		return 1;
-	}
-
-	LUA_METHOD(Backspace)( T* p, lua_State *L )
-	{
-		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
-		bool bRet = p->Backspace( pn );
-		LuaHelpers::Push( L, bRet );
-		return 1;
-	}
+	LUA_SIMPLE(Finish);
+	LUA_SIMPLE(Backspace);
 
 	LUA_METHOD(GetEnteringName)( T* p, lua_State *L )
 	{
@@ -285,17 +272,8 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(GetAnyEntering)( T* p, lua_State *L )
-	{
-		LuaHelpers::Push( L, p->AnyEntering() );
-		return 1;
-	}
-
-	LUA_METHOD(GetAnyStillEntering)( T* p, lua_State *L )
-	{
-		LuaHelpers::Push( L, p->AnyStillEntering() );
-		return 1;
-	}
+	LUA_SIMPLE2(GetAnyEntering, AnyEntering);
+	LUA_SIMPLE2(GetAnyStillEntering, AnyStillEntering);
 
 	LUA_METHOD(GetSelection)( T* p, lua_State *L )
 	{

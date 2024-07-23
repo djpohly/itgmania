@@ -6561,7 +6561,7 @@ void ScreenEdit::DoHelp()
 class LunaScreenEdit: public Luna<ScreenEdit>
 {
 public:
-	LUA_DEFINE_METHOD( GetEditState, GetEditState() )
+	LUA_SIMPLE(GetEditState);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenEdit, ScreenWithMenuElements )

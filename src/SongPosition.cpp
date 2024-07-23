@@ -61,16 +61,16 @@ void SongPosition::Reset()
 class LunaSongPosition: public Luna<SongPosition>
 {
 public:
-	LUA_DEFINE_METHOD( GetMusicSecondsVisible, m_fMusicSecondsVisible );
-	LUA_DEFINE_METHOD( GetSongBeatVisible, m_fSongBeatVisible );
-	LUA_DEFINE_METHOD( GetMusicSeconds, m_fMusicSeconds );
-	LUA_DEFINE_METHOD( GetSongBeat, m_fSongBeat );
-	LUA_DEFINE_METHOD( GetSongBeatNoOffset, m_fSongBeatNoOffset );
-	LUA_DEFINE_METHOD( GetCurBPS, m_fCurBPS );
-	LUA_DEFINE_METHOD( GetFreeze, m_bFreeze );
-	LUA_DEFINE_METHOD( GetDelay, m_bDelay );
-	LUA_DEFINE_METHOD( GetWarpBeginRow, m_iWarpBeginRow );
-	LUA_DEFINE_METHOD( GetWarpDestination, m_fWarpDestination );
+	LUA_GETTER(GetMusicSecondsVisible, m_fMusicSecondsVisible);
+	LUA_GETTER(GetSongBeatVisible, m_fSongBeatVisible);
+	LUA_GETTER(GetMusicSeconds, m_fMusicSeconds);
+	LUA_GETTER(GetSongBeat, m_fSongBeat);
+	LUA_GETTER(GetSongBeatNoOffset, m_fSongBeatNoOffset);
+	LUA_GETTER(GetCurBPS, m_fCurBPS);
+	LUA_GETTER(GetFreeze, m_bFreeze);
+	LUA_GETTER(GetDelay, m_bDelay);
+	LUA_GETTER(GetWarpBeginRow, m_iWarpBeginRow);
+	LUA_GETTER(GetWarpDestination, m_fWarpDestination);
 };
 
 LUA_REGISTER_CLASS( SongPosition );

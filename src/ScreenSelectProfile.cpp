@@ -258,19 +258,8 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(GetProfileIndex)( T* p, lua_State *L )
-	{
-		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
-		LuaHelpers::Push( L, p->GetProfileIndex( pn ) );
-		return 1;
-	}
-
-	LUA_METHOD(Finish)( T* p, lua_State *L )
-	{
-		bool bRet = p->Finish();
-		LuaHelpers::Push( L, bRet );
-		return 1;
-	}
+	LUA_SIMPLE(GetProfileIndex);
+	LUA_SIMPLE(Finish);
 
 	LUA_METHOD(Cancel)( T* p, lua_State *L )
 	{

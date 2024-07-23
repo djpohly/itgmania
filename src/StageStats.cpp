@@ -371,19 +371,15 @@ public:
 		return 1;
 
 	}
-	LUA_METHOD(GetGameplaySeconds)( T* p, lua_State *L )	{ lua_pushnumber(L, p->m_fGameplaySeconds); return 1; }
-	LUA_METHOD(OnePassed)( T* p, lua_State *L )		{ lua_pushboolean(L, p->OnePassed()); return 1; }
-	LUA_METHOD(AllFailed)( T* p, lua_State *L )		{ lua_pushboolean(L, p->AllFailed()); return 1; }
-	LUA_METHOD(GetStage)( T* p, lua_State *L )		{ LuaHelpers::Push( L, p->m_Stage ); return 1; }
-	LUA_DEFINE_METHOD( GetStageIndex,				m_iStageIndex )
-	LUA_DEFINE_METHOD(GetStepsSeconds, m_fStepsSeconds)
-	LUA_METHOD(PlayerHasHighScore)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->PlayerHasHighScore(Enum::Check<PlayerNumber>(L, 1)));
-		return 1;
-	}
-	LUA_DEFINE_METHOD( GetEarnedExtraStage,			m_EarnedExtraStage )
-	LUA_METHOD(GaveUp)( T* p, lua_State *L )		{ LuaHelpers::Push( L, p->m_bGaveUp ); return 1; }
+	LUA_GETTER(GetGameplaySeconds, m_fGameplaySeconds);
+	LUA_SIMPLE(OnePassed);
+	LUA_SIMPLE(AllFailed);
+	LUA_GETTER(GetStage, m_Stage );
+	LUA_GETTER(GetStageIndex, m_iStageIndex);
+	LUA_GETTER(GetStepsSeconds, m_fStepsSeconds);
+	LUA_SIMPLE(PlayerHasHighScore);
+	LUA_GETTER(GetEarnedExtraStage, m_EarnedExtraStage);
+	LUA_GETTER(GaveUp, m_bGaveUp);
 };
 
 LUA_REGISTER_CLASS( StageStats )

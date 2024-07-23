@@ -369,11 +369,7 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(Close)( T* p, lua_State *L )
-	{
-		p->Close();
-		return 1;
-	}
+	LUA_SIMPLE(Close);
 
 	LUA_METHOD(Write)( T* p, lua_State *L )
 	{
@@ -382,11 +378,7 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(Flush)(T* p, lua_State* L)
-	{
-		p->Flush();
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(Flush);
 
 	LUA_METHOD(Read)( T* p, lua_State *L )
 	{
@@ -436,19 +428,8 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(GetError)( T* p, lua_State *L )
-	{
-		RString error;
-		error = p->GetError();
-		lua_pushstring( L, error );
-		return 1;
-	}
-
-	LUA_METHOD(ClearError)( T* p, lua_State *L )
-	{
-		p->ClearError();
-		return 1;
-	}
+	LUA_SIMPLE(GetError);
+	LUA_SIMPLE(ClearError);
 
 	LUA_METHOD(AtEOF)( T* p, lua_State *L )
 	{

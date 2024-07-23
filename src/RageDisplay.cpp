@@ -1033,57 +1033,22 @@ REGISTER_WITH_LUA_FUNCTION( register_REFRESH_DEFAULT );
 class LunaRageDisplay: public Luna<RageDisplay>
 {
 public:
-	LUA_METHOD(GetDisplayWidth)( T* p, lua_State *L )
-	{
-		VideoModeParams params = p->GetActualVideoModeParams();
-		LuaHelpers::Push( L, params.width );
-		return 1;
-	}
-
-	LUA_METHOD(GetDisplayHeight)( T* p, lua_State *L )
-	{
-		VideoModeParams params = p->GetActualVideoModeParams();
-		LuaHelpers::Push( L, params.height );
-		return 1;
-	}
-
-	LUA_METHOD(GetFPS)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->GetFPS());
-		return 1;
-	}
-
-	LUA_METHOD(GetVPF)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->GetVPF());
-		return 1;
-	}
-
-	LUA_METHOD(GetCumFPS)( T* p, lua_State *L )
-	{
-		lua_pushnumber(L, p->GetCumFPS());
-		return 1;
-	}
+	LUA_GETTER(GetDisplayWidth, GetActualVideoModeParams().width);
+	LUA_GETTER(GetDisplayHeight, GetActualVideoModeParams().height);
+	LUA_SIMPLE(GetFPS);
+	LUA_SIMPLE(GetVPF);
+	LUA_SIMPLE(GetCumFPS);
 
 	LUA_METHOD(GetDisplaySpecs)( T* p, lua_State *L )
 	{
 		DisplaySpecs s;
 		p->GetDisplaySpecs(s);
-		pushDisplaySpecs(L, s);
+		pushDisplaySpecs(L, s); // TODO: implement as PushSelf
 		return 1;
 	}
 
-	LUA_METHOD(SupportsRenderToTexture)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->SupportsRenderToTexture());
-		return 1;
-	}
-
-	LUA_METHOD(SupportsFullscreenBorderlessWindow)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->SupportsFullscreenBorderlessWindow());
-		return 1;
-	}
+	LUA_SIMPLE(SupportsRenderToTexture);
+	LUA_SIMPLE(SupportsFullscreenBorderlessWindow);
 };
 
 LUA_REGISTER_CLASS( RageDisplay )

@@ -938,16 +938,8 @@ public:
 		p->SetNewScreen(screen);
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(GetTopScreen)( T* p, lua_State *L )
-	{
-		Actor *pScreen = p->GetTopScreen();
-		if( pScreen != nullptr )
-			pScreen->PushSelf(L);
-		else
-			lua_pushnil( L );
-		return 1;
-	}
-	LUA_METHOD(SystemMessage)( T* p, lua_State *L )		{ p->SystemMessage( SArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(GetTopScreen);
+	LUA_SIMPLE(SystemMessage);
 	LUA_METHOD(ScreenIsPrepped)( T* p, lua_State *L )	{ lua_pushboolean( L, ScreenManagerUtil::ScreenIsPrepped( SArg(1) ) ); return 1; }
 	LUA_METHOD(ScreenClassExists)( T* p, lua_State *L )	{ lua_pushboolean( L, g_pmapRegistrees->find( SArg(1) ) != g_pmapRegistrees->end() ); return 1; }
 	LUA_METHOD(AddNewScreenToTop)( T* p, lua_State *L )
@@ -965,14 +957,9 @@ public:
 		COMMON_RETURN_SELF;
 	}
 	//LUA_METHOD(GetScreenStackSize)( T* p, lua_State *L )	{ lua_pushnumber( L, ScreenManagerUtil::g_ScreenStack.size() ); return 1; }
-	LUA_METHOD(ReloadOverlayScreens)( T* p, lua_State *L )	{ p->ReloadOverlayScreens(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(ReloadOverlayScreens);
 
-	LUA_METHOD(get_input_redirected)(T* p, lua_State* L)
-	{
-		PlayerNumber pn= Enum::Check<PlayerNumber>(L, 1);
-		lua_pushboolean(L, p->get_input_redirected(pn));
-		return 1;
-	}
+	LUA_SIMPLE(get_input_redirected);
 	LUA_METHOD(set_input_redirected)(T* p, lua_State* L)
 	{
 		PlayerNumber pn= Enum::Check<PlayerNumber>(L, 1);
@@ -980,18 +967,11 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-#define SCRMAN_PLAY_SOUND(sound_name) \
-	LUA_METHOD(Play##sound_name)(T* p, lua_State* L) \
-	{ \
-		p->Play##sound_name(); \
-		COMMON_RETURN_SELF; \
-	}
-	SCRMAN_PLAY_SOUND(InvalidSound);
-	SCRMAN_PLAY_SOUND(StartSound);
-	SCRMAN_PLAY_SOUND(CoinSound);
-	SCRMAN_PLAY_SOUND(CancelSound);
-	SCRMAN_PLAY_SOUND(ScreenshotSound);
-#undef SCRMAN_PLAY_SOUND
+	LUA_SIMPLE(PlayInvalidSound);
+	LUA_SIMPLE(PlayStartSound);
+	LUA_SIMPLE(PlayCoinSound);
+	LUA_SIMPLE(PlayCancelSound);
+	LUA_SIMPLE(PlayScreenshotSound);
 };
 
 LUA_REGISTER_CLASS( ScreenManager )

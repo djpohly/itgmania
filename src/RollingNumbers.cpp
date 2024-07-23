@@ -142,8 +142,8 @@ void RollingNumbers::UpdateText()
 class LunaRollingNumbers: public Luna<RollingNumbers>
 {
 public:
-	LUA_METHOD(Load)( T* p, lua_State *L )			{ p->Load(SArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(targetnumber)( T* p, lua_State *L )	{ p->SetTargetNumber( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(Load);
+	LUA_SIMPLE2(targetnumber, SetTargetNumber);
 };
 
 LUA_REGISTER_DERIVED_CLASS( RollingNumbers, BitmapText )

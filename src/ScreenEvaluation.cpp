@@ -807,7 +807,7 @@ void ScreenEvaluation::HandleMenuStart()
 class LunaScreenEvaluation: public Luna<ScreenEvaluation>
 {
 public:
-	LUA_METHOD(GetStageStats)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->GetStageStats() ); return 1; }
+	LUA_SIMPLE(GetStageStats);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenEvaluation, ScreenWithMenuElements )

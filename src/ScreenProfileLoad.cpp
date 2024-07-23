@@ -49,11 +49,7 @@ public:
 		LUA->UnyieldLua();
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(HaveProfileToLoad)( T* p, lua_State *L )
-	{
-		LuaHelpers::Push( L, p->m_bHaveProfileToLoad );
-		return 1;
-	}
+	LUA_GETTER(HaveProfileToLoad, m_bHaveProfileToLoad);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenProfileLoad, ScreenWithMenuElements )

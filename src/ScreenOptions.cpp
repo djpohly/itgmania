@@ -1362,9 +1362,9 @@ void ScreenOptions::SetOptionRowFromName( const RString& nombre )
 class LunaScreenOptions: public Luna<ScreenOptions>
 {
 public:
-	LUA_METHOD(AllAreOnLastRow)( T* p, lua_State *L ) { lua_pushboolean( L, p->AllAreOnLastRow() ); return 1; }
-	LUA_METHOD(FocusedItemEndsScreen)( T* p, lua_State *L ) { lua_pushboolean( L, p->FocusedItemEndsScreen(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	LUA_METHOD(GetCurrentRowIndex)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetCurrentRow(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
+	LUA_SIMPLE(AllAreOnLastRow);
+	LUA_SIMPLE(FocusedItemEndsScreen);
+	LUA_SIMPLE2(GetCurrentRowIndex, GetCurrentRow);
 	LUA_METHOD(GetOptionRow)( T* p, lua_State *L ) {
 		int row_index= IArg(1);
 		// TODO:  Change row indices to be 1-indexed when breaking compatibility
@@ -1380,8 +1380,8 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	LUA_DEFINE_METHOD(GetNumRows, GetNumRows());
-	//LUA_METHOD(SetOptionRowFromName)( T* p, lua_State *L ) { p->SetOptionRowFromName( SArg(1) ); return 0; }
+	LUA_SIMPLE(GetNumRows);
+	//LUA_SIMPLE(SetOptionRowFromName);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenOptions, ScreenWithMenuElements )
