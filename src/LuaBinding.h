@@ -55,21 +55,27 @@ protected:
 		lua_pushcfunction( L, tostring_T );
 		lua_setfield( L, iMetatable, "__tostring" );
 
-		// fill method table with methods from class T
-		for( unsigned i=0; i < s_aMethods.size(); i++ )
-		{
-			const RegType *l = &s_aMethods[i];
-			lua_pushlightuserdata( L, (void*) l->mfunc );
-			lua_pushcclosure( L, thunk, 1 );
-			lua_setfield( L, iMethods, l->szName );
+		if (s_aMethods != nullptr) {
+			// fill method table with methods from class T
+			for( RegType l : *s_aMethods )
+			{
+				lua_pushlightuserdata( L, (void*) l.mfunc );
+				lua_pushcclosure( L, thunk, 1 );
+				lua_setfield( L, iMethods, l.szName );
+			}
 		}
 	}
 
-	inline static std::vector<RegType> s_aMethods;
+	// Will be created by registrants below to avoid static initialization
+	// order fiasco
+	inline static std::vector<RegType> *s_aMethods = nullptr;
 
 	struct RegisterLuaMethod {
 		RegisterLuaMethod( const char *szName, binding_t *pFunc ) {
-			s_aMethods.push_back({ szName, pFunc });
+			if (s_aMethods == nullptr) {
+				s_aMethods = new std::vector<RegType>;
+			}
+			s_aMethods->push_back({ szName, pFunc });
 		}
 	};
 
