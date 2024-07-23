@@ -158,6 +158,7 @@ namespace LuaHelpers
 		return CheckBoolean( L, iArg );
 	}
 
+	// Is there some way to use a variadic template for the arguments?
 	template<class T, typename R, typename A>
 	inline int WrapMethod(lua_State *L, T *p, R (T::*pfn)(A)) {
 		A arg;

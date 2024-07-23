@@ -90,25 +90,13 @@ void ActorFrameTexture::DrawPrimitives()
 class LunaActorFrameTexture : public Luna<ActorFrameTexture>
 {
 public:
-	LUA_METHOD(Create)( T* p, lua_State *L )				{ p->Create(); COMMON_RETURN_SELF; }
-	LUA_METHOD(EnableDepthBuffer)( T* p, lua_State *L )		{ p->EnableDepthBuffer(BArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(EnableAlphaBuffer)( T* p, lua_State *L )		{ p->EnableAlphaBuffer(BArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(EnableFloat)( T* p, lua_State *L )			{ p->EnableFloat(BArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(EnablePreserveTexture)( T* p, lua_State *L )		{ p->EnablePreserveTexture(BArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetTextureName)( T* p, lua_State *L )			{ p->SetTextureName(SArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetTexture)( T* p, lua_State *L )
-	{
-		RageTexture *pTexture = p->GetTexture();
-		if( pTexture == nullptr )
-		{
-			lua_pushnil(L);
-		}
-		else
-		{
-			pTexture->PushSelf(L);
-		}
-		return 1;
-	}
+	LUA_SIMPLE(Create);
+	LUA_SIMPLE(EnableDepthBuffer);
+	LUA_SIMPLE(EnableAlphaBuffer);
+	LUA_SIMPLE(EnableFloat);
+	LUA_SIMPLE(EnablePreserveTexture);
+	LUA_SIMPLE(SetTextureName);
+	LUA_SIMPLE(GetTexture);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorFrameTexture, ActorFrame )

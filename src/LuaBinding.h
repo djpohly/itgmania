@@ -158,8 +158,11 @@ public:
 	template<> RString Luna<T>::m_sBaseClassName = #B; \
 	void T::PushSelf( lua_State *L ) { Luna<B>::PushObject( L, Luna<T>::m_sClassName, this ); } \
 	static Luna##T registera##T; \
-	/* Call PushSelf, so we always call the derived Luna<T>::Push. */ \
-	namespace LuaHelpers { template<> void Push<T*>( lua_State *L, T *const &pObject ) { if( pObject == nullptr ) lua_pushnil(L); else pObject->PushSelf( L ); } }
+	namespace LuaHelpers { \
+		template<> bool FromStack( lua_State *L, T *&pObject, int iOffset ) { pObject = Luna<T>::check(L, iOffset); return pObject != nullptr; } \
+		/* Call PushSelf, so we always call the derived Luna<T>::Push. */ \
+		template<> void Push<T*>( lua_State *L, T *const &pObject ) { if( pObject == nullptr ) lua_pushnil(L); else pObject->PushSelf( L ); } \
+	}
 
 #define LUA_DEFINE_METHOD( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
