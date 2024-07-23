@@ -708,27 +708,19 @@ RString Steps::GenerateChartKey(NoteData &nd, TimingData *td)
 class LunaSteps: public Luna<Steps>
 {
 public:
-	LUA_DEFINE_METHOD( GetStepsType,	m_StepsType )
-	LUA_DEFINE_METHOD( GetDifficulty,	GetDifficulty() )
-	LUA_DEFINE_METHOD( GetDescription,	GetDescription() )
-	LUA_DEFINE_METHOD( GetChartStyle,	GetChartStyle() )
-	LUA_DEFINE_METHOD( GetAuthorCredit, GetCredit() )
-	LUA_DEFINE_METHOD( GetMeter,	GetMeter() )
-	LUA_DEFINE_METHOD( GetFilename,	GetFilename() )
-	LUA_DEFINE_METHOD( IsAutogen,	IsAutogen() )
-	LUA_DEFINE_METHOD( IsAnEdit,	IsAnEdit() )
-	LUA_DEFINE_METHOD( IsAPlayerEdit,	IsAPlayerEdit() )
+	LUA_GETTER(GetStepsType, m_StepsType);
+	LUA_SIMPLE(GetDifficulty);
+	LUA_SIMPLE(GetDescription);
+	LUA_SIMPLE(GetChartStyle);
+	LUA_SIMPLE2(GetAuthorCredit, GetCredit);
+	LUA_SIMPLE(GetMeter);
+	LUA_SIMPLE(GetFilename);
+	LUA_SIMPLE(IsAutogen);
+	LUA_SIMPLE(IsAnEdit);
+	LUA_SIMPLE(IsAPlayerEdit);
+	LUA_SIMPLE(HasSignificantTimingChanges);
+	LUA_SIMPLE(HasAttacks);
 
-	LUA_METHOD(HasSignificantTimingChanges)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->HasSignificantTimingChanges());
-		return 1;
-	}
-	LUA_METHOD(HasAttacks)( T* p, lua_State *L )
-	{
-		lua_pushboolean(L, p->HasAttacks());
-		return 1;
-	}
 	LUA_METHOD(GetRadarValues)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = PLAYER_1;
@@ -745,7 +737,7 @@ public:
 		p->GetTimingData()->PushSelf(L);
 		return 1;
 	}
-	LUA_METHOD(GetHash)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetHash() ); return 1; }
+	LUA_SIMPLE(GetHash);
 	// untested
 	/*
 	LUA_METHOD(GetSMNoteData)( T* p, lua_State *L )
@@ -756,11 +748,7 @@ public:
 		return 1;
 	}
 	*/
-	LUA_METHOD(GetChartName)(T *p, lua_State *L)
-	{
-		lua_pushstring(L, p->GetChartName());
-		return 1;
-	}
+	LUA_SIMPLE(GetChartName);
 	LUA_METHOD(GetDisplayBpms)( T* p, lua_State *L )
 	{
 		DisplayBpms temp;
@@ -787,17 +775,9 @@ public:
 		lua_pushboolean( L, temp.BpmIsConstant() );
 		return 1;
 	}
-	LUA_METHOD(IsDisplayBpmRandom)( T* p, lua_State *L )
-	{
-		lua_pushboolean( L, p->GetDisplayBPM() == DISPLAY_BPM_RANDOM );
-		return 1;
-	}
-	LUA_DEFINE_METHOD( PredictMeter, PredictMeter() )
-	LUA_METHOD(GetDisplayBPMType)( T* p, lua_State *L )
-	{
-		LuaHelpers::Push( L, p->GetDisplayBPM() );
-		return 1;
-	}
+	LUA_GETTER(IsDisplayBpmRandom, GetDisplayBPM() == DISPLAY_BPM_RANDOM);
+	LUA_SIMPLE(PredictMeter);
+	LUA_SIMPLE2(GetDisplayBPMType, GetDisplayBPM);
 };
 
 LUA_REGISTER_CLASS( Steps )

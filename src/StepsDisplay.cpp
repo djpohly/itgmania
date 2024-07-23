@@ -315,12 +315,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(SetFromGameState)( T* p, lua_State *L )
-	{
-		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
-		p->SetFromGameState( pn );
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(SetFromGameState);
 };
 
 LUA_REGISTER_DERIVED_CLASS( StepsDisplay, ActorFrame )

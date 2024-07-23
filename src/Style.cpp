@@ -145,10 +145,10 @@ RString Style::ColToButtonName( int iCol ) const
 class LunaStyle: public Luna<Style>
 {
 public:
-	LUA_METHOD(GetName)( T* p, lua_State *L )		{ LuaHelpers::Push( L, (RString) p->m_szName ); return 1; }
-	LUA_DEFINE_METHOD( GetStyleType,		m_StyleType )
-	LUA_DEFINE_METHOD( GetStepsType,		m_StepsType )
-	LUA_DEFINE_METHOD( ColumnsPerPlayer,	m_iColsPerPlayer )
+	LUA_GETTER(GetName, m_szName);
+	LUA_GETTER(GetStyleType, m_StyleType);
+	LUA_GETTER(GetStepsType, m_StepsType);
+	LUA_GETTER(ColumnsPerPlayer, m_iColsPerPlayer);
 	LUA_METHOD(NeedsZoomOutWith2Players)(T* p, lua_State *L)
 	{
 		// m_bNeedsZoomOutWith2Players was removed in favor of having
@@ -157,13 +157,8 @@ public:
 		lua_pushboolean(L, false);
 		return 1;
 	}
-	LUA_METHOD(GetWidth)(T* p, lua_State* L)
-	{
-		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
-		lua_pushnumber(L, p->GetWidth(pn));
-		return 1;
-	}
-	LUA_DEFINE_METHOD( LockedDifficulty,	m_bLockDifficulties )
+	LUA_SIMPLE(GetWidth);
+	LUA_GETTER(LockedDifficulty, m_bLockDifficulties);
 
 	LUA_METHOD(GetColumnInfo)( T* p, lua_State *L )
 	{

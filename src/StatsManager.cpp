@@ -535,7 +535,7 @@ public:
 		p->m_vPlayedStageStats[iIndex].PushSelf(L);
 		return 1;
 	}
-	LUA_METHOD(Reset)( T* p, lua_State *L )			{ p->Reset(); return 0; }
+	LUA_SIMPLE(Reset);
 	LUA_METHOD(GetAccumPlayedStageStats)( T* p, lua_State *L )	{ p->GetAccumPlayedStageStats().PushSelf(L); return 1; }
 	LUA_METHOD(GetFinalEvalStageStats)( T* p, lua_State *L )
 	{
@@ -558,7 +558,7 @@ public:
 		}
 		return 1;
 	}
-	LUA_METHOD(GetStagesPlayed)( T* p, lua_State *L )				{ lua_pushnumber( L, p->m_vPlayedStageStats.size() ); return 1; }
+	LUA_GETTER(GetStagesPlayed, m_vPlayedStageStats.size());
 
 	LUA_METHOD(GetBestGrade)( T* p, lua_State *L )
 	{
