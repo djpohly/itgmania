@@ -258,11 +258,7 @@ public:
 		else { Course *pC = Luna<Course>::check(L,1); p->LoadFromCourse( pC ); }
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(LoadFromCachedBanner)( T* p, lua_State *L )
-	{ 
-		p->LoadFromCachedBanner( SArg(1) );
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(LoadFromCachedBanner);
 	LUA_METHOD(LoadIconFromCharacter)( T* p, lua_State *L )
 	{ 
 		if( lua_isnil(L,1) ) { p->LoadIconFromCharacter(nullptr); }
@@ -287,11 +283,7 @@ public:
 		else { UnlockEntry *pUE = Luna<UnlockEntry>::check(L,1); p->LoadBackgroundFromUnlockEntry( pUE ); }
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(LoadFromSongGroup)( T* p, lua_State *L )
-	{ 
-		p->LoadFromSongGroup( SArg(1) );
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(LoadFromSongGroup);
 	LUA_METHOD(LoadFromSortOrder)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->LoadFromSortOrder( SortOrder_Invalid ); }
@@ -302,9 +294,9 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(GetScrolling)( T* p, lua_State *L ){ lua_pushboolean( L, p->GetScrolling() ); return 1; }
+	LUA_SIMPLE(GetScrolling);
 	LUA_METHOD(SetScrolling)( T* p, lua_State *L ){ p->SetScrolling( BArg(1), FArg(2) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetPercentScrolling)( T* p, lua_State *L ){ lua_pushnumber( L, p->ScrollingPercent() ); return 1; }
+	LUA_SIMPLE2(GetPercentScrolling, ScrollingPercent);
 };
 
 LUA_REGISTER_DERIVED_CLASS( Banner, Sprite )

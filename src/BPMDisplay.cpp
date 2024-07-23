@@ -310,7 +310,7 @@ REGISTER_ACTOR_CLASS( SongBPMDisplay );
 class LunaBPMDisplay: public Luna<BPMDisplay>
 {
 public:
-	LUA_METHOD(SetFromGameState)( T* p, lua_State *L ) { p->SetFromGameState(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(SetFromGameState);
 	LUA_METHOD(SetFromSong)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->NoBPM(); }

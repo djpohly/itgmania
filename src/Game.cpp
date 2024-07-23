@@ -60,9 +60,9 @@ class LunaGame: public Luna<Game>
 {
 public:
 	LUA_METHOD(GetName)( T* p, lua_State *L )			{ lua_pushstring( L, p->m_szName ); return 1; }
-	LUA_METHOD(CountNotesSeparately)( T* p, lua_State *L )	{ lua_pushboolean( L, p->m_bCountNotesSeparately ); return 1; }
-	LUA_DEFINE_METHOD( GetMapJudgmentTo, GetMapJudgmentTo(Enum::Check<TapNoteScore>(L, 1)) )
-	LUA_DEFINE_METHOD(GetSeparateStyles, m_PlayersHaveSeparateStyles);
+	LUA_GETTER(CountNotesSeparately, m_bCountNotesSeparately);
+	LUA_SIMPLE(GetMapJudgmentTo);
+	LUA_GETTER(GetSeparateStyles, m_PlayersHaveSeparateStyles);
 };
 
 LUA_REGISTER_CLASS( Game )

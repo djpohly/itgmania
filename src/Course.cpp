@@ -1270,22 +1270,15 @@ bool Course::Matches( RString sGroup, RString sCourse ) const
 class LunaCourseEntry: public Luna<CourseEntry>
 {
 public:
-	LUA_METHOD(GetSong)( T* p, lua_State *L )
-	{
-		if( p->songID.ToSong() )
-			p->songID.ToSong()->PushSelf(L);
-		else
-			lua_pushnil(L);
-		return 1;
-	}
-	LUA_DEFINE_METHOD( IsSecret, bSecret );
-	LUA_DEFINE_METHOD( IsFixedSong, IsFixedSong() );
-	LUA_DEFINE_METHOD( GetGainSeconds, fGainSeconds );
-	LUA_DEFINE_METHOD( GetGainLives, iGainLives );
-	LUA_DEFINE_METHOD( GetNormalModifiers, sModifiers );
+	LUA_GETTER(GetSong, songID.ToSong());
+	LUA_GETTER(IsSecret, bSecret);
+	LUA_SIMPLE(IsFixedSong);
+	LUA_GETTER(GetGainSeconds, fGainSeconds);
+	LUA_GETTER(GetGainLives, iGainLives);
+	LUA_GETTER(GetNormalModifiers, sModifiers);
 	// GetTimedModifiers - table
-	LUA_DEFINE_METHOD( GetNumModChanges, GetNumModChanges() );
-	LUA_DEFINE_METHOD( GetTextDescription, GetTextDescription() );
+	LUA_SIMPLE(GetNumModChanges);
+	LUA_SIMPLE(GetTextDescription);
 };
 
 LUA_REGISTER_CLASS( CourseEntry )
@@ -1295,12 +1288,12 @@ LUA_REGISTER_CLASS( CourseEntry )
 class LunaCourse: public Luna<Course>
 {
 public:
-	LUA_DEFINE_METHOD( GetPlayMode, GetPlayMode() )
-	LUA_METHOD(GetDisplayFullTitle)( T* p, lua_State *L )	{ lua_pushstring(L, p->GetDisplayFullTitle() ); return 1; }
-	LUA_METHOD(GetTranslitFullTitle)( T* p, lua_State *L )	{ lua_pushstring(L, p->GetTranslitFullTitle() ); return 1; }
-	LUA_METHOD(HasMods)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasMods() ); return 1; }
-	LUA_METHOD(HasTimedMods)( T* p, lua_State *L )		{ lua_pushboolean( L, p->HasTimedMods() ); return 1; }
-	LUA_DEFINE_METHOD( GetCourseType, GetCourseType() )
+	LUA_SIMPLE(GetPlayMode);
+	LUA_SIMPLE(GetDisplayFullTitle);
+	LUA_SIMPLE(GetTranslitFullTitle);
+	LUA_SIMPLE(HasMods);
+	LUA_SIMPLE(HasTimedMods);
+	LUA_SIMPLE(GetCourseType);
 	LUA_METHOD(GetCourseEntry)(T* p, lua_State* L)
 	{
 		std::size_t id= static_cast<std::size_t>(IArg(1));
@@ -1336,14 +1329,14 @@ public:
 		LuaHelpers::CreateTableFromArray<Trail*>( v, L );
 		return 1;
 	}
-	LUA_METHOD(GetBannerPath)( T* p, lua_State *L )		{ RString s = p->GetBannerPath(); if( s.empty() ) return 0; LuaHelpers::Push(L, s); return 1; }
-	LUA_METHOD(GetBackgroundPath)( T* p, lua_State *L )		{ RString s = p->GetBackgroundPath(); if( s.empty() ) return 0; LuaHelpers::Push(L, s); return 1; }
-	LUA_METHOD(GetCourseDir)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sPath ); return 1; }
-	LUA_METHOD(GetGroupName)( T* p, lua_State *L )		{ lua_pushstring(L, p->m_sGroupName ); return 1; }
-	LUA_METHOD(IsAutogen)( T* p, lua_State *L )		{ lua_pushboolean(L, p->m_bIsAutogen ); return 1; }
-	LUA_METHOD(GetEstimatedNumStages)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetEstimatedNumStages() ); return 1; }
-	LUA_METHOD(GetScripter)( T* p, lua_State *L )		{ lua_pushstring(L, p->m_sScripter ); return 1; }
-	LUA_METHOD(GetDescription)( T* p, lua_State *L )		{ lua_pushstring(L, p->m_sDescription ); return 1; }
+	LUA_SIMPLE(GetBannerPath);
+	LUA_SIMPLE(GetBackgroundPath);
+	LUA_GETTER(GetCourseDir, m_sPath );
+	LUA_GETTER(GetGroupName, m_sGroupName );
+	LUA_GETTER(IsAutogen, m_bIsAutogen );
+	LUA_SIMPLE(GetEstimatedNumStages);
+	LUA_GETTER(GetScripter, m_sScripter );
+	LUA_GETTER(GetDescription, m_sDescription );
 	LUA_METHOD(GetTotalSeconds)( T* p, lua_State *L )
 	{
 		StepsType st = Enum::Check<StepsType>(L, 1);
@@ -1354,21 +1347,16 @@ public:
 			lua_pushnumber( L, fTotalSeconds );
 		return 1;
 	}
-	LUA_DEFINE_METHOD( IsEndless,		IsEndless() )
-	LUA_DEFINE_METHOD( IsNonstop,		IsNonstop() )
-	LUA_DEFINE_METHOD( IsOni,			IsOni() )
-	LUA_DEFINE_METHOD( GetGoalSeconds,	m_fGoalSeconds )
-	LUA_METHOD(HasBanner)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasBanner() ); return 1; }
-	LUA_METHOD(HasBackground)( T* p, lua_State *L )	{ lua_pushboolean(L, p->HasBackground() ); return 1; }
-	LUA_DEFINE_METHOD( IsAnEdit,		IsAnEdit() )
-	LUA_METHOD(IsPlayableIn)( T* p, lua_State *L )
-	{
-		StepsType st = Enum::Check<StepsType>(L, 1);
-		lua_pushboolean(L, p->IsPlayableIn( st ) );
-		return 1;
-	}
-	LUA_DEFINE_METHOD( IsRanking, IsRanking() )
-	LUA_DEFINE_METHOD( AllSongsAreFixed, AllSongsAreFixed() )
+	LUA_SIMPLE(IsEndless);
+	LUA_SIMPLE(IsNonstop);
+	LUA_SIMPLE(IsOni);
+	LUA_GETTER(GetGoalSeconds, m_fGoalSeconds);
+	LUA_SIMPLE(HasBanner);
+	LUA_SIMPLE(HasBackground);
+	LUA_SIMPLE(IsAnEdit);
+	LUA_SIMPLE(IsPlayableIn);
+	LUA_SIMPLE(IsRanking);
+	LUA_SIMPLE(AllSongsAreFixed);
 };
 
 LUA_REGISTER_CLASS( Course )

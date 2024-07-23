@@ -636,7 +636,7 @@ public:
 		p->SetUpdateRate(rate);
 		COMMON_RETURN_SELF;
 	}
-	LUA_DEFINE_METHOD(GetUpdateRate, GetUpdateRate());
+	LUA_SIMPLE(GetUpdateRate);
 	LUA_SIMPLE(SetFOV);
 	LUA_METHOD(vanishpoint)( T* p, lua_State *L )			{ p->SetVanishPoint( FArg(1), FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(GetChild)( T* p, lua_State *L )

@@ -1916,8 +1916,8 @@ public:
 	LUA_SIMPLE(GetRotationZ);
 	LUA_SIMPLE(GetSecsIntoEffect);
 	LUA_SIMPLE(GetEffectDelta);
-	LUA_DEFINE_METHOD( GetDiffuse, GetDiffuse() )
-	LUA_DEFINE_METHOD( GetGlow, GetGlow() )
+	LUA_SIMPLE(GetDiffuse);
+	LUA_SIMPLE(GetGlow);
 	LUA_SIMPLE(GetDiffuseAlpha);
 	LUA_SIMPLE(GetVisible);
 	LUA_SIMPLE2(GetHAlign, GetHorizAlign);

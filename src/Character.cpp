@@ -213,17 +213,17 @@ void Character::UndemandGraphics()
 class LunaCharacter: public Luna<Character>
 {
 public:
-	LUA_METHOD(GetCardPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetCardPath() ); return 1; }
-	LUA_METHOD(GetIconPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetIconPath() ); return 1; }
-	LUA_METHOD(GetSongSelectIconPath)( T* p, lua_State *L )	{ lua_pushstring(L, p->GetSongSelectIconPath() ); return 1; }
-	LUA_METHOD(GetStageIconPath)( T* p, lua_State *L )		{ lua_pushstring(L, p->GetStageIconPath() ); return 1; }
-	LUA_METHOD(GetModelPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetModelPath() ); return 1; }
-	LUA_METHOD(GetRestAnimationPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetRestAnimationPath() ); return 1; }
-	LUA_METHOD(GetWarmUpAnimationPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetWarmUpAnimationPath() ); return 1; }
-	LUA_METHOD(GetDanceAnimationPath)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDanceAnimationPath() ); return 1; }
+	LUA_SIMPLE(GetCardPath);
+	LUA_SIMPLE(GetIconPath);
+	LUA_SIMPLE(GetSongSelectIconPath);
+	LUA_SIMPLE(GetStageIconPath);
+	LUA_SIMPLE(GetModelPath);
+	LUA_SIMPLE(GetRestAnimationPath);
+	LUA_SIMPLE(GetWarmUpAnimationPath);
+	LUA_SIMPLE(GetDanceAnimationPath);
 	LUA_METHOD(GetCharacterDir)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharDir ); return 1; }
 	LUA_METHOD(GetCharacterID)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharacterID ); return 1; }
-	LUA_METHOD(GetDisplayName)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDisplayName() ); return 1; }
+	LUA_SIMPLE(GetDisplayName);
 };
 
 LUA_REGISTER_CLASS( Character )

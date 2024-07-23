@@ -9,9 +9,9 @@
 class LunaDisplayMode: public Luna<DisplayMode>
 {
 public:
-	LUA_DEFINE_METHOD( GetWidth, width );
-	LUA_DEFINE_METHOD( GetHeight, height );
-	LUA_DEFINE_METHOD( GetRefreshRate, refreshRate );
+	LUA_GETTER(GetWidth, width);
+	LUA_GETTER(GetHeight, height);
+	LUA_GETTER(GetRefreshRate, refreshRate);
 };
 
 LUA_REGISTER_CLASS( DisplayMode )
@@ -19,9 +19,9 @@ LUA_REGISTER_CLASS( DisplayMode )
 class LunaDisplaySpec: public Luna<DisplaySpec>
 {
 public:
-	LUA_DEFINE_METHOD( GetId, id() );
-	LUA_DEFINE_METHOD( GetName, name() );
-	LUA_DEFINE_METHOD( IsVirtual, isVirtual() );
+	LUA_SIMPLE2(GetId, id);
+	LUA_SIMPLE2(GetName, name);
+	LUA_SIMPLE2(IsVirtual, isVirtual);
 	LUA_METHOD(GetSupportedModes)( T* p, lua_State *L)
 	{
 		std::vector<DisplayMode*> v;

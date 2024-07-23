@@ -126,26 +126,8 @@ Character* CharacterManager::GetCharacterFromID( RString sCharacterID )
 class LunaCharacterManager: public Luna<CharacterManager>
 {
 public:
-	LUA_METHOD(GetCharacter)( T* p, lua_State *L )
-	{
-		Character *pCharacter = p->GetCharacterFromID(SArg(1));
-		if( pCharacter != nullptr )
-			pCharacter->PushSelf( L );
-		else
-			lua_pushnil( L );
-
-		return 1;
-	}
-	LUA_METHOD(GetRandomCharacter)( T* p, lua_State *L )
-	{
-		Character *pCharacter = p->GetRandomCharacter();
-		if( pCharacter != nullptr )
-			pCharacter->PushSelf( L );
-		else
-			lua_pushnil( L );
-
-		return 1;
-	}
+	LUA_SIMPLE2(GetCharacter, GetCharacterFromID);
+	LUA_SIMPLE(GetRandomCharacter);
 	LUA_METHOD(GetAllCharacters)( T* p, lua_State *L )
 	{
 		std::vector<Character*> vChars;

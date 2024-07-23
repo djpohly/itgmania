@@ -170,7 +170,8 @@ public:
 		template<> void Push<T*>( lua_State *L, T *const &pObject ) { if( pObject == nullptr ) lua_pushnil(L); else pObject->PushSelf( L ); } \
 	}
 
-#define LUA_DEFINE_METHOD( method_name, expr ) \
+#define LUA_DEFINE_METHOD( method_name, expr ) LUA_GETTER( method_name, expr )
+#define LUA_GETTER( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
 
 #define GET_SET_BOOL_METHOD(method_name, bool_name) \

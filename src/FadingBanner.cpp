@@ -294,11 +294,11 @@ public:
 		else { Character *pC = Luna<Character>::check(L,1); p->LoadIconFromCharacter( pC ); }
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(LoadFromSongGroup)( T* p, lua_State *L )	{ p->LoadFromSongGroup( SArg(1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(LoadRandom)( T* p, lua_State *L ) { p->LoadRandom(); COMMON_RETURN_SELF; }
-	LUA_METHOD(LoadRoulette)( T* p, lua_State *L ) { p->LoadRoulette(); COMMON_RETURN_SELF; }
-	LUA_METHOD(LoadCourseFallback)( T* p, lua_State *L ) { p->LoadCourseFallback(); COMMON_RETURN_SELF; }
-	LUA_METHOD(LoadFallback)( T* p, lua_State *L ) { p->LoadFallback(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(LoadFromSongGroup, LoadFromSongGroup);
+	LUA_SIMPLE2(LoadRandom, LoadRandom);
+	LUA_SIMPLE2(LoadRoulette, LoadRoulette);
+	LUA_SIMPLE2(LoadCourseFallback, LoadCourseFallback);
+	LUA_SIMPLE2(LoadFallback, LoadFallback);
 	LUA_METHOD(LoadFromSortOrder)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { p->LoadFromSortOrder( SortOrder_Invalid ); }

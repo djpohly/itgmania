@@ -126,9 +126,9 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(Unset)( T* p, lua_State *L )				{ p->Unset(); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetPlayer)( T* p, lua_State *L )			{ p->SetPlayer( Enum::Check<PlayerNumber>(L, 1) ); COMMON_RETURN_SELF; }
-	LUA_METHOD(SetFromDifficulty)( T* p, lua_State *L )		{ p->SetFromDifficulty( Enum::Check<Difficulty>(L, 1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(Unset);
+	LUA_SIMPLE(SetPlayer);
+	LUA_SIMPLE(SetFromDifficulty);
 };
 
 LUA_REGISTER_DERIVED_CLASS( DifficultyIcon, Sprite )

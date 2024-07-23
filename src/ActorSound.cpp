@@ -51,17 +51,17 @@ void ActorSound::LoadFromNode( const XNode* pNode )
 class LunaActorSound: public Luna<ActorSound>
 {
 public:
-	LUA_METHOD(load)( T* p, lua_State *L )			{ p->Load(SArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(play)( T* p, lua_State *L )			{ p->Play(); COMMON_RETURN_SELF; }
-	LUA_METHOD(pause)( T* p, lua_State *L )			{ p->Pause(BArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(stop)( T* p, lua_State *L )			{ p->Stop(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(load, Load);
+	LUA_SIMPLE2(play, Play);
+	LUA_SIMPLE2(pause, Pause);
+	LUA_SIMPLE2(stop, Stop);
 	LUA_METHOD(get)( T* p, lua_State *L )			{ p->PushSound( L ); return 1; }
 	LUA_METHOD(set_is_action)(T* p, lua_State* L)
 	{
 		p->m_is_action= BArg(1);
 		COMMON_RETURN_SELF;
 	}
-	LUA_DEFINE_METHOD(get_is_action, m_is_action);
+	LUA_GETTER(get_is_action, m_is_action);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorSound, Actor )

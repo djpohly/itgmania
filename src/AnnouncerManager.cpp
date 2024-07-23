@@ -186,7 +186,7 @@ void AnnouncerManager::NextAnnouncer()
 class LunaAnnouncerManager: public Luna<AnnouncerManager>
 {
 public:
-	LUA_METHOD(DoesAnnouncerExist)( T* p, lua_State *L ) { lua_pushboolean(L, p->DoesAnnouncerExist( SArg(1) )); return 1; }
+	LUA_SIMPLE(DoesAnnouncerExist);
 	LUA_METHOD(GetAnnouncerNames)( T* p, lua_State *L )
 	{
 		std::vector<RString> vAnnouncers;
@@ -194,19 +194,7 @@ public:
 		LuaHelpers::CreateTableFromArray(vAnnouncers, L);
 		return 1;
 	}
-	LUA_METHOD(GetCurrentAnnouncer)( T* p, lua_State *L )
-	{
-		RString s = p->GetCurAnnouncerName();
-		if( s.empty() )
-		{
-			lua_pushnil(L);
-		}
-		else
-		{
-			lua_pushstring(L, s );
-		}
-		return 1;
-	}
+	LUA_SIMPLE2(GetCurrentAnnouncer, GetCurAnnouncerName);
 	LUA_METHOD(SetCurrentAnnouncer)( T* p, lua_State *L )
 	{
 		RString s = SArg(1);

@@ -932,7 +932,7 @@ public:
 	}
 
 	LUA_SIMPLE(SetVertsFromSplines);
-	LUA_DEFINE_METHOD(GetUseAnimationState, _use_animation_state);
+	LUA_GETTER(GetUseAnimationState, _use_animation_state);
 	LUA_METHOD(SetUseAnimationState)(T* p, lua_State *L)
 	{
 		p->_use_animation_state= BArg(1);
@@ -1074,7 +1074,7 @@ public:
 		p->SetAllStateDelays(FArg(1));
 		COMMON_RETURN_SELF;
 	}
-	LUA_DEFINE_METHOD(GetAnimationLengthSeconds, GetAnimationLengthSeconds());
+	LUA_SIMPLE(GetAnimationLengthSeconds);
 	LUA_SIMPLE(SetSecondsIntoAnimation);
 	LUA_METHOD(GetNumQuadStates)(T* p, lua_State *L)
 	{
@@ -1115,7 +1115,7 @@ public:
 		p->UpdateAnimationState(true);
 		COMMON_RETURN_SELF;
 	}
-	LUA_DEFINE_METHOD(GetDecodeMovie, _decode_movie);
+	LUA_GETTER(GetDecodeMovie, _decode_movie);
 	LUA_METHOD(SetDecodeMovie)(T* p, lua_State *L)
 	{
 		p->_decode_movie= BArg(1);
