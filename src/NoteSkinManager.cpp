@@ -604,7 +604,7 @@ public:
 		return 1;
 	}
 	*/
-	LUA_METHOD(DoesNoteSkinExist)( T* p, lua_State *L ) { lua_pushboolean(L, p->DoesNoteSkinExist( SArg(1) )); return 1; }
+	LUA_SIMPLE(DoesNoteSkinExist);
 };
 
 LUA_REGISTER_CLASS( NoteSkinManager )

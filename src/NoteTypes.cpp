@@ -207,10 +207,10 @@ float HoldNoteResult::GetLastHeldBeat() const
 class LunaTapNoteResult: public Luna<TapNoteResult>
 {
 public:
-	LUA_DEFINE_METHOD(GetTapNoteScore, tns);
-	LUA_DEFINE_METHOD(GetTapNoteOffset, fTapNoteOffset);
-	LUA_DEFINE_METHOD(GetHidden, bHidden);
-	LUA_DEFINE_METHOD(GetHeld, bHeld);
+	LUA_GETTER(GetTapNoteScore, tns);
+	LUA_GETTER(GetTapNoteOffset, fTapNoteOffset);
+	LUA_GETTER(GetHidden, bHidden);
+	LUA_GETTER(GetHeld, bHeld);
 };
 LUA_REGISTER_CLASS( TapNoteResult )
 
@@ -218,14 +218,14 @@ LUA_REGISTER_CLASS( TapNoteResult )
 class LunaHoldNoteResult: public Luna<HoldNoteResult>
 {
 public:
-	LUA_DEFINE_METHOD(GetHoldNoteScore, hns);
-	LUA_DEFINE_METHOD(GetLife, fLife);
-	LUA_DEFINE_METHOD(GetOverlappedTime, fOverlappedTime);
-	LUA_DEFINE_METHOD(GetLastHeldBeat, GetLastHeldBeat() );
-	LUA_DEFINE_METHOD(GetCheckpointsHit, iCheckpointsHit );
-	LUA_DEFINE_METHOD(GetCheckpointsMissed, iCheckpointsMissed );
-	LUA_DEFINE_METHOD(GetHeld, bHeld );
-	LUA_DEFINE_METHOD(GetActive, bActive );
+	LUA_GETTER(GetHoldNoteScore, hns);
+	LUA_GETTER(GetLife, fLife);
+	LUA_GETTER(GetOverlappedTime, fOverlappedTime);
+	LUA_SIMPLE(GetLastHeldBeat);
+	LUA_GETTER(GetCheckpointsHit, iCheckpointsHit );
+	LUA_GETTER(GetCheckpointsMissed, iCheckpointsMissed );
+	LUA_GETTER(GetHeld, bHeld );
+	LUA_GETTER(GetActive, bActive );
 };
 LUA_REGISTER_CLASS( HoldNoteResult )
 
@@ -233,13 +233,13 @@ LUA_REGISTER_CLASS( HoldNoteResult )
 class LunaTapNote: public Luna<TapNote>
 {
 public:
-	LUA_DEFINE_METHOD( GetTapNoteType, type );
-	LUA_DEFINE_METHOD( GetTapNoteSubType, subType );
-	LUA_DEFINE_METHOD( GetTapNoteSource, source );
-	LUA_DEFINE_METHOD( GetPlayerNumber, pn );
-	LUA_DEFINE_METHOD( GetAttackModifiers, sAttackModifiers );
-	LUA_DEFINE_METHOD( GetAttackDuration, fAttackDurationSeconds );
-	LUA_DEFINE_METHOD( GetKeysoundIndex, iKeysoundIndex );
+	LUA_GETTER( GetTapNoteType, type );
+	LUA_GETTER( GetTapNoteSubType, subType );
+	LUA_GETTER( GetTapNoteSource, source );
+	LUA_GETTER( GetPlayerNumber, pn );
+	LUA_GETTER( GetAttackModifiers, sAttackModifiers );
+	LUA_GETTER( GetAttackDuration, fAttackDurationSeconds );
+	LUA_GETTER( GetKeysoundIndex, iKeysoundIndex );
 	LUA_METHOD(GetHoldDuration)( T* p, lua_State* L )		{ lua_pushnumber(L, NoteRowToBeat(p->iDuration)); return 1; }
 	LUA_METHOD(GetTapNoteResult)( T* p, lua_State* L )		{ p->result.PushSelf(L); return 1; }
 	LUA_METHOD(GetHoldNoteResult)( T* p, lua_State* L )		{ p->HoldResult.PushSelf(L); return 1; }

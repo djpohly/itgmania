@@ -501,11 +501,7 @@ public:
 		lua_pushnumber( L, fY );
 		return 1;
 	}
-	LUA_METHOD(GetMouseWheel)( T* p, lua_State *L ){
-		float fZ = p->GetMouseWheel();
-		lua_pushnumber( L, fZ );
-		return 1;
-	}
+	LUA_SIMPLE(GetMouseWheel);
 };
 
 LUA_REGISTER_CLASS( InputFilter )

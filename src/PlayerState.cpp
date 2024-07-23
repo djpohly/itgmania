@@ -226,14 +226,14 @@ public:
 			p->m_PlayerOptions.Get(ModsLevel_Preferred));
 		return 0;
 	}
-	LUA_DEFINE_METHOD( GetPlayerNumber, m_PlayerNumber );
+	LUA_GETTER(GetPlayerNumber, m_PlayerNumber);
 	LUA_METHOD(GetSongPosition)( T* p, lua_State *L )
 	{
 		p->m_Position.PushSelf(L);
 		return 1;
 	}
-	LUA_DEFINE_METHOD( GetMultiPlayerNumber, m_mp );
-	LUA_DEFINE_METHOD( GetPlayerController, m_PlayerController );
+	LUA_GETTER(GetMultiPlayerNumber, m_mp);
+	LUA_GETTER(GetPlayerController, m_PlayerController);
 	LUA_METHOD(SetPlayerOptions)( T* p, lua_State *L )
 	{
 		ModsLevel m = Enum::Check<ModsLevel>( L, 1 );
@@ -268,8 +268,8 @@ public:
 		p->m_PlayerOptions.GetCurrent().PushSelf(L);
 		return 1;
 	}
-	LUA_DEFINE_METHOD( GetHealthState, m_HealthState );
-	LUA_DEFINE_METHOD( GetSuperMeterLevel, m_fSuperMeter );
+	LUA_GETTER(GetHealthState, m_HealthState);
+	LUA_GETTER(GetSuperMeterLevel, m_fSuperMeter);
 };
 
 LUA_REGISTER_CLASS( PlayerState )

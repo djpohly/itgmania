@@ -632,7 +632,7 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(SavePreferences)( T* p, lua_State *L ) { p->SavePrefsToDisk(); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(SavePreferences, SavePrefsToDisk);
 };
 
 LUA_REGISTER_CLASS( PrefsManager )

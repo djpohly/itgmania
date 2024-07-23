@@ -780,14 +780,14 @@ bool Model::MaterialsNeedNormals() const
 class LunaModel: public Luna<Model>
 {
 public:
-	LUA_METHOD(position)( T* p, lua_State *L )	{ p->SetPosition( FArg(1) ); COMMON_RETURN_SELF; }
+	LUA_SIMPLE2(position, SetPosition);
 	LUA_METHOD(playanimation)( T* p, lua_State *L )	{ p->PlayAnimation(SArg(1),FArg(2)); COMMON_RETURN_SELF; }
 	LUA_METHOD(SetDefaultAnimation)( T* p, lua_State *L )	{ p->SetDefaultAnimation(SArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetDefaultAnimation)( T* p, lua_State *L )	{ lua_pushstring( L, p->GetDefaultAnimation() ); return 1; }
-	LUA_METHOD(loop)( T* p, lua_State *L )		{ p->SetLoop(BArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(rate)( T* p, lua_State *L )		{ p->SetRate(FArg(1)); COMMON_RETURN_SELF; }
-	LUA_METHOD(GetNumStates)( T* p, lua_State *L )		{ lua_pushnumber( L, p->GetNumStates() ); return 1; }
-	//LUA_METHOD(CelShading)( T* p, lua_State *L )		{ p->SetCelShading(BArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(GetDefaultAnimation);
+	LUA_SIMPLE2(loop, SetLoop);
+	LUA_SIMPLE2(rate, SetRate);
+	LUA_SIMPLE(GetNumStates);
+	//LUA_SIMPLE2(CelShading, SetCelShading);
 };
 
 LUA_REGISTER_DERIVED_CLASS( Model, Actor )

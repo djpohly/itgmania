@@ -2378,11 +2378,7 @@ public:
 		return 1;
 	}
 
-	LUA_METHOD(FromString)(T* p, lua_State* L)
-	{
-		p->FromString(SArg(1));
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(FromString);
 };
 
 LUA_REGISTER_CLASS( PlayerOptions )

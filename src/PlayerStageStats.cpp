@@ -730,41 +730,41 @@ LuaFunction( FormatPercentScore,	PlayerStageStats::FormatPercentScore( FArg(1) )
 class LunaPlayerStageStats: public Luna<PlayerStageStats>
 {
 public:
-	LUA_DEFINE_METHOD( GetCaloriesBurned,			m_fCaloriesBurned )
-	LUA_DEFINE_METHOD( GetNumControllerSteps,		m_iNumControllerSteps )
-	LUA_DEFINE_METHOD( GetLifeRemainingSeconds,		m_fLifeRemainingSeconds )
-	LUA_DEFINE_METHOD( GetSurvivalSeconds,			GetSurvivalSeconds() )
-	LUA_DEFINE_METHOD( GetCurrentCombo,				m_iCurCombo )
-	LUA_DEFINE_METHOD( GetCurrentMissCombo,			m_iCurMissCombo )
-	LUA_DEFINE_METHOD( GetCurrentScoreMultiplier,	m_iCurScoreMultiplier )
-	LUA_DEFINE_METHOD( GetScore,					m_iScore )
-	LUA_DEFINE_METHOD( GetCurMaxScore,				m_iCurMaxScore )
-	LUA_DEFINE_METHOD( GetTapNoteScores,			m_iTapNoteScores[Enum::Check<TapNoteScore>(L, 1)] )
-	LUA_DEFINE_METHOD( GetHoldNoteScores,			m_iHoldNoteScores[Enum::Check<HoldNoteScore>(L, 1)] )
-	LUA_DEFINE_METHOD( FullCombo,					FullCombo() )
-	LUA_DEFINE_METHOD( FullComboOfScore,			FullComboOfScore( Enum::Check<TapNoteScore>(L, 1) ) )
-	LUA_DEFINE_METHOD( MaxCombo,					GetMaxCombo().m_cnt )
-	LUA_DEFINE_METHOD( GetCurrentLife,				GetCurrentLife() )
-	LUA_DEFINE_METHOD( GetGrade,					GetGrade() )
-	LUA_DEFINE_METHOD( GetActualDancePoints,		m_iActualDancePoints )
-	LUA_DEFINE_METHOD( GetPossibleDancePoints,		m_iPossibleDancePoints )
-	LUA_DEFINE_METHOD( GetCurrentPossibleDancePoints,		m_iCurPossibleDancePoints )
-	LUA_DEFINE_METHOD( GetPercentDancePoints,		GetPercentDancePoints() )
-	LUA_DEFINE_METHOD( GetLessonScoreActual,		GetLessonScoreActual() )
-	LUA_DEFINE_METHOD( GetLessonScoreNeeded,		GetLessonScoreNeeded() )
-	LUA_DEFINE_METHOD( GetPersonalHighScoreIndex,	m_iPersonalHighScoreIndex )
-	LUA_DEFINE_METHOD( GetMachineHighScoreIndex,	m_iMachineHighScoreIndex )
-	LUA_DEFINE_METHOD( GetStageAward,				m_StageAward )
-	LUA_DEFINE_METHOD( GetPeakComboAward,			m_PeakComboAward )
-	LUA_DEFINE_METHOD( IsDisqualified,				IsDisqualified() )
-	LUA_DEFINE_METHOD( GetAliveSeconds,				m_fAliveSeconds )
-	LUA_DEFINE_METHOD( GetPercentageOfTaps,			GetPercentageOfTaps( Enum::Check<TapNoteScore>(L, 1) ) )
-	LUA_DEFINE_METHOD( GetBestFullComboTapNoteScore, GetBestFullComboTapNoteScore() )
-	LUA_DEFINE_METHOD( GetFailed, 					m_bFailed )
-	LUA_DEFINE_METHOD( GetSongsPassed, 					m_iSongsPassed )
-	LUA_DEFINE_METHOD( GetSongsPlayed, 					m_iSongsPlayed )
+	LUA_GETTER(GetCaloriesBurned, m_fCaloriesBurned)
+	LUA_GETTER(GetNumControllerSteps, m_iNumControllerSteps)
+	LUA_GETTER(GetLifeRemainingSeconds, m_fLifeRemainingSeconds)
+	LUA_SIMPLE(GetSurvivalSeconds);
+	LUA_GETTER(GetCurrentCombo, m_iCurCombo)
+	LUA_GETTER(GetCurrentMissCombo, m_iCurMissCombo)
+	LUA_GETTER(GetCurrentScoreMultiplier, m_iCurScoreMultiplier)
+	LUA_GETTER(GetScore, m_iScore)
+	LUA_GETTER(GetCurMaxScore, m_iCurMaxScore)
+	LUA_GETTER(GetTapNoteScores, m_iTapNoteScores[Enum::Check<TapNoteScore>(L, 1)])
+	LUA_GETTER(GetHoldNoteScores, m_iHoldNoteScores[Enum::Check<HoldNoteScore>(L, 1)])
+	LUA_SIMPLE(FullCombo);
+	LUA_SIMPLE(FullComboOfScore);
+	LUA_GETTER(MaxCombo, GetMaxCombo().m_cnt)
+	LUA_SIMPLE(GetCurrentLife);
+	LUA_SIMPLE(GetGrade);
+	LUA_GETTER(GetActualDancePoints, m_iActualDancePoints)
+	LUA_GETTER(GetPossibleDancePoints, m_iPossibleDancePoints)
+	LUA_GETTER(GetCurrentPossibleDancePoints, m_iCurPossibleDancePoints)
+	LUA_SIMPLE(GetPercentDancePoints);
+	LUA_SIMPLE(GetLessonScoreActual);
+	LUA_SIMPLE(GetLessonScoreNeeded);
+	LUA_GETTER(GetPersonalHighScoreIndex, m_iPersonalHighScoreIndex)
+	LUA_GETTER(GetMachineHighScoreIndex, m_iMachineHighScoreIndex)
+	LUA_GETTER(GetStageAward, m_StageAward)
+	LUA_GETTER(GetPeakComboAward, m_PeakComboAward)
+	LUA_SIMPLE(IsDisqualified);
+	LUA_GETTER(GetAliveSeconds, m_fAliveSeconds)
+	LUA_SIMPLE(GetPercentageOfTaps);
+	LUA_SIMPLE(GetBestFullComboTapNoteScore);
+	LUA_GETTER(GetFailed, m_bFailed)
+	LUA_GETTER(GetSongsPassed, m_iSongsPassed)
+	LUA_GETTER(GetSongsPlayed, m_iSongsPlayed)
 
-	LUA_METHOD(GetHighScore)( T* p, lua_State *L )
+	LUA_METHOD(GetHighScore)(T* p, lua_State *L)
 	{
 		p->m_HighScore.PushSelf(L);
 		return 1;

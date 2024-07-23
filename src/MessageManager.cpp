@@ -307,11 +307,7 @@ public:
 		p->Broadcast( msg );
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(SetLogging)(T* p, lua_State *L)
-	{
-		p->SetLogging(lua_toboolean(L, -1));
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(SetLogging);
 };
 
 LUA_REGISTER_CLASS( MessageManager )

@@ -23,14 +23,10 @@ LifeMeter *LifeMeter::MakeLifeMeter( LifeType t )
 class LunaLifeMeter: public Luna<LifeMeter>
 {
 public:
-	LUA_METHOD(GetLife)( T* p, lua_State *L )
-	{
-		LuaHelpers::Push( L, p->GetLife() );
-		return 1;
-	}
-	LUA_METHOD(IsInDanger)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->IsInDanger() ); return 1; }
-	LUA_METHOD(IsHot)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->IsHot() ); return 1; }
-	LUA_METHOD(IsFailing)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->IsFailing() ); return 1; }
+	LUA_SIMPLE(GetLife);
+	LUA_SIMPLE(IsInDanger);
+	LUA_SIMPLE(IsHot);
+	LUA_SIMPLE(IsFailing);
 };
 
 LUA_REGISTER_DERIVED_CLASS( LifeMeter, ActorFrame )

@@ -976,15 +976,15 @@ int OptionRow::ExportOptions( const std::vector<PlayerNumber> &vpns, bool bRowHa
 class LunaOptionRow: public Luna<OptionRow>
 {
 public:
-	LUA_DEFINE_METHOD( FirstItemGoesDown, GetFirstItemGoesDown() )
-	LUA_METHOD(GetChoiceInRowWithFocus)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetChoiceInRowWithFocus(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	LUA_DEFINE_METHOD( GetLayoutType, GetHandler()->m_Def.m_layoutType )
-	LUA_METHOD(GetName)( T* p, lua_State *L ) { lua_pushstring( L, p->GetHandler()->m_Def.m_sName ); return 1; }
-	LUA_METHOD(GetNumChoices)( T* p, lua_State *L ) { lua_pushnumber( L, p->GetHandler()->m_Def.m_vsChoices.size() ); return 1; }
-	LUA_DEFINE_METHOD( GetSelectType, GetHandler()->m_Def.m_selectType )
-	LUA_DEFINE_METHOD( GetRowTitle, GetRowTitle() )
-	LUA_METHOD(HasFocus)( T* p, lua_State *L ) { lua_pushboolean( L, p->GetRowHasFocus(Enum::Check<PlayerNumber>(L, 1)) ); return 1; }
-	LUA_METHOD(OneChoiceForAllPlayers)( T* p, lua_State *L ) { lua_pushboolean( L, p->GetHandler()->m_Def.m_bOneChoiceForAllPlayers ); return 1; }
+	LUA_SIMPLE2(FirstItemGoesDown, GetFirstItemGoesDown);
+	LUA_SIMPLE(GetChoiceInRowWithFocus);
+	LUA_GETTER(GetLayoutType, GetHandler()->m_Def.m_layoutType)
+	LUA_GETTER(GetName, GetHandler()->m_Def.m_sName);
+	LUA_GETTER(GetNumChoices, GetHandler()->m_Def.m_vsChoices.size());
+	LUA_GETTER(GetSelectType, GetHandler()->m_Def.m_selectType)
+	LUA_GETTER(GetRowTitle, GetRowTitle())
+	LUA_SIMPLE2(HasFocus, GetRowHasFocus);
+	LUA_GETTER(OneChoiceForAllPlayers, GetHandler()->m_Def.m_bOneChoiceForAllPlayers);
 };
 
 LUA_REGISTER_DERIVED_CLASS( OptionRow, ActorFrame )

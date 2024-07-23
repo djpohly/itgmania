@@ -3512,18 +3512,8 @@ public:
 		p->m_inside_lua_set_life= false;
 		COMMON_RETURN_SELF;
 	}
-	LUA_METHOD(SetActorWithJudgmentPosition)( T* p, lua_State *L )
-	{
-		Actor *pActor = Luna<Actor>::check(L, 1);
-		p->SetActorWithJudgmentPosition(pActor);
-		COMMON_RETURN_SELF;
-	}
-	LUA_METHOD(SetActorWithComboPosition)( T* p, lua_State *L )
-	{
-		Actor *pActor = Luna<Actor>::check(L, 1);
-		p->SetActorWithComboPosition(pActor);
-		COMMON_RETURN_SELF;
-	}
+	LUA_SIMPLE(SetActorWithJudgmentPosition);
+	LUA_SIMPLE(SetActorWithComboPosition);
 	LUA_METHOD(GetPlayerTimingData)( T* p, lua_State *L )
 	{
 		p->GetPlayerTimingData().PushSelf(L);

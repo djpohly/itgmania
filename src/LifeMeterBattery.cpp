@@ -274,9 +274,9 @@ void LifeMeterBattery::Update( float fDeltaTime )
 class LunaLifeMeterBattery: public Luna<LifeMeterBattery>
 {
 public:
-	LUA_METHOD(GetLivesLeft)( T* p, lua_State *L )	{ lua_pushnumber( L, p->GetLivesLeft() ); return 1; }
-	LUA_METHOD(GetTotalLives)( T* p, lua_State *L )	{ lua_pushnumber(L, p->GetTotalLives()); return 1; }
-	LUA_METHOD(ChangeLives)( T* p, lua_State *L )	{ p->ChangeLives(IArg(1)); COMMON_RETURN_SELF; }
+	LUA_SIMPLE(GetLivesLeft);
+	LUA_SIMPLE(GetTotalLives);
+	LUA_SIMPLE(ChangeLives);
 };
 
 LUA_REGISTER_DERIVED_CLASS( LifeMeterBattery, LifeMeter )
