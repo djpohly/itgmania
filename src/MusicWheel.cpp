@@ -1748,7 +1748,7 @@ public:
 		}
 		return 1;
 	}
-	LUA_SIMPLE(GetSelectedSection);
+	LUA_BIND(GetSelectedSection);
 	LUA_METHOD(GetCurrentSections)( T* p, lua_State *L )
 	{
 		std::vector<RString> v;
@@ -1756,7 +1756,7 @@ public:
 		LuaHelpers::CreateTableFromArray<RString>( v, L );
 		return 1;
 	}
-	LUA_SIMPLE(IsRouletting);
+	LUA_BIND(IsRouletting);
 	LUA_METHOD(SelectSong)( T* p, lua_State *L )
 	{
 		if( lua_isnil(L,1) ) { lua_pushboolean( L, false ); }

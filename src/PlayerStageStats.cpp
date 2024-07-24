@@ -733,7 +733,7 @@ public:
 	LUA_GETTER(GetCaloriesBurned, m_fCaloriesBurned)
 	LUA_GETTER(GetNumControllerSteps, m_iNumControllerSteps)
 	LUA_GETTER(GetLifeRemainingSeconds, m_fLifeRemainingSeconds)
-	LUA_SIMPLE(GetSurvivalSeconds);
+	LUA_BIND(GetSurvivalSeconds);
 	LUA_GETTER(GetCurrentCombo, m_iCurCombo)
 	LUA_GETTER(GetCurrentMissCombo, m_iCurMissCombo)
 	LUA_GETTER(GetCurrentScoreMultiplier, m_iCurScoreMultiplier)
@@ -741,25 +741,25 @@ public:
 	LUA_GETTER(GetCurMaxScore, m_iCurMaxScore)
 	LUA_GETTER(GetTapNoteScores, m_iTapNoteScores[Enum::Check<TapNoteScore>(L, 1)])
 	LUA_GETTER(GetHoldNoteScores, m_iHoldNoteScores[Enum::Check<HoldNoteScore>(L, 1)])
-	LUA_SIMPLE(FullCombo);
-	LUA_SIMPLE(FullComboOfScore);
+	LUA_BIND(FullCombo);
+	LUA_BIND(FullComboOfScore);
 	LUA_GETTER(MaxCombo, GetMaxCombo().m_cnt)
-	LUA_SIMPLE(GetCurrentLife);
-	LUA_SIMPLE(GetGrade);
+	LUA_BIND(GetCurrentLife);
+	LUA_BIND(GetGrade);
 	LUA_GETTER(GetActualDancePoints, m_iActualDancePoints)
 	LUA_GETTER(GetPossibleDancePoints, m_iPossibleDancePoints)
 	LUA_GETTER(GetCurrentPossibleDancePoints, m_iCurPossibleDancePoints)
-	LUA_SIMPLE(GetPercentDancePoints);
-	LUA_SIMPLE(GetLessonScoreActual);
-	LUA_SIMPLE(GetLessonScoreNeeded);
+	LUA_BIND(GetPercentDancePoints);
+	LUA_BIND(GetLessonScoreActual);
+	LUA_BIND(GetLessonScoreNeeded);
 	LUA_GETTER(GetPersonalHighScoreIndex, m_iPersonalHighScoreIndex)
 	LUA_GETTER(GetMachineHighScoreIndex, m_iMachineHighScoreIndex)
 	LUA_GETTER(GetStageAward, m_StageAward)
 	LUA_GETTER(GetPeakComboAward, m_PeakComboAward)
-	LUA_SIMPLE(IsDisqualified);
+	LUA_BIND(IsDisqualified);
 	LUA_GETTER(GetAliveSeconds, m_fAliveSeconds)
-	LUA_SIMPLE(GetPercentageOfTaps);
-	LUA_SIMPLE(GetBestFullComboTapNoteScore);
+	LUA_BIND(GetPercentageOfTaps);
+	LUA_BIND(GetBestFullComboTapNoteScore);
 	LUA_GETTER(GetFailed, m_bFailed)
 	LUA_GETTER(GetSongsPassed, m_iSongsPassed)
 	LUA_GETTER(GetSongsPlayed, m_iSongsPlayed)

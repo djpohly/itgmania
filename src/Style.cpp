@@ -157,7 +157,7 @@ public:
 		lua_pushboolean(L, false);
 		return 1;
 	}
-	LUA_SIMPLE(GetWidth);
+	LUA_BIND(GetWidth);
 	LUA_GETTER(LockedDifficulty, m_bLockDifficulties);
 
 	LUA_METHOD(GetColumnInfo)( T* p, lua_State *L )

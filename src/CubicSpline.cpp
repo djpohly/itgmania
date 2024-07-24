@@ -964,9 +964,12 @@ struct LunaCubicSplineN : Luna<CubicSplineN>
 		lua_pushboolean(L, p->empty());
 		return 1;
 	}
-	GETTER_SETTER_BOOL_METHOD(loop);
-	GETTER_SETTER_BOOL_METHOD(polygonal);
-	GETTER_SETTER_BOOL_METHOD(dirty);
+	LUA_BIND(get_loop);
+	LUA_BIND(set_loop);
+	LUA_BIND(get_polygonal);
+	LUA_BIND(set_polygonal);
+	LUA_BIND(get_dirty);
+	LUA_BIND(set_dirty);
 	LUA_METHOD(destroy)(T* p, lua_State* L)
 	{
 		if(p->m_owned_by_actor)

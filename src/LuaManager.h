@@ -348,9 +348,7 @@ int LuaFunc_##func( lua_State *L ); \
 int LuaFunc_##func( lua_State *L ) { \
 	LuaHelpers::Push( L, expr ); return 1; \
 } \
-void LuaFunc_Register_##func( lua_State *L ); \
-void LuaFunc_Register_##func( lua_State *L ) { lua_register( L, #func, LuaFunc_##func ); } \
-REGISTER_WITH_LUA_FUNCTION( LuaFunc_Register_##func );
+LUAFUNC_REGISTER_COMMON( func )
 
 #define LUAFUNC_REGISTER_COMMON(func_name) \
 void LuaFunc_Register_##func_name(lua_State* L); \

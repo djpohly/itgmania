@@ -480,11 +480,11 @@ void Screenshot::LoadFromNode( const XNode* pNode )
 class LunaHighScore: public Luna<HighScore>
 {
 public:
-	LUA_SIMPLE(GetName);
-	LUA_SIMPLE(GetScore);
-	LUA_SIMPLE(GetPercentDP);
+	LUA_BIND(GetName);
+	LUA_BIND(GetScore);
+	LUA_BIND(GetPercentDP);
 	LUA_METHOD(GetDate)( T* p, lua_State *L )			{ lua_pushstring(L, p->GetDateTime().GetString() ); return 1; }
-	LUA_SIMPLE(GetSurvivalSeconds);
+	LUA_BIND(GetSurvivalSeconds);
 	LUA_METHOD(IsFillInMarker)( T* p, lua_State *L )
 	{
 		bool bIsFillInMarker = false;
@@ -493,19 +493,19 @@ public:
 		lua_pushboolean( L, bIsFillInMarker );
 		return 1;
 	}
-	LUA_SIMPLE(GetMaxCombo);
-	LUA_SIMPLE(GetModifiers);
-	LUA_SIMPLE(GetTapNoteScore);
-	LUA_SIMPLE(GetHoldNoteScore);
+	LUA_BIND(GetMaxCombo);
+	LUA_BIND(GetModifiers);
+	LUA_BIND(GetTapNoteScore);
+	LUA_BIND(GetHoldNoteScore);
 	LUA_METHOD(GetRadarValues)( T* p, lua_State *L )
 	{
 		RadarValues &rv = const_cast<RadarValues &>(p->GetRadarValues());
 		rv.PushSelf(L);
 		return 1;
 	}
-	LUA_SIMPLE(GetGrade);
-	LUA_SIMPLE(GetStageAward);
-	LUA_SIMPLE(GetPeakComboAward);
+	LUA_BIND(GetGrade);
+	LUA_BIND(GetStageAward);
+	LUA_BIND(GetPeakComboAward);
 };
 
 LUA_REGISTER_CLASS( HighScore )

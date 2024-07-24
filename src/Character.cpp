@@ -213,17 +213,17 @@ void Character::UndemandGraphics()
 class LunaCharacter: public Luna<Character>
 {
 public:
-	LUA_SIMPLE(GetCardPath);
-	LUA_SIMPLE(GetIconPath);
-	LUA_SIMPLE(GetSongSelectIconPath);
-	LUA_SIMPLE(GetStageIconPath);
-	LUA_SIMPLE(GetModelPath);
-	LUA_SIMPLE(GetRestAnimationPath);
-	LUA_SIMPLE(GetWarmUpAnimationPath);
-	LUA_SIMPLE(GetDanceAnimationPath);
+	LUA_BIND(GetCardPath);
+	LUA_BIND(GetIconPath);
+	LUA_BIND(GetSongSelectIconPath);
+	LUA_BIND(GetStageIconPath);
+	LUA_BIND(GetModelPath);
+	LUA_BIND(GetRestAnimationPath);
+	LUA_BIND(GetWarmUpAnimationPath);
+	LUA_BIND(GetDanceAnimationPath);
 	LUA_METHOD(GetCharacterDir)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharDir ); return 1; }
 	LUA_METHOD(GetCharacterID)( T* p, lua_State *L )			{ lua_pushstring(L, p->m_sCharacterID ); return 1; }
-	LUA_SIMPLE(GetDisplayName);
+	LUA_BIND(GetDisplayName);
 };
 
 LUA_REGISTER_CLASS( Character )

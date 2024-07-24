@@ -624,8 +624,8 @@ public:
 		p->RunCommandsOnChildren( cmds, &ParamTable );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE2(propagate, SetPropagateCommands);
-	LUA_SIMPLE2(fov, SetFOV);
+	LUA_BIND_ALIAS(propagate, SetPropagateCommands);
+	LUA_BIND_ALIAS(fov, SetFOV);
 	LUA_METHOD(SetUpdateRate)( T* p, lua_State *L )
 	{
 		float rate= FArg(1);
@@ -636,8 +636,8 @@ public:
 		p->SetUpdateRate(rate);
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(GetUpdateRate);
-	LUA_SIMPLE(SetFOV);
+	LUA_BIND(GetUpdateRate);
+	LUA_BIND(SetFOV);
 	LUA_METHOD(vanishpoint)( T* p, lua_State *L )			{ p->SetVanishPoint( FArg(1), FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(GetChild)( T* p, lua_State *L )
 	{
@@ -649,8 +649,8 @@ public:
 		p->PushChildrenTable( L );
 		return 1;
 	}
-	LUA_SIMPLE(GetNumChildren);
-	LUA_SIMPLE(SetDrawByZPosition);
+	LUA_BIND(GetNumChildren);
+	LUA_BIND(SetDrawByZPosition);
 	LUA_METHOD(SetDrawFunction)( T* p, lua_State *L )
 	{
 		if(lua_isnil(L,1))
@@ -670,7 +670,7 @@ public:
 		p->SetDrawFunction( ref );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(GetDrawFunction);
+	LUA_BIND(GetDrawFunction);
 	LUA_METHOD(SetUpdateFunction)( T* p, lua_State *L )
 	{
 		if(lua_isnil(L,1))
@@ -690,9 +690,9 @@ public:
 		p->SetUpdateFunction( ref );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(SortByDrawOrder);
+	LUA_BIND(SortByDrawOrder);
 
-	//LUA_SIMPLE2(CustomLighting, SetCustomLighting);
+	//LUA_BIND_ALIAS(CustomLighting, SetCustomLighting);
 	LUA_METHOD(SetAmbientLightColor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetAmbientLightColor( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(SetDiffuseLightColor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseLightColor( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(SetSpecularLightColor)( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetSpecularLightColor( c ); COMMON_RETURN_SELF; }

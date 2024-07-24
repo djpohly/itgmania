@@ -37,8 +37,8 @@ void ActorProxy::LoadFromNode( const XNode* pNode )
 class LunaActorProxy: public Luna<ActorProxy>
 {
 public:
-	LUA_SIMPLE(SetTarget);
-	LUA_SIMPLE(GetTarget);
+	LUA_BIND(SetTarget);
+	LUA_BIND(GetTarget);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorProxy, Actor )

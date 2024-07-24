@@ -170,43 +170,18 @@ public:
 		template<> void Push<T*>( lua_State *L, T *const &pObject ) { if( pObject == nullptr ) lua_pushnil(L); else pObject->PushSelf( L ); } \
 	}
 
-#define LUA_DEFINE_METHOD( method_name, expr ) LUA_GETTER( method_name, expr )
 #define LUA_GETTER( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
 #define LUA_SETTER( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::FromStack( L, p->expr, 1 ); COMMON_RETURN_SELF; }
 
-#define GET_SET_BOOL_METHOD(method_name, bool_name) \
-LUA_METHOD(get_##method_name)(T* p, lua_State* L) \
-{ \
-	lua_pushboolean(L, p->bool_name); \
-	return 1; \
-} \
-LUA_METHOD(set_##method_name)(T* p, lua_State* L) \
-{ \
-	p->bool_name= lua_toboolean(L, 1); \
-	COMMON_RETURN_SELF; \
-}
-
-#define GETTER_SETTER_BOOL_METHOD(bool_name) \
-LUA_METHOD(get_##bool_name)(T* p, lua_State* L) \
-{ \
-	lua_pushboolean(L, p->get_##bool_name()); \
-	return 1; \
-} \
-LUA_METHOD(set_##bool_name)(T* p, lua_State* L) \
-{ \
-	p->set_##bool_name(lua_toboolean(L, 1)); \
-	COMMON_RETURN_SELF; \
-}
-
 #define LUA_METHOD( name ) \
 	RegisterLuaMethod register_##name{#name, name}; \
 	static int name /* (parameter list) { body } */
-#define LUA_SIMPLE2(luaname, cname) \
+#define LUA_BIND_ALIAS(luaname, cname) \
 	static int luaname(T *p, lua_State *L) { return LuaHelpers::WrapMethod(L, p, &T::cname); } \
 	RegisterLuaMethod register_##luaname{#luaname, luaname}
-#define LUA_SIMPLE(name) LUA_SIMPLE2(name, name)
+#define LUA_BIND(name) LUA_BIND_ALIAS(name, name)
 
 #define LUA_REGISTER_NAMESPACE( T ) \
 	static void Register##T( lua_State *L ) { luaL_register( L, #T, T##Table ); lua_pop( L, 1 ); } \

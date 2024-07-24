@@ -1609,7 +1609,7 @@ Actor::TweenInfo &Actor::TweenInfo::operator=( const TweenInfo &rhs )
 class LunaActor : public Luna<Actor>
 {
 public:
-	LUA_SIMPLE2(name, SetName);
+	LUA_BIND_ALIAS(name, SetName);
 	LUA_METHOD(sleep)( T* p, lua_State *L )
 	{
 		float fTime = FArg(1);
@@ -1680,8 +1680,8 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE2(stoptweening, StopTweening);
-	LUA_SIMPLE2(finishtweening, FinishTweening);
+	LUA_BIND_ALIAS(stoptweening, StopTweening);
+	LUA_BIND_ALIAS(finishtweening, FinishTweening);
 	LUA_METHOD(hurrytweening)( T* p, lua_State *L )
 	{
 		float time= FArg(1);
@@ -1692,38 +1692,38 @@ public:
 		p->HurryTweening(time);
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(GetTweenTimeLeft);
-	LUA_SIMPLE2(x, SetX);
-	LUA_SIMPLE2(y, SetY);
-	LUA_SIMPLE2(z, SetZ);
+	LUA_BIND(GetTweenTimeLeft);
+	LUA_BIND_ALIAS(x, SetX);
+	LUA_BIND_ALIAS(y, SetY);
+	LUA_BIND_ALIAS(z, SetZ);
 	LUA_METHOD(xy)( T* p, lua_State *L )			{ p->SetXY(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(addx, AddX);
-	LUA_SIMPLE2(addy, AddY);
-	LUA_SIMPLE2(addz, AddZ);
-	LUA_SIMPLE2(zoom, SetZoom);
-	LUA_SIMPLE2(zoomx, SetZoomX);
-	LUA_SIMPLE2(zoomy, SetZoomY);
-	LUA_SIMPLE2(zoomz, SetZoomZ);
+	LUA_BIND_ALIAS(addx, AddX);
+	LUA_BIND_ALIAS(addy, AddY);
+	LUA_BIND_ALIAS(addz, AddZ);
+	LUA_BIND_ALIAS(zoom, SetZoom);
+	LUA_BIND_ALIAS(zoomx, SetZoomX);
+	LUA_BIND_ALIAS(zoomy, SetZoomY);
+	LUA_BIND_ALIAS(zoomz, SetZoomZ);
 	LUA_METHOD(zoomto)( T* p, lua_State *L )			{ p->ZoomTo(FArg(1), FArg(2)); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(zoomtowidth, ZoomToWidth);
-	LUA_SIMPLE2(zoomtoheight, ZoomToHeight);
+	LUA_BIND_ALIAS(zoomtowidth, ZoomToWidth);
+	LUA_BIND_ALIAS(zoomtoheight, ZoomToHeight);
 	LUA_METHOD(setsize)( T* p, lua_State *L )		{ p->SetWidth(FArg(1)); p->SetHeight(FArg(2)); COMMON_RETURN_SELF; }
-	LUA_SIMPLE(SetWidth);
-	LUA_SIMPLE(SetHeight);
-	LUA_SIMPLE2(basealpha, SetBaseAlpha);
-	LUA_SIMPLE2(basezoom, SetBaseZoom);
-	LUA_SIMPLE2(basezoomx, SetBaseZoomX);
-	LUA_SIMPLE2(basezoomy, SetBaseZoomY);
-	LUA_SIMPLE2(basezoomz, SetBaseZoomZ);
+	LUA_BIND(SetWidth);
+	LUA_BIND(SetHeight);
+	LUA_BIND_ALIAS(basealpha, SetBaseAlpha);
+	LUA_BIND_ALIAS(basezoom, SetBaseZoom);
+	LUA_BIND_ALIAS(basezoomx, SetBaseZoomX);
+	LUA_BIND_ALIAS(basezoomy, SetBaseZoomY);
+	LUA_BIND_ALIAS(basezoomz, SetBaseZoomZ);
 	LUA_METHOD(stretchto)( T* p, lua_State *L )		{ p->StretchTo( RectF(FArg(1),FArg(2),FArg(3),FArg(4)) ); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(cropleft, SetCropLeft);
-	LUA_SIMPLE2(croptop, SetCropTop);
-	LUA_SIMPLE2(cropright, SetCropRight);
-	LUA_SIMPLE2(cropbottom, SetCropBottom);
-	LUA_SIMPLE2(fadeleft, SetFadeLeft);
-	LUA_SIMPLE2(fadetop, SetFadeTop);
-	LUA_SIMPLE2(faderight, SetFadeRight);
-	LUA_SIMPLE2(fadebottom, SetFadeBottom);
+	LUA_BIND_ALIAS(cropleft, SetCropLeft);
+	LUA_BIND_ALIAS(croptop, SetCropTop);
+	LUA_BIND_ALIAS(cropright, SetCropRight);
+	LUA_BIND_ALIAS(cropbottom, SetCropBottom);
+	LUA_BIND_ALIAS(fadeleft, SetFadeLeft);
+	LUA_BIND_ALIAS(fadetop, SetFadeTop);
+	LUA_BIND_ALIAS(faderight, SetFadeRight);
+	LUA_BIND_ALIAS(fadebottom, SetFadeBottom);
 	LUA_METHOD(diffuse)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuse( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(diffuseupperleft)( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseUpperLeft( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(diffuseupperright)( T* p, lua_State *L )	{ RageColor c; c.FromStackCompat( L, 1 ); p->SetDiffuseUpperRight( c ); COMMON_RETURN_SELF; }
@@ -1738,24 +1738,24 @@ public:
 	LUA_METHOD(glow)( T* p, lua_State *L )			{ RageColor c; c.FromStackCompat( L, 1 ); p->SetGlow( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(aux)( T* p, lua_State *L )			{ p->SetAux( FArg(1) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(getaux)( T* p, lua_State *L )			{ lua_pushnumber( L, p->GetAux() ); return 1; }
-	LUA_SIMPLE2(rotationx, SetRotationX);
-	LUA_SIMPLE2(rotationy, SetRotationY);
-	LUA_SIMPLE2(rotationz, SetRotationZ);
-	LUA_SIMPLE2(addrotationx, AddRotationX);
-	LUA_SIMPLE2(addrotationy, AddRotationY);
-	LUA_SIMPLE2(addrotationz, AddRotationZ);
+	LUA_BIND_ALIAS(rotationx, SetRotationX);
+	LUA_BIND_ALIAS(rotationy, SetRotationY);
+	LUA_BIND_ALIAS(rotationz, SetRotationZ);
+	LUA_BIND_ALIAS(addrotationx, AddRotationX);
+	LUA_BIND_ALIAS(addrotationy, AddRotationY);
+	LUA_BIND_ALIAS(addrotationz, AddRotationZ);
 	LUA_METHOD(getrotation)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetRotationX()); lua_pushnumber(L, p->GetRotationY()); lua_pushnumber(L, p->GetRotationZ()); return 3; }
-	LUA_SIMPLE2(baserotationx, SetBaseRotationX);
-	LUA_SIMPLE2(baserotationy, SetBaseRotationY);
-	LUA_SIMPLE2(baserotationz, SetBaseRotationZ);
-	LUA_SIMPLE2(skewx, SetSkewX);
-	LUA_SIMPLE2(skewy, SetSkewY);
-	LUA_SIMPLE2(heading, AddRotationH);
-	LUA_SIMPLE2(pitch, AddRotationP);
-	LUA_SIMPLE2(roll, AddRotationR);
-	LUA_SIMPLE2(shadowlength, SetShadowLength);
-	LUA_SIMPLE2(shadowlengthx, SetShadowLengthX);
-	LUA_SIMPLE2(shadowlengthy, SetShadowLengthY);
+	LUA_BIND_ALIAS(baserotationx, SetBaseRotationX);
+	LUA_BIND_ALIAS(baserotationy, SetBaseRotationY);
+	LUA_BIND_ALIAS(baserotationz, SetBaseRotationZ);
+	LUA_BIND_ALIAS(skewx, SetSkewX);
+	LUA_BIND_ALIAS(skewy, SetSkewY);
+	LUA_BIND_ALIAS(heading, AddRotationH);
+	LUA_BIND_ALIAS(pitch, AddRotationP);
+	LUA_BIND_ALIAS(roll, AddRotationR);
+	LUA_BIND_ALIAS(shadowlength, SetShadowLength);
+	LUA_BIND_ALIAS(shadowlengthx, SetShadowLengthX);
+	LUA_BIND_ALIAS(shadowlengthy, SetShadowLengthY);
 	LUA_METHOD(shadowcolor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetShadowColor( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(horizalign)( T* p, lua_State *L )		{ p->SetHorizAlign(Enum::Check<HorizAlign>(L, 1)); COMMON_RETURN_SELF; }
 	LUA_METHOD(vertalign)( T* p, lua_State *L )		{ p->SetVertAlign(Enum::Check<VertAlign>(L, 1)); COMMON_RETURN_SELF; }
@@ -1774,7 +1774,7 @@ public:
 	LUA_METHOD(pulse)( T* p, lua_State *L )			{ p->SetEffectPulse(2.0f, 0.5f, 1.0f); COMMON_RETURN_SELF; }
 	LUA_METHOD(spin)( T* p, lua_State *L )			{ p->SetEffectSpin(RageVector3(0,0,180)); COMMON_RETURN_SELF; }
 	LUA_METHOD(vibrate)( T* p, lua_State *L )			{ p->SetEffectVibrate(RageVector3(10,10,10)); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(stopeffect, StopEffect);
+	LUA_BIND_ALIAS(stopeffect, StopEffect);
 	LUA_METHOD(effectcolor1)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetEffectColor1( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(effectcolor2)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetEffectColor2( c ); COMMON_RETURN_SELF; }
 	LUA_METHOD(effectperiod)( T* p, lua_State *L )
@@ -1816,33 +1816,34 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE2(effectoffset, SetEffectOffset);
-	LUA_SIMPLE2(effectclock, SetEffectClockString);
+	LUA_BIND_ALIAS(effectoffset, SetEffectOffset);
+	LUA_BIND_ALIAS(effectclock, SetEffectClockString);
 	LUA_METHOD(effectmagnitude)( T* p, lua_State *L )	{ p->SetEffectMagnitude( RageVector3(FArg(1),FArg(2),FArg(3)) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(geteffectmagnitude)( T* p, lua_State *L )	{ RageVector3 v = p->GetEffectMagnitude(); lua_pushnumber(L, v[0]); lua_pushnumber(L, v[1]); lua_pushnumber(L, v[2]); return 3; }
-	GETTER_SETTER_BOOL_METHOD(tween_uses_effect_delta);
+	LUA_BIND(get_tween_uses_effect_delta);
+	LUA_BIND(set_tween_uses_effect_delta);
 	LUA_METHOD(scaletocover)( T* p, lua_State *L )		{ p->ScaleToCover( RectF(FArg(1), FArg(2), FArg(3), FArg(4)) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(scaletofit)( T* p, lua_State *L )		{ p->ScaleToFitInside( RectF(FArg(1), FArg(2), FArg(3), FArg(4)) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(animate)( T* p, lua_State *L )		{ p->EnableAnimation(BIArg(1)); COMMON_RETURN_SELF; }
 	LUA_METHOD(play)( T* p, lua_State *L )			{ p->EnableAnimation(true); COMMON_RETURN_SELF; }
 	LUA_METHOD(pause)( T* p, lua_State *L )			{ p->EnableAnimation(false); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(setstate, SetState);
-	LUA_SIMPLE(GetNumStates);
+	LUA_BIND_ALIAS(setstate, SetState);
+	LUA_BIND(GetNumStates);
 	LUA_METHOD(texturetranslate)( T* p, lua_State *L )	{ p->SetTextureTranslate(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(texturewrapping, SetTextureWrapping);
-	LUA_SIMPLE(SetTextureFiltering);
-	LUA_SIMPLE2(blend, SetBlendMode);
-	LUA_SIMPLE2(zbuffer, SetUseZBuffer);
+	LUA_BIND_ALIAS(texturewrapping, SetTextureWrapping);
+	LUA_BIND(SetTextureFiltering);
+	LUA_BIND_ALIAS(blend, SetBlendMode);
+	LUA_BIND_ALIAS(zbuffer, SetUseZBuffer);
 	LUA_METHOD(ztest)( T* p, lua_State *L )			{ p->SetZTestMode((BIArg(1))?ZTEST_WRITE_ON_PASS:ZTEST_OFF); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(ztestmode, SetZTestMode);
-	LUA_SIMPLE2(zwrite, SetZWrite);
-	LUA_SIMPLE2(zbias, SetZBias);
-	LUA_SIMPLE2(clearzbuffer, SetClearZBuffer);
-	LUA_SIMPLE2(backfacecull, SetCullMode);
-	LUA_SIMPLE2(cullmode, SetCullMode);
-	LUA_SIMPLE2(visible, SetVisible);
-	LUA_SIMPLE2(hibernate, SetHibernate);
-	LUA_SIMPLE2(draworder, SetDrawOrder);
+	LUA_BIND_ALIAS(ztestmode, SetZTestMode);
+	LUA_BIND_ALIAS(zwrite, SetZWrite);
+	LUA_BIND_ALIAS(zbias, SetZBias);
+	LUA_BIND_ALIAS(clearzbuffer, SetClearZBuffer);
+	LUA_BIND_ALIAS(backfacecull, SetCullMode);
+	LUA_BIND_ALIAS(cullmode, SetCullMode);
+	LUA_BIND_ALIAS(visible, SetVisible);
+	LUA_BIND_ALIAS(hibernate, SetHibernate);
+	LUA_BIND_ALIAS(draworder, SetDrawOrder);
 	LUA_METHOD(playcommand)( T* p, lua_State *L )
 	{
 		if( !lua_istable(L, 2) && !lua_isnoneornil(L, 2) )
@@ -1857,8 +1858,8 @@ public:
 
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE2(queuecommand, QueueCommand);
-	LUA_SIMPLE2(queuemessage, QueueMessage);
+	LUA_BIND_ALIAS(queuecommand, QueueCommand);
+	LUA_BIND_ALIAS(queuemessage, QueueMessage);
 	LUA_METHOD(addcommand)( T* p, lua_State *L )
 	{
 		LuaReference *pRef = new LuaReference;
@@ -1894,38 +1895,38 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_SIMPLE(GetX);
-	LUA_SIMPLE(GetY);
-	LUA_SIMPLE(GetZ);
-	LUA_SIMPLE(GetDestX);
-	LUA_SIMPLE(GetDestY);
-	LUA_SIMPLE(GetDestZ);
-	LUA_SIMPLE2(GetWidth, GetUnzoomedWidth);
-	LUA_SIMPLE2(GetHeight, GetUnzoomedHeight);
-	LUA_SIMPLE(GetZoomedWidth);
-	LUA_SIMPLE(GetZoomedHeight);
-	LUA_SIMPLE(GetZoom);
-	LUA_SIMPLE(GetZoomX);
-	LUA_SIMPLE(GetZoomY);
-	LUA_SIMPLE(GetZoomZ);
-	LUA_SIMPLE(GetBaseZoomX);
-	LUA_SIMPLE(GetBaseZoomY);
-	LUA_SIMPLE(GetBaseZoomZ);
-	LUA_SIMPLE(GetRotationX);
-	LUA_SIMPLE(GetRotationY);
-	LUA_SIMPLE(GetRotationZ);
-	LUA_SIMPLE(GetSecsIntoEffect);
-	LUA_SIMPLE(GetEffectDelta);
-	LUA_SIMPLE(GetDiffuse);
-	LUA_SIMPLE(GetGlow);
-	LUA_SIMPLE(GetDiffuseAlpha);
-	LUA_SIMPLE(GetVisible);
-	LUA_SIMPLE2(GetHAlign, GetHorizAlign);
-	LUA_SIMPLE2(GetVAlign, GetVertAlign);
+	LUA_BIND(GetX);
+	LUA_BIND(GetY);
+	LUA_BIND(GetZ);
+	LUA_BIND(GetDestX);
+	LUA_BIND(GetDestY);
+	LUA_BIND(GetDestZ);
+	LUA_BIND_ALIAS(GetWidth, GetUnzoomedWidth);
+	LUA_BIND_ALIAS(GetHeight, GetUnzoomedHeight);
+	LUA_BIND(GetZoomedWidth);
+	LUA_BIND(GetZoomedHeight);
+	LUA_BIND(GetZoom);
+	LUA_BIND(GetZoomX);
+	LUA_BIND(GetZoomY);
+	LUA_BIND(GetZoomZ);
+	LUA_BIND(GetBaseZoomX);
+	LUA_BIND(GetBaseZoomY);
+	LUA_BIND(GetBaseZoomZ);
+	LUA_BIND(GetRotationX);
+	LUA_BIND(GetRotationY);
+	LUA_BIND(GetRotationZ);
+	LUA_BIND(GetSecsIntoEffect);
+	LUA_BIND(GetEffectDelta);
+	LUA_BIND(GetDiffuse);
+	LUA_BIND(GetGlow);
+	LUA_BIND(GetDiffuseAlpha);
+	LUA_BIND(GetVisible);
+	LUA_BIND_ALIAS(GetHAlign, GetHorizAlign);
+	LUA_BIND_ALIAS(GetVAlign, GetVertAlign);
 
-	LUA_SIMPLE(GetName);
-	LUA_SIMPLE(GetParent);
-	LUA_SIMPLE(GetFakeParent);
+	LUA_BIND(GetName);
+	LUA_BIND(GetParent);
+	LUA_BIND(GetFakeParent);
 	LUA_METHOD(SetFakeParent)(T* p, lua_State* L)
 	{
 		if(lua_isnoneornil(L, 1))

@@ -709,17 +709,17 @@ class LunaSteps: public Luna<Steps>
 {
 public:
 	LUA_GETTER(GetStepsType, m_StepsType);
-	LUA_SIMPLE(GetDifficulty);
-	LUA_SIMPLE(GetDescription);
-	LUA_SIMPLE(GetChartStyle);
-	LUA_SIMPLE2(GetAuthorCredit, GetCredit);
-	LUA_SIMPLE(GetMeter);
-	LUA_SIMPLE(GetFilename);
-	LUA_SIMPLE(IsAutogen);
-	LUA_SIMPLE(IsAnEdit);
-	LUA_SIMPLE(IsAPlayerEdit);
-	LUA_SIMPLE(HasSignificantTimingChanges);
-	LUA_SIMPLE(HasAttacks);
+	LUA_BIND(GetDifficulty);
+	LUA_BIND(GetDescription);
+	LUA_BIND(GetChartStyle);
+	LUA_BIND_ALIAS(GetAuthorCredit, GetCredit);
+	LUA_BIND(GetMeter);
+	LUA_BIND(GetFilename);
+	LUA_BIND(IsAutogen);
+	LUA_BIND(IsAnEdit);
+	LUA_BIND(IsAPlayerEdit);
+	LUA_BIND(HasSignificantTimingChanges);
+	LUA_BIND(HasAttacks);
 
 	LUA_METHOD(GetRadarValues)( T* p, lua_State *L )
 	{
@@ -737,7 +737,7 @@ public:
 		p->GetTimingData()->PushSelf(L);
 		return 1;
 	}
-	LUA_SIMPLE(GetHash);
+	LUA_BIND(GetHash);
 	// untested
 	/*
 	LUA_METHOD(GetSMNoteData)( T* p, lua_State *L )
@@ -748,7 +748,7 @@ public:
 		return 1;
 	}
 	*/
-	LUA_SIMPLE(GetChartName);
+	LUA_BIND(GetChartName);
 	LUA_METHOD(GetDisplayBpms)( T* p, lua_State *L )
 	{
 		DisplayBpms temp;
@@ -776,8 +776,8 @@ public:
 		return 1;
 	}
 	LUA_GETTER(IsDisplayBpmRandom, GetDisplayBPM() == DISPLAY_BPM_RANDOM);
-	LUA_SIMPLE(PredictMeter);
-	LUA_SIMPLE2(GetDisplayBPMType, GetDisplayBPM);
+	LUA_BIND(PredictMeter);
+	LUA_BIND_ALIAS(GetDisplayBPMType, GetDisplayBPM);
 };
 
 LUA_REGISTER_CLASS( Steps )

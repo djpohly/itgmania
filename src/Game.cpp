@@ -61,7 +61,7 @@ class LunaGame: public Luna<Game>
 public:
 	LUA_METHOD(GetName)( T* p, lua_State *L )			{ lua_pushstring( L, p->m_szName ); return 1; }
 	LUA_GETTER(CountNotesSeparately, m_bCountNotesSeparately);
-	LUA_SIMPLE(GetMapJudgmentTo);
+	LUA_BIND(GetMapJudgmentTo);
 	LUA_GETTER(GetSeparateStyles, m_PlayersHaveSeparateStyles);
 };
 

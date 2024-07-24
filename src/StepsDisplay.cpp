@@ -315,7 +315,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(SetFromGameState);
+	LUA_BIND(SetFromGameState);
 };
 
 LUA_REGISTER_DERIVED_CLASS( StepsDisplay, ActorFrame )

@@ -255,8 +255,8 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(Finish);
-	LUA_SIMPLE(Backspace);
+	LUA_BIND(Finish);
+	LUA_BIND(Backspace);
 
 	LUA_METHOD(GetEnteringName)( T* p, lua_State *L )
 	{
@@ -272,8 +272,8 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE2(GetAnyEntering, AnyEntering);
-	LUA_SIMPLE2(GetAnyStillEntering, AnyStillEntering);
+	LUA_BIND_ALIAS(GetAnyEntering, AnyEntering);
+	LUA_BIND_ALIAS(GetAnyStillEntering, AnyStillEntering);
 
 	LUA_METHOD(GetSelection)( T* p, lua_State *L )
 	{

@@ -49,8 +49,8 @@ void GradeDisplay::SetGrade( Grade grade )
 class LunaGradeDisplay: public Luna<GradeDisplay>
 {
 public:
-	LUA_SIMPLE(Load);
-	LUA_SIMPLE(SetGrade);
+	LUA_BIND(Load);
+	LUA_BIND(SetGrade);
 };
 
 LUA_REGISTER_DERIVED_CLASS( GradeDisplay, ActorFrame )

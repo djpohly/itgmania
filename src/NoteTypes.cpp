@@ -221,7 +221,7 @@ public:
 	LUA_GETTER(GetHoldNoteScore, hns);
 	LUA_GETTER(GetLife, fLife);
 	LUA_GETTER(GetOverlappedTime, fOverlappedTime);
-	LUA_SIMPLE(GetLastHeldBeat);
+	LUA_BIND(GetLastHeldBeat);
 	LUA_GETTER(GetCheckpointsHit, iCheckpointsHit );
 	LUA_GETTER(GetCheckpointsMissed, iCheckpointsMissed );
 	LUA_GETTER(GetHeld, bHeld );

@@ -847,7 +847,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE2(PlayAnnouncer, PlayOnceFromAnnouncer);
+	LUA_BIND_ALIAS(PlayAnnouncer, PlayOnceFromAnnouncer);
 	LUA_METHOD(GetPlayerBalance)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
@@ -889,7 +889,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_SIMPLE(StopMusic);
+	LUA_BIND(StopMusic);
 	LUA_METHOD(IsTimingDelayed)( T* p, lua_State *L )	{ lua_pushboolean( L, g_Playing->m_bTimingDelayed ); return 1; }
 };
 

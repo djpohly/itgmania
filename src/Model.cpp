@@ -780,14 +780,14 @@ bool Model::MaterialsNeedNormals() const
 class LunaModel: public Luna<Model>
 {
 public:
-	LUA_SIMPLE2(position, SetPosition);
+	LUA_BIND_ALIAS(position, SetPosition);
 	LUA_METHOD(playanimation)( T* p, lua_State *L )	{ p->PlayAnimation(SArg(1),FArg(2)); COMMON_RETURN_SELF; }
 	LUA_METHOD(SetDefaultAnimation)( T* p, lua_State *L )	{ p->SetDefaultAnimation(SArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	LUA_SIMPLE(GetDefaultAnimation);
-	LUA_SIMPLE2(loop, SetLoop);
-	LUA_SIMPLE2(rate, SetRate);
-	LUA_SIMPLE(GetNumStates);
-	//LUA_SIMPLE2(CelShading, SetCelShading);
+	LUA_BIND(GetDefaultAnimation);
+	LUA_BIND_ALIAS(loop, SetLoop);
+	LUA_BIND_ALIAS(rate, SetRate);
+	LUA_BIND(GetNumStates);
+	//LUA_BIND_ALIAS(CelShading, SetCelShading);
 };
 
 LUA_REGISTER_DERIVED_CLASS( Model, Actor )

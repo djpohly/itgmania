@@ -3512,14 +3512,15 @@ public:
 		p->m_inside_lua_set_life= false;
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(SetActorWithJudgmentPosition);
-	LUA_SIMPLE(SetActorWithComboPosition);
+	LUA_BIND(SetActorWithJudgmentPosition);
+	LUA_BIND(SetActorWithComboPosition);
 	LUA_METHOD(GetPlayerTimingData)( T* p, lua_State *L )
 	{
 		p->GetPlayerTimingData().PushSelf(L);
 		return 1;
 	}
-	GET_SET_BOOL_METHOD(oitg_zoom_mode, m_oitg_zoom_mode);
+	LUA_GETTER(get_oitg_zoom_mode, m_oitg_zoom_mode);
+	LUA_SETTER(set_oitg_zoom_mode, m_oitg_zoom_mode);
 };
 
 LUA_REGISTER_DERIVED_CLASS( Player, ActorFrame )

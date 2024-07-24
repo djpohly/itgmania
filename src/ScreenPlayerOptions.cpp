@@ -154,7 +154,7 @@ void ScreenPlayerOptions::UpdateDisqualified( int row, PlayerNumber pn )
 class LunaScreenPlayerOptions: public Luna<ScreenPlayerOptions>
 {
 public:
-	LUA_SIMPLE(GetGoToOptions);
+	LUA_BIND(GetGoToOptions);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenPlayerOptions, ScreenOptions )

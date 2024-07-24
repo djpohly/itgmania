@@ -19,9 +19,9 @@ LUA_REGISTER_CLASS( DisplayMode )
 class LunaDisplaySpec: public Luna<DisplaySpec>
 {
 public:
-	LUA_SIMPLE2(GetId, id);
-	LUA_SIMPLE2(GetName, name);
-	LUA_SIMPLE2(IsVirtual, isVirtual);
+	LUA_BIND_ALIAS(GetId, id);
+	LUA_BIND_ALIAS(GetName, name);
+	LUA_BIND_ALIAS(IsVirtual, isVirtual);
 	LUA_METHOD(GetSupportedModes)( T* p, lua_State *L)
 	{
 		std::vector<DisplayMode*> v;

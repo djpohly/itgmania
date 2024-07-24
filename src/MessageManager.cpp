@@ -307,7 +307,7 @@ public:
 		p->Broadcast( msg );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(SetLogging);
+	LUA_BIND(SetLogging);
 };
 
 LUA_REGISTER_CLASS( MessageManager )

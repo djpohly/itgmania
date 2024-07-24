@@ -550,11 +550,11 @@ RString NoteSkinManager::GetPathFromDirAndFile( const RString &sDir, const RStri
 class LunaNoteSkinManager: public Luna<NoteSkinManager>
 {
 public:
-	LUA_DEFINE_METHOD( GetPath, GetPath(SArg(1), SArg(2)) );
-	LUA_DEFINE_METHOD( GetMetric, GetMetric(SArg(1), SArg(2)) );
-	LUA_DEFINE_METHOD( GetMetricI, GetMetricI(SArg(1), SArg(2)) );
-	LUA_DEFINE_METHOD( GetMetricF, GetMetricF(SArg(1), SArg(2)) );
-	LUA_DEFINE_METHOD( GetMetricB, GetMetricB(SArg(1), SArg(2)) );
+	LUA_GETTER(GetPath, GetPath(SArg(1), SArg(2)));
+	LUA_GETTER(GetMetric, GetMetric(SArg(1), SArg(2)));
+	LUA_GETTER(GetMetricI, GetMetricI(SArg(1), SArg(2)));
+	LUA_GETTER(GetMetricF, GetMetricF(SArg(1), SArg(2)));
+	LUA_GETTER(GetMetricB, GetMetricB(SArg(1), SArg(2)));
 	LUA_METHOD(GetMetricA)( T* p, lua_State *L )		{ p->GetMetricA(SArg(1),SArg(2))->PushSelf(L); return 1; }
 	LUA_METHOD(LoadActor)( T* p, lua_State *L )
 	{
@@ -604,7 +604,7 @@ public:
 		return 1;
 	}
 	*/
-	LUA_SIMPLE(DoesNoteSkinExist);
+	LUA_BIND(DoesNoteSkinExist);
 };
 
 LUA_REGISTER_CLASS( NoteSkinManager )

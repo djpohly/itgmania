@@ -1328,7 +1328,7 @@ RString ThemeManager::GetBlankGraphicPath()
 class LunaThemeManager: public Luna<ThemeManager>
 {
 public:
-	LUA_SIMPLE(ReloadMetrics);
+	LUA_BIND(ReloadMetrics);
 
 	LUA_METHOD(HasMetric)( T* p, lua_State *L )		{ lua_pushboolean(L, p->HasMetric(SArg(1),SArg(2))); return 1; }
 	LUA_METHOD(GetMetric)( T* p, lua_State *L )
@@ -1391,16 +1391,16 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(GetNumSelectableThemes);
+	LUA_BIND(GetNumSelectableThemes);
 
-	LUA_SIMPLE2(GetCurrentThemeDirectory, GetCurThemeDir);
-	LUA_SIMPLE(GetCurLanguage);
-	LUA_SIMPLE(GetThemeDisplayName);
-	LUA_SIMPLE(GetThemeAuthor);
-	LUA_SIMPLE(DoesThemeExist);
-	LUA_SIMPLE(IsThemeSelectable);
-	LUA_SIMPLE(DoesLanguageExist);
-	LUA_SIMPLE(GetCurThemeName);
+	LUA_BIND_ALIAS(GetCurrentThemeDirectory, GetCurThemeDir);
+	LUA_BIND(GetCurLanguage);
+	LUA_BIND(GetThemeDisplayName);
+	LUA_BIND(GetThemeAuthor);
+	LUA_BIND(DoesThemeExist);
+	LUA_BIND(IsThemeSelectable);
+	LUA_BIND(DoesLanguageExist);
+	LUA_BIND(GetCurThemeName);
 
 	static void PushMetricNamesInGroup(IniFile const& ini, lua_State* L)
 	{

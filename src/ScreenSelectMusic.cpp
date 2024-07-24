@@ -2050,8 +2050,8 @@ bool ScreenSelectMusic::can_open_options_list(PlayerNumber pn)
 class LunaScreenSelectMusic: public Luna<ScreenSelectMusic>
 {
 public:
-	LUA_SIMPLE(GetGoToOptions);
-	LUA_SIMPLE(GetMusicWheel);
+	LUA_BIND(GetGoToOptions);
+	LUA_BIND(GetMusicWheel);
 	LUA_METHOD(OpenOptionsList)( T* p, lua_State *L )
 	{
 		PlayerNumber pn = Enum::Check<PlayerNumber>(L, 1);
@@ -2061,7 +2061,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE2(CanOpenOptionsList, can_open_options_list);
+	LUA_BIND_ALIAS(CanOpenOptionsList, can_open_options_list);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenSelectMusic, ScreenWithMenuElements )

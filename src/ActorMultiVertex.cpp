@@ -830,8 +830,8 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_SIMPLE(SetEffectMode);
-	LUA_SIMPLE(SetTextureMode);
+	LUA_BIND(SetEffectMode);
+	LUA_BIND(SetTextureMode);
 
 	LUA_METHOD(SetLineWidth)( T* p, lua_State *L )
 	{
@@ -882,7 +882,7 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_SIMPLE(GetDestDrawMode);
+	LUA_BIND(GetDestDrawMode);
 
 	LUA_METHOD(GetDestFirstToDraw)( T* p, lua_State* L )
 	{
@@ -891,8 +891,8 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(GetDestNumToDraw);
-	LUA_SIMPLE(GetCurrDrawMode);
+	LUA_BIND(GetDestNumToDraw);
+	LUA_BIND(GetCurrDrawMode);
 
 	LUA_METHOD(GetCurrFirstToDraw)( T* p, lua_State* L )
 	{
@@ -901,7 +901,7 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(GetCurrNumToDraw);
+	LUA_BIND(GetCurrNumToDraw);
 
 	LUA_METHOD(LoadTexture)( T* p, lua_State *L )
 	{
@@ -931,7 +931,7 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(SetVertsFromSplines);
+	LUA_BIND(SetVertsFromSplines);
 	LUA_GETTER(GetUseAnimationState, _use_animation_state);
 	LUA_METHOD(SetUseAnimationState)(T* p, lua_State *L)
 	{
@@ -1074,8 +1074,8 @@ public:
 		p->SetAllStateDelays(FArg(1));
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(GetAnimationLengthSeconds);
-	LUA_SIMPLE(SetSecondsIntoAnimation);
+	LUA_BIND(GetAnimationLengthSeconds);
+	LUA_BIND(SetSecondsIntoAnimation);
 	LUA_METHOD(GetNumQuadStates)(T* p, lua_State *L)
 	{
 		lua_pushnumber(L, p->GetNumQuadStates());

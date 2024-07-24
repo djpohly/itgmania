@@ -1035,9 +1035,9 @@ class LunaRageDisplay: public Luna<RageDisplay>
 public:
 	LUA_GETTER(GetDisplayWidth, GetActualVideoModeParams().width);
 	LUA_GETTER(GetDisplayHeight, GetActualVideoModeParams().height);
-	LUA_SIMPLE(GetFPS);
-	LUA_SIMPLE(GetVPF);
-	LUA_SIMPLE(GetCumFPS);
+	LUA_BIND(GetFPS);
+	LUA_BIND(GetVPF);
+	LUA_BIND(GetCumFPS);
 
 	LUA_METHOD(GetDisplaySpecs)( T* p, lua_State *L )
 	{
@@ -1047,8 +1047,8 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(SupportsRenderToTexture);
-	LUA_SIMPLE(SupportsFullscreenBorderlessWindow);
+	LUA_BIND(SupportsRenderToTexture);
+	LUA_BIND(SupportsFullscreenBorderlessWindow);
 };
 
 LUA_REGISTER_CLASS( RageDisplay )

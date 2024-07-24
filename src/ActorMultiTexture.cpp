@@ -146,8 +146,8 @@ bool ActorMultiTexture::EarlyAbortDraw() const
 class LunaActorMultiTexture: public Luna<ActorMultiTexture>
 {
 public:
-	LUA_SIMPLE(ClearTextures);
-	LUA_SIMPLE(AddTexture);
+	LUA_BIND(ClearTextures);
+	LUA_BIND(AddTexture);
 	LUA_METHOD(SetTextureMode)( T* p, lua_State *L )
 	{
 		int iIndex = IArg(1);
@@ -155,9 +155,9 @@ public:
 		p->SetTextureMode( iIndex, tm );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(SetTextureCoords);
-	LUA_SIMPLE(SetSizeFromTexture);
-	LUA_SIMPLE(SetEffectMode);
+	LUA_BIND(SetTextureCoords);
+	LUA_BIND(SetSizeFromTexture);
+	LUA_BIND(SetEffectMode);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorMultiTexture, Actor )

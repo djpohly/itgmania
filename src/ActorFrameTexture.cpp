@@ -90,13 +90,13 @@ void ActorFrameTexture::DrawPrimitives()
 class LunaActorFrameTexture : public Luna<ActorFrameTexture>
 {
 public:
-	LUA_SIMPLE(Create);
-	LUA_SIMPLE(EnableDepthBuffer);
-	LUA_SIMPLE(EnableAlphaBuffer);
-	LUA_SIMPLE(EnableFloat);
-	LUA_SIMPLE(EnablePreserveTexture);
-	LUA_SIMPLE(SetTextureName);
-	LUA_SIMPLE(GetTexture);
+	LUA_BIND(Create);
+	LUA_BIND(EnableDepthBuffer);
+	LUA_BIND(EnableAlphaBuffer);
+	LUA_BIND(EnableFloat);
+	LUA_BIND(EnablePreserveTexture);
+	LUA_BIND(SetTextureName);
+	LUA_BIND(GetTexture);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorFrameTexture, ActorFrame )

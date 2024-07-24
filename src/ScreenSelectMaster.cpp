@@ -1101,7 +1101,7 @@ float ScreenSelectMaster::GetCursorY( PlayerNumber pn )
 class LunaScreenSelectMaster: public Luna<ScreenSelectMaster>
 {
 public:
-	LUA_SIMPLE2(GetSelectionIndex, GetPlayerSelectionIndex);
+	LUA_BIND_ALIAS(GetSelectionIndex, GetPlayerSelectionIndex);
 	// should I even bother adding this? -aj
 	// would have to make a public function to get this in ssmaster.h:
 	// m_aGameCommands[i].m_sName

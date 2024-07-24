@@ -114,7 +114,7 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(IsLoaded);
+	LUA_BIND(IsLoaded);
 };
 LUA_REGISTER_DERIVED_CLASS( WheelItemBase, ActorFrame )
 // lua end

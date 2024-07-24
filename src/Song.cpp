@@ -2093,15 +2093,15 @@ bool Song::IsMarathon() const
 class LunaSong: public Luna<Song>
 {
 public:
-	LUA_SIMPLE(GetDisplayFullTitle);
-	LUA_SIMPLE(GetTranslitFullTitle);
-	LUA_SIMPLE(GetDisplayMainTitle);
-	LUA_SIMPLE(GetMainTitle);
-	LUA_SIMPLE(GetTranslitMainTitle);
-	LUA_SIMPLE(GetDisplaySubTitle);
-	LUA_SIMPLE(GetTranslitSubTitle);
-	LUA_SIMPLE(GetDisplayArtist);
-	LUA_SIMPLE(GetTranslitArtist);
+	LUA_BIND(GetDisplayFullTitle);
+	LUA_BIND(GetTranslitFullTitle);
+	LUA_BIND(GetDisplayMainTitle);
+	LUA_BIND(GetMainTitle);
+	LUA_BIND(GetTranslitMainTitle);
+	LUA_BIND(GetDisplaySubTitle);
+	LUA_BIND(GetTranslitSubTitle);
+	LUA_BIND(GetDisplayArtist);
+	LUA_BIND(GetTranslitArtist);
 	LUA_GETTER(GetGenre, m_sGenre );
 	LUA_GETTER(GetOrigin, m_sOrigin );
 	LUA_METHOD(GetAllSteps)( T* p, lua_State *L )
@@ -2158,7 +2158,7 @@ public:
 			lua_pushnil(L);
 		return 1;
 	}
-	LUA_SIMPLE(GetPreviewMusicPath);
+	LUA_BIND(GetPreviewMusicPath);
 	LUA_METHOD(GetJacketPath)( T* p, lua_State *L )
 	{
 		RString s = p->GetJacketPath();
@@ -2204,17 +2204,17 @@ public:
 			lua_pushnil(L);
 		return 1;
 	}
-	LUA_SIMPLE(GetSongFilePath);
-	LUA_SIMPLE(IsTutorial);
-	LUA_SIMPLE2(IsEnabled, GetEnabled);
+	LUA_BIND(GetSongFilePath);
+	LUA_BIND(IsTutorial);
+	LUA_BIND_ALIAS(IsEnabled, GetEnabled);
 	LUA_GETTER(IsCustomSong, m_LoadedFromProfile != ProfileSlot_Invalid);
 	LUA_GETTER(GetGroupName, m_sGroupName);
 	LUA_GETTER(MusicLengthSeconds, m_fMusicLengthSeconds);
-	LUA_SIMPLE2(GetSampleStart, GetPreviewStartSeconds);
+	LUA_BIND_ALIAS(GetSampleStart, GetPreviewStartSeconds);
 	LUA_GETTER(GetSampleLength, m_fMusicSampleLengthSeconds);
-	LUA_SIMPLE(IsLong);
-	LUA_SIMPLE(IsMarathon);
-	LUA_SIMPLE(HasStepsType);
+	LUA_BIND(IsLong);
+	LUA_BIND(IsMarathon);
+	LUA_BIND(HasStepsType);
 	LUA_METHOD(HasStepsTypeAndDifficulty)( T* p, lua_State *L )
 	{
 		StepsType st = Enum::Check<StepsType>(L, 1);
@@ -2222,7 +2222,7 @@ public:
 		lua_pushboolean( L, p->HasStepsTypeAndDifficulty(st, dc) );
 		return 1;
 	}
-	LUA_SIMPLE(IsStepsUsingDifferentTiming);
+	LUA_BIND(IsStepsUsingDifferentTiming);
 	/* TODO: HasStepsTypeAndDifficulty and GetOneSteps should be in
 	 * a SongUtil Lua table and a method of Steps. */
 	LUA_METHOD(GetOneSteps)( T* p, lua_State *L )
@@ -2265,28 +2265,28 @@ public:
 		return 1;
 	}
 	// has functions
-	LUA_SIMPLE(HasMusic);
-	LUA_SIMPLE(HasBanner);
-	LUA_SIMPLE(HasBackground);
-	LUA_SIMPLE(HasPreviewVid);
-	LUA_SIMPLE(HasJacket);
-	LUA_SIMPLE(HasDisc);
-	LUA_SIMPLE(HasCDImage);
-	LUA_SIMPLE(HasCDTitle);
-	LUA_SIMPLE(HasBGChanges);
-	LUA_SIMPLE(HasLyrics);
+	LUA_BIND(HasMusic);
+	LUA_BIND(HasBanner);
+	LUA_BIND(HasBackground);
+	LUA_BIND(HasPreviewVid);
+	LUA_BIND(HasJacket);
+	LUA_BIND(HasDisc);
+	LUA_BIND(HasCDImage);
+	LUA_BIND(HasCDTitle);
+	LUA_BIND(HasBGChanges);
+	LUA_BIND(HasLyrics);
 	// functions that AJ loves
-	LUA_SIMPLE2(HasSignificantBPMChangesOrStops, HasSignificantBpmChangesOrStops);
-	LUA_SIMPLE(HasEdits);
-	LUA_SIMPLE(IsEasy);
-	LUA_SIMPLE(GetStepsSeconds);
-	LUA_SIMPLE(NormallyDisplayed);
-	LUA_SIMPLE(ShowInDemonstrationAndRanking);
-	LUA_SIMPLE(GetFirstSecond);
-	LUA_SIMPLE(GetLastSecond);
-	LUA_SIMPLE(GetFirstBeat);
-	LUA_SIMPLE(GetLastBeat);
-	LUA_SIMPLE(HasAttacks);
+	LUA_BIND_ALIAS(HasSignificantBPMChangesOrStops, HasSignificantBpmChangesOrStops);
+	LUA_BIND(HasEdits);
+	LUA_BIND(IsEasy);
+	LUA_BIND(GetStepsSeconds);
+	LUA_BIND(NormallyDisplayed);
+	LUA_BIND(ShowInDemonstrationAndRanking);
+	LUA_BIND(GetFirstSecond);
+	LUA_BIND(GetLastSecond);
+	LUA_BIND(GetFirstBeat);
+	LUA_BIND(GetLastBeat);
+	LUA_BIND(HasAttacks);
 	LUA_METHOD(GetDisplayBpms)( T* p, lua_State *L )
 	{
 		DisplayBpms temp;

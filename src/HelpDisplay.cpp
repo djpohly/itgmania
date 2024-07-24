@@ -114,7 +114,7 @@ public:
 
 		return 2;
 	}
-	LUA_SIMPLE(SetSecsBetweenSwitches);
+	LUA_BIND(SetSecsBetweenSwitches);
 };
 
 LUA_REGISTER_DERIVED_CLASS( HelpDisplay, BitmapText )

@@ -258,8 +258,8 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(GetProfileIndex);
-	LUA_SIMPLE(Finish);
+	LUA_BIND(GetProfileIndex);
+	LUA_BIND(Finish);
 
 	LUA_METHOD(Cancel)( T* p, lua_State *L )
 	{

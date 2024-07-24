@@ -795,8 +795,8 @@ void UnlockManager::GetStepsUnlockedByEntryID( std::vector<Song *> &apSongsOut, 
 class LunaUnlockEntry: public Luna<UnlockEntry>
 {
 public:
-	LUA_SIMPLE(IsLocked);
-	LUA_SIMPLE(GetDescription);
+	LUA_BIND(IsLocked);
+	LUA_BIND(GetDescription);
 	LUA_GETTER(GetUnlockRewardType, m_Type );
 	LUA_METHOD(GetRequirement)( T* p, lua_State *L )		{ UnlockRequirement i = Enum::Check<UnlockRequirement>( L, 1 ); lua_pushnumber(L, p->m_fRequirement[i] ); return 1; }
 	LUA_GETTER(GetRequirePassHardSteps, m_bRequirePassHardSteps);
@@ -888,17 +888,17 @@ LUA_REGISTER_CLASS( UnlockEntry )
 class LunaUnlockManager: public Luna<UnlockManager>
 {
 public:
-	LUA_SIMPLE2(GetPointsUntilNextUnlock, PointsUntilNextUnlock);
-	LUA_SIMPLE(FindEntryID);
-	LUA_SIMPLE(UnlockEntryID);
-	LUA_SIMPLE(UnlockEntryIndex);
-	LUA_SIMPLE(LockEntryID);
-	LUA_SIMPLE(LockEntryIndex);
-	LUA_SIMPLE(PreferUnlockEntryID);
-	LUA_SIMPLE(GetNumUnlocks);
-	LUA_SIMPLE(GetNumUnlocked);
-	LUA_SIMPLE(GetUnlockEntryIndexToCelebrate);
-	LUA_SIMPLE(AnyUnlocksToCelebrate);
+	LUA_BIND_ALIAS(GetPointsUntilNextUnlock, PointsUntilNextUnlock);
+	LUA_BIND(FindEntryID);
+	LUA_BIND(UnlockEntryID);
+	LUA_BIND(UnlockEntryIndex);
+	LUA_BIND(LockEntryID);
+	LUA_BIND(LockEntryIndex);
+	LUA_BIND(PreferUnlockEntryID);
+	LUA_BIND(GetNumUnlocks);
+	LUA_BIND(GetNumUnlocked);
+	LUA_BIND(GetUnlockEntryIndexToCelebrate);
+	LUA_BIND(AnyUnlocksToCelebrate);
 	LUA_METHOD(GetUnlockEntry)( T* p, lua_State *L )			{ unsigned iIndex = IArg(1); if( iIndex >= p->m_UnlockEntries.size() ) return 0; p->m_UnlockEntries[iIndex].PushSelf(L); return 1; }
 	LUA_METHOD(GetSongsUnlockedByEntryID)( T* p, lua_State *L )
 	{

@@ -632,7 +632,7 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE2(SavePreferences, SavePrefsToDisk);
+	LUA_BIND_ALIAS(SavePreferences, SavePrefsToDisk);
 };
 
 LUA_REGISTER_CLASS( PrefsManager )

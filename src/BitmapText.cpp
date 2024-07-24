@@ -1012,15 +1012,15 @@ void BitmapText::Attribute::FromStack( lua_State *L, int iPos )
 class LunaBitmapText: public Luna<BitmapText>
 {
 public:
-	LUA_SIMPLE2(wrapwidthpixels, SetWrapWidthPixels);
+	LUA_BIND_ALIAS(wrapwidthpixels, SetWrapWidthPixels);
 #define MAX_DIMENSION(maxdimension, SetMaxDimension) \
 	LUA_METHOD(maxdimension)( T* p, lua_State *L ) \
 	{ p->SetMaxDimension(FArg(1)); COMMON_RETURN_SELF; }
 	MAX_DIMENSION(maxwidth, SetMaxWidth);
 	MAX_DIMENSION(maxheight, SetMaxHeight);
 #undef MAX_DIMENSION
-	LUA_SIMPLE2(max_dimension_use_zoom, SetMaxDimUseZoom);
-	LUA_SIMPLE2(vertspacing, SetVertSpacing);
+	LUA_BIND_ALIAS(max_dimension_use_zoom, SetMaxDimUseZoom);
+	LUA_BIND_ALIAS(vertspacing, SetVertSpacing);
 	LUA_METHOD(settext)( T* p, lua_State *L )
 	{
 		RString s = SArg(1);
@@ -1043,12 +1043,13 @@ public:
 		p->SetText( s, sAlt );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE2(rainbowscroll, SetRainbowScroll);
-	LUA_SIMPLE2(jitter, SetJitter);
-	LUA_SIMPLE2(distort, SetDistortion);
-	LUA_SIMPLE2(undistort, UnSetDistortion);
-	GETTER_SETTER_BOOL_METHOD(mult_attrs_with_diffuse);
-	LUA_SIMPLE(GetText);
+	LUA_BIND_ALIAS(rainbowscroll, SetRainbowScroll);
+	LUA_BIND_ALIAS(jitter, SetJitter);
+	LUA_BIND_ALIAS(distort, SetDistortion);
+	LUA_BIND_ALIAS(undistort, UnSetDistortion);
+	LUA_BIND(get_mult_attrs_with_diffuse);
+	LUA_BIND(set_mult_attrs_with_diffuse);
+	LUA_BIND(GetText);
 	LUA_METHOD(AddAttribute)( T* p, lua_State *L )
 	{
 		std::size_t iPos = IArg(1);
@@ -1058,11 +1059,11 @@ public:
 		p->AddAttribute( iPos, attr );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(ClearAttributes);
+	LUA_BIND(ClearAttributes);
 	LUA_METHOD(strokecolor)( T* p, lua_State *L )		{ RageColor c; c.FromStackCompat( L, 1 ); p->SetStrokeColor( c ); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(getstrokecolor, GetStrokeColor);
-	LUA_SIMPLE2(uppercase, SetUppercase);
-	LUA_SIMPLE2(textglowmode, SetTextGlowMode);
+	LUA_BIND_ALIAS(getstrokecolor, GetStrokeColor);
+	LUA_BIND_ALIAS(uppercase, SetUppercase);
+	LUA_BIND_ALIAS(textglowmode, SetTextGlowMode);
 };
 
 LUA_REGISTER_DERIVED_CLASS( BitmapText, Actor )

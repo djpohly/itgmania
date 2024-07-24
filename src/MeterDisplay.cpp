@@ -97,7 +97,7 @@ void SongMeterDisplay::Update( float fDeltaTime )
 class LunaMeterDisplay: public Luna<MeterDisplay>
 {
 public:
-	LUA_SIMPLE(SetStreamWidth);
+	LUA_BIND(SetStreamWidth);
 };
 
 LUA_REGISTER_DERIVED_CLASS( MeterDisplay, ActorFrame )

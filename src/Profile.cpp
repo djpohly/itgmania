@@ -2654,12 +2654,12 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(GetCharacter);
-	LUA_SIMPLE(SetCharacter);
+	LUA_BIND(GetCharacter);
+	LUA_BIND(SetCharacter);
 	LUA_GETTER(GetWeightPounds, m_iWeightPounds);
 	LUA_SETTER(SetWeightPounds, m_iWeightPounds);
 	LUA_GETTER(GetVoomax, m_Voomax);
-	LUA_SIMPLE(GetAge);
+	LUA_BIND(GetAge);
 	LUA_GETTER(GetBirthYear, m_BirthYear);
 	LUA_GETTER(GetIgnoreStepCountCalories, m_IgnoreStepCountCalories);
 	LUA_GETTER(GetIsMale, m_IsMale);
@@ -2667,7 +2667,7 @@ public:
 	LUA_SETTER(SetBirthYear, m_BirthYear);
 	LUA_SETTER(SetIgnoreStepCountCalories, m_IgnoreStepCountCalories);
 	LUA_SETTER(SetIsMale, m_IsMale);
-	LUA_SIMPLE(AddCaloriesToDailyTotal);
+	LUA_BIND(AddCaloriesToDailyTotal);
 	LUA_GETTER(CalculateCaloriesFromHeartRate, CalculateCaloriesFromHeartRate(FArg(1), FArg(2)));
 	LUA_GETTER(GetGoalType, m_GoalType);
 	LUA_SETTER(SetGoalType, m_GoalType);
@@ -2675,9 +2675,9 @@ public:
 	LUA_SETTER(SetGoalCalories, m_iGoalCalories);
 	LUA_GETTER(GetGoalSeconds, m_iGoalSeconds);
 	LUA_SETTER(SetGoalSeconds, m_iGoalSeconds);
-	LUA_SIMPLE(GetCaloriesBurnedToday);
+	LUA_BIND(GetCaloriesBurnedToday);
 	LUA_GETTER(GetTotalNumSongsPlayed, m_iNumTotalSongsPlayed);
-	LUA_SIMPLE(IsCodeUnlocked);
+	LUA_BIND(IsCodeUnlocked);
 	LUA_METHOD(GetSongsActual)( T* p, lua_State *L )			{ lua_pushnumber(L, p->GetSongsActual(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
 	LUA_METHOD(GetCoursesActual)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetCoursesActual(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
 	LUA_METHOD(GetSongsPossible)( T* p, lua_State *L )		{ lua_pushnumber(L, p->GetSongsPossible(Enum::Check<StepsType>(L, 1),Enum::Check<Difficulty>(L, 2)) ); return 1; }
@@ -2690,11 +2690,11 @@ public:
 	LUA_GETTER(GetTotalSessions, m_iTotalSessions);
 	LUA_GETTER(GetTotalSessionSeconds, m_iTotalSessionSeconds);
 	LUA_GETTER(GetTotalGameplaySeconds, m_iTotalGameplaySeconds);
-	LUA_SIMPLE(GetSongsAndCoursesPercentCompleteAllDifficulties);
+	LUA_BIND(GetSongsAndCoursesPercentCompleteAllDifficulties);
 	LUA_GETTER(GetTotalCaloriesBurned, m_fTotalCaloriesBurned);
-	LUA_SIMPLE(GetDisplayTotalCaloriesBurned);
-	LUA_SIMPLE(GetMostPopularSong);
-	LUA_SIMPLE(GetMostPopularCourse);
+	LUA_BIND(GetDisplayTotalCaloriesBurned);
+	LUA_BIND(GetMostPopularSong);
+	LUA_BIND(GetMostPopularCourse);
 	LUA_METHOD(GetSongNumTimesPlayed)( T* p, lua_State *L )
 	{
 		ASSERT( !lua_isnil(L,1) );

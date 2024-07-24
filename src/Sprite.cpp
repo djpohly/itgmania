@@ -1155,8 +1155,8 @@ public:
 
 	/* Commands that go in the tweening queue:
 	 * Commands that take effect immediately (ignoring the tweening queue): */
-	LUA_SIMPLE2(customtexturerect, SetCustomTextureRect);
-	LUA_SIMPLE(SetCustomImageRect);
+	LUA_BIND_ALIAS(customtexturerect, SetCustomTextureRect);
+	LUA_BIND(SetCustomImageRect);
 	LUA_METHOD(SetCustomPosCoords)( T* p, lua_State *L )
 	{
 		float coords[8];
@@ -1171,7 +1171,7 @@ public:
 		p->SetCustomPosCoords(coords);
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(StopUsingCustomPosCoords);
+	LUA_BIND(StopUsingCustomPosCoords);
 	LUA_METHOD(texcoordvelocity)( T* p, lua_State *L )	{ p->SetTexCoordVelocity( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_GETTER(get_use_effect_clock_for_texcoords, m_use_effect_clock_for_texcoords);
 	LUA_SETTER(set_use_effect_clock_for_texcoords, m_use_effect_clock_for_texcoords);
@@ -1179,8 +1179,8 @@ public:
 	LUA_METHOD(CropTo)( T* p, lua_State *L )		{ p->CropTo( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(stretchtexcoords)( T* p, lua_State *L )	{ p->StretchTexCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
 	LUA_METHOD(addimagecoords)( T* p, lua_State *L )		{ p->AddImageCoords( FArg(1),FArg(2) ); COMMON_RETURN_SELF; }
-	LUA_SIMPLE2(setstate, SetState);
-	LUA_SIMPLE(GetState);
+	LUA_BIND_ALIAS(setstate, SetState);
+	LUA_BIND(GetState);
 	LUA_METHOD(SetStateProperties)(T* p, lua_State* L)
 	{
 		// States table example:
@@ -1258,8 +1258,8 @@ public:
 		p->SetStateProperties(new_states);
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(GetAnimationLengthSeconds);
-	LUA_SIMPLE(SetSecondsIntoAnimation);
+	LUA_BIND(GetAnimationLengthSeconds);
+	LUA_BIND(SetSecondsIntoAnimation);
 	LUA_METHOD(SetTexture)( T* p, lua_State *L )
 	{
 		RageTexture *pTexture = Luna<RageTexture>::check(L, 1);
@@ -1276,9 +1276,9 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	LUA_SIMPLE(SetEffectMode);
-	LUA_SIMPLE(GetNumStates);
-	LUA_SIMPLE(SetAllStateDelays);
+	LUA_BIND(SetEffectMode);
+	LUA_BIND(GetNumStates);
+	LUA_BIND(SetAllStateDelays);
 	LUA_GETTER(GetDecodeMovie, m_DecodeMovie);
 	LUA_SETTER(SetDecodeMovie, m_DecodeMovie);
 	LUA_METHOD(LoadFromCached)( T* p, lua_State *L )

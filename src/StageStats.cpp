@@ -372,12 +372,12 @@ public:
 
 	}
 	LUA_GETTER(GetGameplaySeconds, m_fGameplaySeconds);
-	LUA_SIMPLE(OnePassed);
-	LUA_SIMPLE(AllFailed);
+	LUA_BIND(OnePassed);
+	LUA_BIND(AllFailed);
 	LUA_GETTER(GetStage, m_Stage );
 	LUA_GETTER(GetStageIndex, m_iStageIndex);
 	LUA_GETTER(GetStepsSeconds, m_fStepsSeconds);
-	LUA_SIMPLE(PlayerHasHighScore);
+	LUA_BIND(PlayerHasHighScore);
 	LUA_GETTER(GetEarnedExtraStage, m_EarnedExtraStage);
 	LUA_GETTER(GaveUp, m_bGaveUp);
 };

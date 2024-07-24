@@ -1343,13 +1343,13 @@ void TimingSegmentSetToLuaTable(TimingData* td, TimingSegmentType tst, lua_State
 class LunaTimingData: public Luna<TimingData>
 {
 public:
-	LUA_SIMPLE(HasStops);
-	LUA_SIMPLE(HasDelays);
-	LUA_SIMPLE(HasBPMChanges);
-	LUA_SIMPLE(HasWarps);
-	LUA_SIMPLE(HasFakes);
-	LUA_SIMPLE(HasSpeedChanges);
-	LUA_SIMPLE(HasScrollChanges);
+	LUA_BIND(HasStops);
+	LUA_BIND(HasDelays);
+	LUA_BIND(HasBPMChanges);
+	LUA_BIND(HasWarps);
+	LUA_BIND(HasFakes);
+	LUA_BIND(HasSpeedChanges);
+	LUA_BIND(HasScrollChanges);
 #define GET_FUNCTION(get_name, segment_name) \
 	LUA_METHOD(get_name)(T* p, lua_State* L) \
 	{ \
@@ -1398,11 +1398,11 @@ public:
 		LuaHelpers::CreateTableFromArray(fBPMs, L);
 		return 1;
 	}
-	LUA_SIMPLE2(HasNegativeBPMs, HasWarps);
+	LUA_BIND_ALIAS(HasNegativeBPMs, HasWarps);
 	// formerly in Song.cpp in sm-ssc private beta 1.x:
-	LUA_SIMPLE(GetBPMAtBeat);
-	LUA_SIMPLE(GetBeatFromElapsedTime);
-	LUA_SIMPLE(GetElapsedTimeFromBeat);
+	LUA_BIND(GetBPMAtBeat);
+	LUA_BIND(GetBeatFromElapsedTime);
+	LUA_BIND(GetElapsedTimeFromBeat);
 };
 
 LUA_REGISTER_CLASS( TimingData )

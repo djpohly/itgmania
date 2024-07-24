@@ -88,9 +88,9 @@ const RectF *RageTexture::GetTextureCoordRect( int iFrameNo ) const
 class LunaRageTexture: public Luna<RageTexture>
 {
 public:
-	LUA_SIMPLE2(position, SetPosition);
-	LUA_SIMPLE2(loop, SetLooping);
-	LUA_SIMPLE2(rate, SetPlaybackRate);
+	LUA_BIND_ALIAS(position, SetPosition);
+	LUA_BIND_ALIAS(loop, SetLooping);
+	LUA_BIND_ALIAS(rate, SetPlaybackRate);
 	LUA_METHOD(GetTextureCoordRect)( T* p, lua_State *L )
 	{
 		const RectF *pRect = p->GetTextureCoordRect( IArg(1) );
@@ -100,14 +100,14 @@ public:
 		lua_pushnumber( L, pRect->bottom );
 		return 4;  // TODO: refactor Push<> to return int?
 	}
-	LUA_SIMPLE(GetNumFrames);
-	LUA_SIMPLE(Reload);
-	LUA_SIMPLE(GetSourceWidth);
-	LUA_SIMPLE(GetSourceHeight);
-	LUA_SIMPLE(GetTextureWidth);
-	LUA_SIMPLE(GetTextureHeight);
-	LUA_SIMPLE(GetImageWidth);
-	LUA_SIMPLE(GetImageHeight);
+	LUA_BIND(GetNumFrames);
+	LUA_BIND(Reload);
+	LUA_BIND(GetSourceWidth);
+	LUA_BIND(GetSourceHeight);
+	LUA_BIND(GetTextureWidth);
+	LUA_BIND(GetTextureHeight);
+	LUA_BIND(GetImageWidth);
+	LUA_BIND(GetImageHeight);
 	LUA_GETTER(GetPath, GetID().filename);
 };
 

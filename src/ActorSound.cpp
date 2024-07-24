@@ -51,10 +51,10 @@ void ActorSound::LoadFromNode( const XNode* pNode )
 class LunaActorSound: public Luna<ActorSound>
 {
 public:
-	LUA_SIMPLE2(load, Load);
-	LUA_SIMPLE2(play, Play);
-	LUA_SIMPLE2(pause, Pause);
-	LUA_SIMPLE2(stop, Stop);
+	LUA_BIND_ALIAS(load, Load);
+	LUA_BIND_ALIAS(play, Play);
+	LUA_BIND_ALIAS(pause, Pause);
+	LUA_BIND_ALIAS(stop, Stop);
 	LUA_METHOD(get)( T* p, lua_State *L )			{ p->PushSound( L ); return 1; }
 	LUA_METHOD(set_is_action)(T* p, lua_State* L)
 	{

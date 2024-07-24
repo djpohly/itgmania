@@ -1678,48 +1678,27 @@ struct LunaNCSplineHandler : Luna<NCSplineHandler>
 		p->m_spline.PushSelf(L);
 		return 1;
 	}
-	LUA_DEFINE_METHOD(get_receptor_t, m_receptor_t);
-	LUA_DEFINE_METHOD(get_beats_per_t, m_beats_per_t);
-#define SET_T(member, name) \
-	LUA_METHOD(name)(T* p, lua_State* L) \
-	{ \
-		p->member= FArg(1); \
-		COMMON_RETURN_SELF; \
-	}
-#define SET_B(member, name) \
-	LUA_METHOD(name)(T* p, lua_State* L) \
-	{ \
-		p->member= BArg(1); \
-		COMMON_RETURN_SELF; \
-	}
-	SET_T(m_receptor_t, set_receptor_t);
-	SET_T(m_beats_per_t, set_beats_per_t);
-	SET_B(m_subtract_song_beat_from_curr, set_subtract_song_beat);
-#undef SET_T
-#undef SET_B
+	LUA_GETTER(get_receptor_t, m_receptor_t);
+	LUA_GETTER(get_beats_per_t, m_beats_per_t);
+	LUA_SETTER(set_receptor_t, m_receptor_t);
+	LUA_SETTER(set_beats_per_t, m_beats_per_t);
+	LUA_SETTER(set_subtract_song_beat, m_subtract_song_beat_from_curr);
 	LUA_METHOD(set_spline_mode)(T* p, lua_State* L)
 	{
 		p->m_spline_mode= Enum::Check<NoteColumnSplineMode>(L, 1);
 		COMMON_RETURN_SELF;
 	}
-	LUA_DEFINE_METHOD(get_spline_mode, m_spline_mode);
-	LUA_DEFINE_METHOD(get_subtract_song_beat, m_subtract_song_beat_from_curr);
+	LUA_GETTER(get_spline_mode, m_spline_mode);
+	LUA_GETTER(get_subtract_song_beat, m_subtract_song_beat_from_curr);
 };
 
 LUA_REGISTER_CLASS(NCSplineHandler);
 
 struct LunaNoteColumnRenderer : Luna<NoteColumnRenderer>
 {
-#define GET_HANDLER(member, name) \
-	LUA_METHOD(name)(T* p, lua_State* L) \
-	{ \
-		p->member->PushSelf(L); \
-		return 1; \
-	}
-	GET_HANDLER(GetPosHandler(), get_pos_handler);
-	GET_HANDLER(GetRotHandler(), get_rot_handler);
-	GET_HANDLER(GetZoomHandler(), get_zoom_handler);
-#undef GET_HANDLER
+	LUA_BIND_ALIAS(get_pos_handler, GetPosHandler);
+	LUA_BIND_ALIAS(get_rot_handler, GetRotHandler);
+	LUA_BIND_ALIAS(get_zoom_handler, GetZoomHandler);
 };
 
 LUA_REGISTER_DERIVED_CLASS(NoteColumnRenderer, Actor)

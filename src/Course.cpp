@@ -1272,13 +1272,13 @@ class LunaCourseEntry: public Luna<CourseEntry>
 public:
 	LUA_GETTER(GetSong, songID.ToSong());
 	LUA_GETTER(IsSecret, bSecret);
-	LUA_SIMPLE(IsFixedSong);
+	LUA_BIND(IsFixedSong);
 	LUA_GETTER(GetGainSeconds, fGainSeconds);
 	LUA_GETTER(GetGainLives, iGainLives);
 	LUA_GETTER(GetNormalModifiers, sModifiers);
 	// GetTimedModifiers - table
-	LUA_SIMPLE(GetNumModChanges);
-	LUA_SIMPLE(GetTextDescription);
+	LUA_BIND(GetNumModChanges);
+	LUA_BIND(GetTextDescription);
 };
 
 LUA_REGISTER_CLASS( CourseEntry )
@@ -1288,12 +1288,12 @@ LUA_REGISTER_CLASS( CourseEntry )
 class LunaCourse: public Luna<Course>
 {
 public:
-	LUA_SIMPLE(GetPlayMode);
-	LUA_SIMPLE(GetDisplayFullTitle);
-	LUA_SIMPLE(GetTranslitFullTitle);
-	LUA_SIMPLE(HasMods);
-	LUA_SIMPLE(HasTimedMods);
-	LUA_SIMPLE(GetCourseType);
+	LUA_BIND(GetPlayMode);
+	LUA_BIND(GetDisplayFullTitle);
+	LUA_BIND(GetTranslitFullTitle);
+	LUA_BIND(HasMods);
+	LUA_BIND(HasTimedMods);
+	LUA_BIND(GetCourseType);
 	LUA_METHOD(GetCourseEntry)(T* p, lua_State* L)
 	{
 		std::size_t id= static_cast<std::size_t>(IArg(1));
@@ -1329,12 +1329,12 @@ public:
 		LuaHelpers::CreateTableFromArray<Trail*>( v, L );
 		return 1;
 	}
-	LUA_SIMPLE(GetBannerPath);
-	LUA_SIMPLE(GetBackgroundPath);
+	LUA_BIND(GetBannerPath);
+	LUA_BIND(GetBackgroundPath);
 	LUA_GETTER(GetCourseDir, m_sPath );
 	LUA_GETTER(GetGroupName, m_sGroupName );
 	LUA_GETTER(IsAutogen, m_bIsAutogen );
-	LUA_SIMPLE(GetEstimatedNumStages);
+	LUA_BIND(GetEstimatedNumStages);
 	LUA_GETTER(GetScripter, m_sScripter );
 	LUA_GETTER(GetDescription, m_sDescription );
 	LUA_METHOD(GetTotalSeconds)( T* p, lua_State *L )
@@ -1347,16 +1347,16 @@ public:
 			lua_pushnumber( L, fTotalSeconds );
 		return 1;
 	}
-	LUA_SIMPLE(IsEndless);
-	LUA_SIMPLE(IsNonstop);
-	LUA_SIMPLE(IsOni);
+	LUA_BIND(IsEndless);
+	LUA_BIND(IsNonstop);
+	LUA_BIND(IsOni);
 	LUA_GETTER(GetGoalSeconds, m_fGoalSeconds);
-	LUA_SIMPLE(HasBanner);
-	LUA_SIMPLE(HasBackground);
-	LUA_SIMPLE(IsAnEdit);
-	LUA_SIMPLE(IsPlayableIn);
-	LUA_SIMPLE(IsRanking);
-	LUA_SIMPLE(AllSongsAreFixed);
+	LUA_BIND(HasBanner);
+	LUA_BIND(HasBackground);
+	LUA_BIND(IsAnEdit);
+	LUA_BIND(IsPlayableIn);
+	LUA_BIND(IsRanking);
+	LUA_BIND(AllSongsAreFixed);
 };
 
 LUA_REGISTER_CLASS( Course )

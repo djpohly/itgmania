@@ -201,8 +201,8 @@ class LunaTrail: public Luna<Trail>
 {
 public:
 	LUA_GETTER(GetDifficulty, m_CourseDifficulty);
-	LUA_SIMPLE(GetMeter);
-	LUA_SIMPLE(GetTotalMeter);
+	LUA_BIND(GetMeter);
+	LUA_BIND(GetTotalMeter);
 	LUA_GETTER(GetStepsType, m_StepsType);
 	LUA_METHOD(GetRadarValues)( T* p, lua_State *L )
 	{
@@ -250,8 +250,8 @@ public:
 		LuaHelpers::CreateTableFromArray<TrailEntry*>( v, L );
 		return 1;
 	}
-	LUA_DEFINE_METHOD( GetLengthSeconds, GetLengthSeconds() )
-	LUA_DEFINE_METHOD( IsSecret, IsSecret() )
+	LUA_BIND(GetLengthSeconds);
+	LUA_BIND(IsSecret);
 	LUA_METHOD(ContainsSong)( T* p, lua_State *L )
 	{
 		const Song *pS = Luna<Song>::check(L,1);

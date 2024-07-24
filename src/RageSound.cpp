@@ -718,7 +718,7 @@ public:
 	}
 
 	/*
-	LUA_SIMPLE2(SetStopMode, SetStopModeFromString(SArg(1)));
+	LUA_BIND_ALIAS(SetStopMode, SetStopModeFromString(SArg(1)));
 	*/
 };
 

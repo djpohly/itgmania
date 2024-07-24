@@ -142,8 +142,8 @@ void RollingNumbers::UpdateText()
 class LunaRollingNumbers: public Luna<RollingNumbers>
 {
 public:
-	LUA_SIMPLE(Load);
-	LUA_SIMPLE2(targetnumber, SetTargetNumber);
+	LUA_BIND(Load);
+	LUA_BIND_ALIAS(targetnumber, SetTargetNumber);
 };
 
 LUA_REGISTER_DERIVED_CLASS( RollingNumbers, BitmapText )

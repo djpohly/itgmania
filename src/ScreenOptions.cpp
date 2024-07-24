@@ -1362,9 +1362,9 @@ void ScreenOptions::SetOptionRowFromName( const RString& nombre )
 class LunaScreenOptions: public Luna<ScreenOptions>
 {
 public:
-	LUA_SIMPLE(AllAreOnLastRow);
-	LUA_SIMPLE(FocusedItemEndsScreen);
-	LUA_SIMPLE2(GetCurrentRowIndex, GetCurrentRow);
+	LUA_BIND(AllAreOnLastRow);
+	LUA_BIND(FocusedItemEndsScreen);
+	LUA_BIND_ALIAS(GetCurrentRowIndex, GetCurrentRow);
 	LUA_METHOD(GetOptionRow)( T* p, lua_State *L ) {
 		int row_index= IArg(1);
 		// TODO:  Change row indices to be 1-indexed when breaking compatibility
@@ -1380,8 +1380,8 @@ public:
 			lua_pushnil( L );
 		return 1;
 	}
-	LUA_SIMPLE(GetNumRows);
-	//LUA_SIMPLE(SetOptionRowFromName);
+	LUA_BIND(GetNumRows);
+	//LUA_BIND(SetOptionRowFromName);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ScreenOptions, ScreenWithMenuElements )

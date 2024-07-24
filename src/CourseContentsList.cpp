@@ -154,7 +154,7 @@ void CourseContentsList::SetItemFromGameState( Actor *pActor, int iCourseEntryIn
 class LunaCourseContentsList: public Luna<CourseContentsList>
 {
 public:
-	LUA_SIMPLE(SetFromGameState);
+	LUA_BIND(SetFromGameState);
 };
 
 LUA_REGISTER_DERIVED_CLASS( CourseContentsList, ActorScroller )

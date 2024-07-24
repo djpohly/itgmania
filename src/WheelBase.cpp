@@ -519,7 +519,7 @@ int WheelBase::FirstVisibleIndex()
 class LunaWheelBase: public Luna<WheelBase>
 {
 public:
-	LUA_SIMPLE(Move);
+	LUA_BIND(Move);
 	LUA_METHOD(GetWheelItem)( T* p, lua_State *L )
 	{
 		int iItem = IArg(1);
@@ -531,18 +531,18 @@ public:
 
 		return 1;
 	}
-	LUA_SIMPLE(IsSettled);
-	LUA_SIMPLE(SetOpenSection);
-	LUA_SIMPLE(GetCurrentIndex);
-	LUA_SIMPLE(GetNumItems);
+	LUA_BIND(IsSettled);
+	LUA_BIND(SetOpenSection);
+	LUA_BIND(GetCurrentIndex);
+	LUA_BIND(GetNumItems);
 	// evil shit
 	//LUA_METHOD(ChangeMusic)( T* p, lua_State *L ){ p->ChangeMusicUnlessLocked( IArg(1) ); return 0; }
 
-	LUA_SIMPLE(GetSelectedType);
-	LUA_SIMPLE(GetWheelState);
+	LUA_BIND(GetSelectedType);
+	LUA_BIND(GetWheelState);
 
 	// deprecated; use GetWheelState instead:
-	LUA_SIMPLE2(IsLocked, WheelIsLocked);
+	LUA_BIND_ALIAS(IsLocked, WheelIsLocked);
 };
 
 LUA_REGISTER_DERIVED_CLASS( WheelBase, ActorFrame )

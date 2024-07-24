@@ -2355,7 +2355,7 @@ public:
 		return 2;
 	}
 
-	LUA_DEFINE_METHOD( UsingReverse, m_fScrolls[PlayerOptions::SCROLL_REVERSE] == 1.0f );
+	LUA_GETTER(UsingReverse, m_fScrolls[PlayerOptions::SCROLL_REVERSE] == 1.0f);
 
 	LUA_METHOD(GetReversePercentForColumn)( T *p, lua_State *L )
 	{
@@ -2378,7 +2378,7 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(FromString);
+	LUA_BIND(FromString);
 };
 
 LUA_REGISTER_CLASS( PlayerOptions )

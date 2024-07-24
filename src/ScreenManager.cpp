@@ -938,8 +938,8 @@ public:
 		p->SetNewScreen(screen);
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(GetTopScreen);
-	LUA_SIMPLE(SystemMessage);
+	LUA_BIND(GetTopScreen);
+	LUA_BIND(SystemMessage);
 	LUA_METHOD(ScreenIsPrepped)( T* p, lua_State *L )	{ lua_pushboolean( L, ScreenManagerUtil::ScreenIsPrepped( SArg(1) ) ); return 1; }
 	LUA_METHOD(ScreenClassExists)( T* p, lua_State *L )	{ lua_pushboolean( L, g_pmapRegistrees->find( SArg(1) ) != g_pmapRegistrees->end() ); return 1; }
 	LUA_METHOD(AddNewScreenToTop)( T* p, lua_State *L )
@@ -957,9 +957,9 @@ public:
 		COMMON_RETURN_SELF;
 	}
 	//LUA_METHOD(GetScreenStackSize)( T* p, lua_State *L )	{ lua_pushnumber( L, ScreenManagerUtil::g_ScreenStack.size() ); return 1; }
-	LUA_SIMPLE(ReloadOverlayScreens);
+	LUA_BIND(ReloadOverlayScreens);
 
-	LUA_SIMPLE(get_input_redirected);
+	LUA_BIND(get_input_redirected);
 	LUA_METHOD(set_input_redirected)(T* p, lua_State* L)
 	{
 		PlayerNumber pn= Enum::Check<PlayerNumber>(L, 1);
@@ -967,11 +967,11 @@ public:
 		COMMON_RETURN_SELF;
 	}
 
-	LUA_SIMPLE(PlayInvalidSound);
-	LUA_SIMPLE(PlayStartSound);
-	LUA_SIMPLE(PlayCoinSound);
-	LUA_SIMPLE(PlayCancelSound);
-	LUA_SIMPLE(PlayScreenshotSound);
+	LUA_BIND(PlayInvalidSound);
+	LUA_BIND(PlayStartSound);
+	LUA_BIND(PlayCoinSound);
+	LUA_BIND(PlayCancelSound);
+	LUA_BIND(PlayScreenshotSound);
 };
 
 LUA_REGISTER_CLASS( ScreenManager )

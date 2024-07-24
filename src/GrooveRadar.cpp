@@ -244,7 +244,7 @@ public:
 		}
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(SetEmpty);
+	LUA_BIND(SetEmpty);
 };
 
 LUA_REGISTER_DERIVED_CLASS( GrooveRadar, ActorFrame )

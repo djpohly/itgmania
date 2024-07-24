@@ -1282,9 +1282,9 @@ public:
 		lua_pushboolean(L, p->Copy(fromPath, toPath));
 		return 1;
 	}
-	LUA_SIMPLE(DoesFileExist);
-	LUA_SIMPLE2(GetFileSizeBytes, GetFileSizeInBytes);
-	LUA_SIMPLE2(GetHashForFile, GetFileHash);
+	LUA_BIND(DoesFileExist);
+	LUA_BIND_ALIAS(GetFileSizeBytes, GetFileSizeInBytes);
+	LUA_BIND_ALIAS(GetHashForFile, GetFileHash);
 	LUA_METHOD(GetDirListing)( T* p, lua_State *L )
 	{
 		std::vector<RString> vDirs;

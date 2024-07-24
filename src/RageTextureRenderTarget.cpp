@@ -86,7 +86,7 @@ public:
 		p->BeginRenderingTo( bPreserveTexture );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(FinishRenderingTo);
+	LUA_BIND(FinishRenderingTo);
 };
 
 LUA_REGISTER_DERIVED_CLASS( RageTextureRenderTarget, RageTexture )

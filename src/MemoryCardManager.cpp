@@ -723,8 +723,8 @@ void MemoryCardManager::UnPauseMountingThread()
 class LunaMemoryCardManager: public Luna<MemoryCardManager>
 {
 public:
-	LUA_SIMPLE(GetCardState);
-	LUA_SIMPLE(GetName);
+	LUA_BIND(GetCardState);
+	LUA_BIND(GetName);
 };
 
 LUA_REGISTER_CLASS( MemoryCardManager )

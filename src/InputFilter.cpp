@@ -501,7 +501,7 @@ public:
 		lua_pushnumber( L, fY );
 		return 1;
 	}
-	LUA_SIMPLE(GetMouseWheel);
+	LUA_BIND(GetMouseWheel);
 };
 
 LUA_REGISTER_CLASS( InputFilter )

@@ -976,14 +976,14 @@ int OptionRow::ExportOptions( const std::vector<PlayerNumber> &vpns, bool bRowHa
 class LunaOptionRow: public Luna<OptionRow>
 {
 public:
-	LUA_SIMPLE2(FirstItemGoesDown, GetFirstItemGoesDown);
-	LUA_SIMPLE(GetChoiceInRowWithFocus);
+	LUA_BIND_ALIAS(FirstItemGoesDown, GetFirstItemGoesDown);
+	LUA_BIND(GetChoiceInRowWithFocus);
 	LUA_GETTER(GetLayoutType, GetHandler()->m_Def.m_layoutType)
 	LUA_GETTER(GetName, GetHandler()->m_Def.m_sName);
 	LUA_GETTER(GetNumChoices, GetHandler()->m_Def.m_vsChoices.size());
 	LUA_GETTER(GetSelectType, GetHandler()->m_Def.m_selectType)
 	LUA_GETTER(GetRowTitle, GetRowTitle())
-	LUA_SIMPLE2(HasFocus, GetRowHasFocus);
+	LUA_BIND_ALIAS(HasFocus, GetRowHasFocus);
 	LUA_GETTER(OneChoiceForAllPlayers, GetHandler()->m_Def.m_bOneChoiceForAllPlayers);
 };
 

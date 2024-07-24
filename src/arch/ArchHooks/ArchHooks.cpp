@@ -87,8 +87,8 @@ void ArchHooks::RegisterWithLua()
 class LunaArchHooks: public Luna<ArchHooks>
 {
 public:
-	LUA_SIMPLE(AppHasFocus);
-	LUA_SIMPLE(GetArchName);
+	LUA_BIND(AppHasFocus);
+	LUA_BIND(GetArchName);
 };
 LUA_REGISTER_CLASS( ArchHooks );
 

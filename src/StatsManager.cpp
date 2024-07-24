@@ -535,7 +535,7 @@ public:
 		p->m_vPlayedStageStats[iIndex].PushSelf(L);
 		return 1;
 	}
-	LUA_SIMPLE(Reset);
+	LUA_BIND(Reset);
 	LUA_METHOD(GetAccumPlayedStageStats)( T* p, lua_State *L )	{ p->GetAccumPlayedStageStats().PushSelf(L); return 1; }
 	LUA_METHOD(GetFinalEvalStageStats)( T* p, lua_State *L )
 	{

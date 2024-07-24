@@ -23,10 +23,10 @@ LifeMeter *LifeMeter::MakeLifeMeter( LifeType t )
 class LunaLifeMeter: public Luna<LifeMeter>
 {
 public:
-	LUA_SIMPLE(GetLife);
-	LUA_SIMPLE(IsInDanger);
-	LUA_SIMPLE(IsHot);
-	LUA_SIMPLE(IsFailing);
+	LUA_BIND(GetLife);
+	LUA_BIND(IsInDanger);
+	LUA_BIND(IsHot);
+	LUA_BIND(IsFailing);
 };
 
 LUA_REGISTER_DERIVED_CLASS( LifeMeter, ActorFrame )

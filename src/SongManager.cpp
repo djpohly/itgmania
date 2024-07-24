@@ -2170,19 +2170,19 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(FindSong);
-	LUA_SIMPLE(FindCourse);
-	LUA_SIMPLE(GetRandomSong);
-	LUA_SIMPLE(GetRandomCourse);
-	LUA_SIMPLE(GetNumSongs);
-	LUA_SIMPLE(GetNumLockedSongs);
-	LUA_SIMPLE(GetNumUnlockedSongs);
-	LUA_SIMPLE(GetNumSelectableAndUnlockedSongs);
+	LUA_BIND(FindSong);
+	LUA_BIND(FindCourse);
+	LUA_BIND(GetRandomSong);
+	LUA_BIND(GetRandomCourse);
+	LUA_BIND(GetNumSongs);
+	LUA_BIND(GetNumLockedSongs);
+	LUA_BIND(GetNumUnlockedSongs);
+	LUA_BIND(GetNumSelectableAndUnlockedSongs);
 	LUA_METHOD(GetNumAdditionalSongs)( T* p, lua_State *L )  { lua_pushnumber( L, 0 ); return 1; }	// deprecated
-	LUA_SIMPLE(GetNumSongGroups);
-	LUA_SIMPLE(GetNumCourses);
+	LUA_BIND(GetNumSongGroups);
+	LUA_BIND(GetNumCourses);
 	LUA_METHOD(GetNumAdditionalCourses)( T* p, lua_State *L ){ lua_pushnumber( L, 0 ); return 1; }	// deprecated
-	LUA_SIMPLE(GetNumCourseGroups);
+	LUA_BIND(GetNumCourseGroups);
 
 	/* Note: this could now be implemented as Luna<Steps>::GetSong */
 	LUA_METHOD(GetSongFromSteps)( T* p, lua_State *L )
@@ -2209,7 +2209,7 @@ public:
 		return 2;
 	}
 	LUA_GETTER( GetSongColor, GetSongColor( Luna<Song>::check(L,1) ) )
-	LUA_SIMPLE( GetSongGroupColor );
+	LUA_BIND( GetSongGroupColor );
 	LUA_GETTER( GetCourseColor, GetCourseColor( Luna<Course>::check(L,1) ) )
 
 	LUA_METHOD(GetSongRank)( T* p, lua_State *L )
@@ -2252,7 +2252,7 @@ public:
 		return 1;
 	}
 
-	LUA_DEFINE_METHOD( ShortenGroupName, ShortenGroupName( SArg(1) ) )
+	LUA_GETTER(ShortenGroupName, ShortenGroupName(SArg(1)));
 
 	LUA_METHOD(GetCourseGroupNames)( T* p, lua_State *L )
 	{
@@ -2262,10 +2262,10 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(GetSongGroupBannerPath);
-	LUA_SIMPLE(GetCourseGroupBannerPath);
-	LUA_SIMPLE(DoesSongGroupExist);
-	LUA_SIMPLE(DoesCourseGroupExist);
+	LUA_BIND(GetSongGroupBannerPath);
+	LUA_BIND(GetCourseGroupBannerPath);
+	LUA_BIND(DoesSongGroupExist);
+	LUA_BIND(DoesCourseGroupExist);
 
 	LUA_METHOD(GetPopularSongs)( T* p, lua_State *L )
 	{

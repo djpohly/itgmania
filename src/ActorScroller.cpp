@@ -327,7 +327,7 @@ void ActorScroller::PositionItemsAndDrawPrimitives( bool bDrawPrimitives )
 class LunaActorScroller: public Luna<ActorScroller>
 {
 public:
-	LUA_SIMPLE(PositionItems);
+	LUA_BIND(PositionItems);
 	LUA_METHOD(SetTransformFromFunction)( T* p, lua_State *L )
 	{
 		LuaReference ref;
@@ -335,28 +335,28 @@ public:
 		p->SetTransformFromReference( ref );
 		COMMON_RETURN_SELF;
 	}
-	LUA_SIMPLE(SetTransformFromHeight);
-	LUA_SIMPLE(SetTransformFromWidth);
-	LUA_SIMPLE(SetCurrentAndDestinationItem);
-	LUA_SIMPLE(SetDestinationItem);
-	LUA_SIMPLE(GetSecondsToDestination);
-	LUA_SIMPLE(SetSecondsPerItem);
-	LUA_SIMPLE(GetSecondsPauseBetweenItems);
-	LUA_SIMPLE(SetSecondsPauseBetweenItems);
-	LUA_SIMPLE(SetPauseCountdownSeconds);
-	LUA_SIMPLE(SetNumSubdivisions);
-	LUA_SIMPLE(ScrollThroughAllItems);
+	LUA_BIND(SetTransformFromHeight);
+	LUA_BIND(SetTransformFromWidth);
+	LUA_BIND(SetCurrentAndDestinationItem);
+	LUA_BIND(SetDestinationItem);
+	LUA_BIND(GetSecondsToDestination);
+	LUA_BIND(SetSecondsPerItem);
+	LUA_BIND(GetSecondsPauseBetweenItems);
+	LUA_BIND(SetSecondsPauseBetweenItems);
+	LUA_BIND(SetPauseCountdownSeconds);
+	LUA_BIND(SetNumSubdivisions);
+	LUA_BIND(ScrollThroughAllItems);
 	LUA_METHOD(ScrollWithPadding)( T* p, lua_State *L )		{ p->ScrollWithPadding(FArg(1),FArg(2)); COMMON_RETURN_SELF; }
-	LUA_SIMPLE(SetFastCatchup);
-	LUA_SIMPLE(SetLoop);
-	LUA_SIMPLE(SetWrap);
+	LUA_BIND(SetFastCatchup);
+	LUA_BIND(SetLoop);
+	LUA_BIND(SetWrap);
 	LUA_METHOD(SetMask)( T* p, lua_State *L )			{ p->EnableMask(FArg(1), FArg(2)); COMMON_RETURN_SELF; }
 
-	LUA_SIMPLE(SetNumItemsToDraw);
-	LUA_SIMPLE2(GetFullScrollLengthSeconds, GetSecondsForCompleteScrollThrough);
-	LUA_SIMPLE(GetCurrentItem);
-	LUA_SIMPLE(GetDestinationItem);
-	LUA_SIMPLE(GetNumItems);
+	LUA_BIND(SetNumItemsToDraw);
+	LUA_BIND_ALIAS(GetFullScrollLengthSeconds, GetSecondsForCompleteScrollThrough);
+	LUA_BIND(GetCurrentItem);
+	LUA_BIND(GetDestinationItem);
+	LUA_BIND(GetNumItems);
 };
 
 LUA_REGISTER_DERIVED_CLASS( ActorScroller, ActorFrame )

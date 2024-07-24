@@ -126,8 +126,8 @@ Character* CharacterManager::GetCharacterFromID( RString sCharacterID )
 class LunaCharacterManager: public Luna<CharacterManager>
 {
 public:
-	LUA_SIMPLE2(GetCharacter, GetCharacterFromID);
-	LUA_SIMPLE(GetRandomCharacter);
+	LUA_BIND_ALIAS(GetCharacter, GetCharacterFromID);
+	LUA_BIND(GetRandomCharacter);
 	LUA_METHOD(GetAllCharacters)( T* p, lua_State *L )
 	{
 		std::vector<Character*> vChars;

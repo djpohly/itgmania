@@ -369,7 +369,7 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(Close);
+	LUA_BIND(Close);
 
 	LUA_METHOD(Write)( T* p, lua_State *L )
 	{
@@ -378,7 +378,7 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(Flush);
+	LUA_BIND(Flush);
 
 	LUA_METHOD(Read)( T* p, lua_State *L )
 	{
@@ -428,8 +428,8 @@ public:
 		return 1;
 	}
 
-	LUA_SIMPLE(GetError);
-	LUA_SIMPLE(ClearError);
+	LUA_BIND(GetError);
+	LUA_BIND(ClearError);
 
 	LUA_METHOD(AtEOF)( T* p, lua_State *L )
 	{

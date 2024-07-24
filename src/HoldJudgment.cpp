@@ -108,7 +108,7 @@ void HoldJudgment::HandleMessage( const Message &msg )
 class LunaHoldJudgment: public Luna<HoldJudgment>
 {
 public:
-	LUA_SIMPLE(LoadFromMultiPlayer);
+	LUA_BIND(LoadFromMultiPlayer);
 };
 
 LUA_REGISTER_DERIVED_CLASS( HoldJudgment, ActorFrame )
