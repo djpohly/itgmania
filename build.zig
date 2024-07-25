@@ -157,6 +157,7 @@ const Helper = struct {
                 const outfile = b.fmt("{s}.o", .{ basename[0 .. basename.len - ".asm".len] });
 
                 const nasm_run = b.addRunArtifact(nasm.exe);
+                nasm_run.step.dependOn(self.submodules_update);
                 nasm_run.addArgs(&.{
                     "-f", "elf64",
                     "-g",
@@ -252,7 +253,7 @@ pub fn build(b: *std.Build) !void {
     const ffversion_hdr = b.addConfigHeader(.{
         .style = .blank,
         .include_path = "libavutil/ffversion.h",
-    }, .{ .FFMPEG_VERSION = "n5.1.4" });
+    }, .{ .FFMPEG_VERSION = "n" ++ ffmpeg_config.FFMPEG_VERSION });
     const ffmpeg_config_hdr = b.addConfigHeader(.{
         .style = .blank,
         .include_path = "config.h",

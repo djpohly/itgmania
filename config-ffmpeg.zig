@@ -1,6 +1,6 @@
 FFMPEG_CONFIGURATION: []const u8 = "--disable-autodetect --disable-avdevice --disable-avfilter --disable-encoders --disable-muxers --disable-protocols --disable-devices --disable-doc --disable-filters --disable-lzma --disable-network --disable-postproc --disable-programs --disable-swresample --disable-vaapi --disable-bzlib --disable-hwaccels --enable-gpl --enable-pthreads --enable-static --enable-zlib --enable-protocol=file --prefix=/",
 FFMPEG_LICENSE: []const u8 = "GPL version 2 or later",
-FFMPEG_VERSION: []const u8 = @embedFile("extern/ffmpeg/RELEASE"),
+FFMPEG_VERSION: []const u8 = "5.1.4",
 CONFIG_THIS_YEAR: comptime_int = 2023,
 FFMPEG_DATADIR: []const u8 = "//share/ffmpeg",
 AVCONV_DATADIR: []const u8 = "//share/ffmpeg",
