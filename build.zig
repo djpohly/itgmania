@@ -127,6 +127,7 @@ const Helper = struct {
                     .include_path = dest
                 }, global_config);
                 lib.addConfigHeader(hdr);
+                self.exe.addConfigHeader(hdr);
             }
         }
 
