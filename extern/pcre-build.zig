@@ -3,12 +3,11 @@ pub const config = .{
     .@"config.h" = "extern/config.pcre.in.h",
     .@"pcre.h" = "extern/pcre/pcre.h.generic",
 };
-pub const copyfrom = .{
+pub const rename_src = .{
     .@"extern/pcre/pcre_chartables.c" = "extern/pcre/pcre_chartables.c.dist",
 };
 pub const src = .{
     "extern/pcre/pcre_byte_order.c",
-    "extern/pcre/pcre_chartables.c",
     "extern/pcre/pcre_compile.c",
     "extern/pcre/pcre_config.c",
     "extern/pcre/pcre_dfa_exec.c",

@@ -95,16 +95,6 @@ const Helper = struct {
             .optimize = .ReleaseFast,
         });
 
-        if (@hasDecl(libconfig, "copyfrom")) {
-            const usf = b.addUpdateSourceFiles();
-            inline for (std.meta.fields(@TypeOf(libconfig.copyfrom))) |f| {
-                const dest = f.name;
-                const src = @field(libconfig.copyfrom, f.name);
-                usf.addCopyFileToSource(b.path(src), dest);
-            }
-            lib.step.dependOn(&usf.step);
-        }
-
         if (@hasDecl(libconfig, "define")) {
             inline for (std.meta.fields(@TypeOf(libconfig.define))) |f| {
                 lib.root_module.addCMacro(f.name, @field(libconfig.define, f.name));
@@ -149,6 +139,19 @@ const Helper = struct {
         const flags = @as([]const []const u8, &.{}) ++
             (if (@hasDecl(libconfig, "c_std")) .{ "-std=" ++ libconfig.c_std } else .{}) ++
             (if (@hasDecl(libconfig, "flags")) libconfig.flags else .{});
+
+        if (@hasDecl(libconfig, "rename_src")) {
+            const wf = b.addWriteFiles();
+            inline for (std.meta.fields(@TypeOf(libconfig.rename_src))) |f| {
+                const alias = f.name;
+                const real = @field(libconfig.rename_src, f.name);
+                lib.addCSourceFile(.{
+                    .file = wf.addCopyFile(b.path(real), alias),
+                    .flags = flags,
+                });
+            }
+            lib.step.dependOn(&wf.step);
+        }
 
         inline for (libconfig.src) |path| {
             if (std.mem.endsWith(u8, path, ".asm")) {
