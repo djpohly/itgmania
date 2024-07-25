@@ -170,18 +170,18 @@ public:
 		template<> void Push<T*>( lua_State *L, T *const &pObject ) { if( pObject == nullptr ) lua_pushnil(L); else pObject->PushSelf( L ); } \
 	}
 
+#define LUA_METHOD( name ) \
+	RegisterLuaMethod register_##name{#name, name}; \
+	static int name /* (parameter list) { body } */
+
+#define LUA_BIND(name) LUA_BIND_ALIAS(name, name)
+#define LUA_BIND_ALIAS(luaname, cname) \
+	LUA_METHOD(luaname)(T *p, lua_State *L) { return LuaHelpers::WrapMethod(L, p, &T::cname); } \
+
 #define LUA_GETTER( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::Push( L, p->expr ); return 1; }
 #define LUA_SETTER( method_name, expr ) \
 	LUA_METHOD(method_name)( T* p, lua_State *L ) { LuaHelpers::FromStack( L, p->expr, 1 ); COMMON_RETURN_SELF; }
-
-#define LUA_METHOD( name ) \
-	RegisterLuaMethod register_##name{#name, name}; \
-	static int name /* (parameter list) { body } */
-#define LUA_BIND_ALIAS(luaname, cname) \
-	static int luaname(T *p, lua_State *L) { return LuaHelpers::WrapMethod(L, p, &T::cname); } \
-	RegisterLuaMethod register_##luaname{#luaname, luaname}
-#define LUA_BIND(name) LUA_BIND_ALIAS(name, name)
 
 #define LUA_REGISTER_NAMESPACE( T ) \
 	static void Register##T( lua_State *L ) { luaL_register( L, #T, T##Table ); lua_pop( L, 1 ); } \
