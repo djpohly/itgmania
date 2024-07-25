@@ -1,6 +1,6 @@
 pub const name = "jpeg";
 pub const config = .{
-    .@"config.h" = "extern/config.jpeg.in.h",
+    .@"jconfig.h" = "extern/config.jpeg.in.h",
 };
 pub const src = .{
     // "extern/libjpeg/cjpegalt.c",

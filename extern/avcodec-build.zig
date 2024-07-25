@@ -1,4 +1,9 @@
 pub const name = "avcodec";
+pub const config = .{
+    .@"libavcodec/parser_list.c" = "extern/avcodec_parsers.c",
+    .@"libavcodec/bsf_list.c" = "extern/avcodec_bsfs.c",
+    .@"libavcodec/codec_list.c" = "extern/avcodec_codecs.c",
+};
 pub const src = .{
     "extern/ffmpeg/libavcodec/012v.c",
     "extern/ffmpeg/libavcodec/4xm.c",

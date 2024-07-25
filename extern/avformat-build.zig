@@ -1,4 +1,8 @@
 pub const name = "avformat";
+pub const config = .{
+    .@"avformat/protocol_list.c" = "extern/avformat_protocols.c",
+    .@"avformat/muxer_list.c" = "extern/avformat_muxers.c",
+};
 pub const src = .{
     "extern/ffmpeg/libavformat/3dostr.c",
     "extern/ffmpeg/libavformat/4xm.c",

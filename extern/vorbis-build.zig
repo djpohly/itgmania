@@ -26,6 +26,7 @@ pub const src = .{
     "extern/vorbis/lib/window.c",
 };
 pub const include = .{
+    "extern/vorbis/include",
     "extern/vorbis/lib",
     "extern/ogg/include",
 };

@@ -1,4 +1,7 @@
 pub const name = "avutil";
+pub const config = .{
+    .@"libavutil/ffversion.h" = "avutil_ffversion.h",
+};
 pub const src = .{
     "extern/ffmpeg/libavutil/adler32.c",
     "extern/ffmpeg/libavutil/aes.c",
