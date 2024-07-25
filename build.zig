@@ -205,7 +205,7 @@ pub fn build(b: *std.Build) !void {
     const optimize = b.standardOptimizeOption(.{});
 
     const submodules_update = b.addSystemCommand(&.{
-        "git", "submodule", "update", "--init", "--recursive"
+        "git", "submodule", "update", "--init", "--recursive", "--depth", "1"
     });
 
     const itgm_config = @import("itgmania-build.zig");
