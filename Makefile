@@ -17,7 +17,7 @@ cache-clean:
 	cp -a $(SAVED_CACHE)/{args,h,z} .zig-cache/
 	cp -rl $(SAVED_CACHE)/o .zig-cache/o
 
-cache-save:
+cache-save: deps
 	$(RM) -r $(SAVED_CACHE)
 	mkdir $(SAVED_CACHE)
 	cp -a .zig-cache/{args,h,z} $(SAVED_CACHE)/
