@@ -475,20 +475,14 @@ void ThemeManager::SwitchThemeAndLanguage( const RString &sThemeName_, const RSt
 void ThemeManager::ReloadSubscribers()
 {
 	// reload subscribers
-	if( g_Subscribers.m_pSubscribers )
-	{
-		for (IThemeMetric *metric : *g_Subscribers.m_pSubscribers)
-			metric->Read();
-	}
+	for (IThemeMetric *metric : g_Subscribers.Get())
+		metric->Read();
 }
 
 void ThemeManager::ClearSubscribers()
 {
-	if( g_Subscribers.m_pSubscribers )
-	{
-		for (IThemeMetric *metric : *g_Subscribers.m_pSubscribers)
-			metric->Clear();
-	}
+	for (IThemeMetric *metric : g_Subscribers.Get())
+		metric->Clear();
 }
 
 void ThemeManager::RunLuaScripts( const RString &sMask, bool bUseThemeDir )

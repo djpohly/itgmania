@@ -24,7 +24,7 @@ IPreference::~IPreference()
 
 IPreference *IPreference::GetPreferenceByName( const RString &sName )
 {
-	for (IPreference *p : *m_Subscribers.m_pSubscribers)
+	for (IPreference *p : m_Subscribers.Get())
 	{
 		if( !p->GetName().CompareNoCase( sName ) )
 			return p;
@@ -35,20 +35,20 @@ IPreference *IPreference::GetPreferenceByName( const RString &sName )
 
 void IPreference::LoadAllDefaults()
 {
-	for (IPreference *p : *m_Subscribers.m_pSubscribers)
+	for (IPreference *p : m_Subscribers.Get())
 		p->LoadDefault();
 }
 
 void IPreference::ReadAllPrefsFromNode( const XNode* pNode, bool bIsStatic )
 {
 	ASSERT( pNode != nullptr );
-	for (IPreference *p : *m_Subscribers.m_pSubscribers)
+	for (IPreference *p : m_Subscribers.Get())
 		p->ReadFrom( pNode, bIsStatic );
 }
 
 void IPreference::SavePrefsToNode( XNode* pNode )
 {
-	for (IPreference *p : *m_Subscribers.m_pSubscribers)
+	for (IPreference *p : m_Subscribers.Get())
 		p->WriteTo( pNode );
 }
 
@@ -56,7 +56,7 @@ void IPreference::ReadAllDefaultsFromNode( const XNode* pNode )
 {
 	if( pNode == nullptr )
 		return;
-	for (IPreference *p : *m_Subscribers.m_pSubscribers)
+	for (IPreference *p : m_Subscribers.Get())
 		p->ReadDefaultFrom( pNode );
 }
 

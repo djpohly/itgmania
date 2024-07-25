@@ -10,7 +10,6 @@
 template<class T>
 class SubscriptionManager
 {
-public:
 	// TRICKY: If we make this a global instead of a global pointer,
 	// then we'd have to be careful that the static constructors of all
 	// subscribers are called before the collection constructor.  It's
@@ -18,8 +17,10 @@ public:
 	// collection ourself on first use.  SubscriptionHandler itself is
 	// a POD type, so a static SubscriptionHandler will always have
 	// m_pSubscribers == nullptr (before any static constructors are called).
+private:
 	std::set<T*>* m_pSubscribers;
 
+public:
 	// Use this to access m_pSubscribers, so you don't have to worry about
 	// it being nullptr.
 	std::set<T*> &Get()
