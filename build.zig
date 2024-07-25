@@ -77,6 +77,7 @@ const ffmpeg_config = mergeConfig(global_config, @import("config-ffmpeg.zig"){})
 const Helper = struct {
     b: *std.Build,
     target: std.Build.ResolvedTarget,
+    submodules_update: *std.Build.Step,
     exe: *std.Build.Step.Compile,
     dep_step: *std.Build.Step,
     nasm: ?NasmInfo,
@@ -178,6 +179,7 @@ const Helper = struct {
             }
         }
 
+        lib.step.dependOn(self.submodules_update);
         self.dep_step.dependOn(&lib.step);
         self.exe.linkLibrary(lib);
         return lib;
@@ -200,6 +202,10 @@ pub fn build(b: *std.Build) !void {
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
+
+    const submodules_update = b.addSystemCommand(&.{
+        "git", "submodule", "update", "--init", "--recursive"
+    });
 
     const itgm_config = @import("itgmania-build.zig");
     const exe = b.addExecutable(.{
@@ -237,6 +243,7 @@ pub fn build(b: *std.Build) !void {
     const helper = Helper{
         .b = b,
         .target = target,
+        .submodules_update = &submodules_update.step,
         .exe = exe,
         .dep_step = dep_step,
         .nasm = nasm,
@@ -278,6 +285,7 @@ pub fn build(b: *std.Build) !void {
         @import("extern/swscale-build.zig"),
     }) |config| {
         const lib = helper.makeLib(config);
+        lib.step.dependOn(&submodules_update.step);
         lib.addConfigHeader(ffversion_hdr);
         lib.addConfigHeader(ffmpeg_config_hdr);
         lib.addConfigHeader(avutil_config_hdr);
