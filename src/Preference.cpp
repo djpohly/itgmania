@@ -7,7 +7,7 @@
 #include "SubscriptionManager.h"
 
 
-static SubscriptionManager<IPreference> m_Subscribers;
+static SubscriptionManager<IPreference*> m_Subscribers;
 
 IPreference::IPreference( const RString& sName, PreferenceType type ):
 	m_sName( sName ),

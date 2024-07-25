@@ -4,6 +4,7 @@
 #define LuaBinding_H
 
 #include "LuaManager.h"
+#include "SubscriptionManager.h"
 
 #include <vector>
 
@@ -50,32 +51,25 @@ protected:
 		binding_t *mfunc;
 	};
 
+	inline static SubscriptionManager<RegType> s_methods;
+
 	void Register( Lua *L, int iMethods, int iMetatable )
 	{
 		lua_pushcfunction( L, tostring_T );
 		lua_setfield( L, iMetatable, "__tostring" );
 
-		if (s_aMethods != nullptr) {
-			// fill method table with methods from class T
-			for( RegType l : *s_aMethods )
-			{
-				lua_pushlightuserdata( L, (void*) l.mfunc );
-				lua_pushcclosure( L, thunk, 1 );
-				lua_setfield( L, iMethods, l.szName );
-			}
+		// fill method table with methods from class T
+		for( RegType l : s_methods.Get() )
+		{
+			lua_pushlightuserdata( L, (void*) l.mfunc );
+			lua_pushcclosure( L, thunk, 1 );
+			lua_setfield( L, iMethods, l.szName );
 		}
 	}
 
-	// Will be created by registrants below to avoid static initialization
-	// order fiasco
-	inline static std::vector<RegType> *s_aMethods = nullptr;
-
 	struct RegisterLuaMethod {
 		RegisterLuaMethod( const char *szName, binding_t *pFunc ) {
-			if (s_aMethods == nullptr) {
-				s_aMethods = new std::vector<RegType>;
-			}
-			s_aMethods->push_back({ szName, pFunc });
+			s_methods.Subscribe({ szName, pFunc });
 		}
 	};
 

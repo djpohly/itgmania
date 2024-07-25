@@ -69,7 +69,7 @@ LoadedThemeData *g_pLoadedThemeData = nullptr;
 
 // For self-registering metrics
 #include "SubscriptionManager.h"
-static SubscriptionManager<IThemeMetric> g_Subscribers;
+static SubscriptionManager<IThemeMetric*> g_Subscribers;
 
 class LocalizedStringImplThemeMetric : public ILocalizedStringImpl, public ThemeMetric<RString>
 {

@@ -3,7 +3,9 @@
 #ifndef SubscriptionManager_H
 #define SubscriptionManager_H
 
-#include <set>
+#include <algorithm>
+#include <vector>
+#include <type_traits>
 
 // Since this class has only POD types and no constructor, there's no 
 // initialize order problem.
@@ -16,38 +18,37 @@ class SubscriptionManager
 	// impossible to enfore that in C++.  Instead, we'll allocate the 
 	// collection ourself on first use.  SubscriptionHandler itself is
 	// a POD type, so a static SubscriptionHandler will always have
-	// m_pSubscribers == nullptr (before any static constructors are called).
+	// m_subscribers == nullptr (before any static constructors are called).
 private:
-	std::set<T*>* m_pSubscribers;
+	std::vector<T>* m_subscribers;
 
 public:
-	// Use this to access m_pSubscribers, so you don't have to worry about
+	// Use this to access m_subscribers, so you don't have to worry about
 	// it being nullptr.
-	std::set<T*> &Get()
+	std::vector<T> const& Get()
 	{
-		if( m_pSubscribers == nullptr )
-			m_pSubscribers = new std::set<T*>;
-		return *m_pSubscribers;
+		if( m_subscribers == nullptr )
+			m_subscribers = new std::vector<T>;
+		return *m_subscribers;
 	}
 
-	void Subscribe( T* p )
+	void Subscribe( T const& p )
 	{
-		if( m_pSubscribers == nullptr )
-			m_pSubscribers = new std::set<T*>;
-#ifdef DEBUG
-		typename std::set<T*>::iterator iter = m_pSubscribers->find( p );
-		ASSERT_M( iter == m_pSubscribers->end(), "already subscribed" );
-#endif
-		m_pSubscribers->insert( p );
+		if( m_subscribers == nullptr )
+			m_subscribers = new std::vector<T>;
+		m_subscribers->push_back( p );
 	}
 
-	void Unsubscribe( T* p )
+	void Unsubscribe( T const& p )
 	{
-		typename std::set<T*>::iterator iter = m_pSubscribers->find( p );
-		ASSERT( iter != m_pSubscribers->end() );
-		m_pSubscribers->erase( iter );
+		m_subscribers->erase( std::remove( m_subscribers->begin(), m_subscribers->end(), p ), m_subscribers->end() );
 	}
 };
+
+static_assert(std::is_trivial_v<SubscriptionManager<int>>,
+	"SubscriptionHandler must be a trivial type to avoid issues with "
+	"static initialization order."
+	);
 
 #endif
 

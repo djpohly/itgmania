@@ -2,10 +2,11 @@
 #include "LuaBinding.h"
 #include "LuaReference.h"
 #include "RageUtil.h"
-
-
 #include "SubscriptionManager.h"
-static SubscriptionManager<LuaBinding> m_Subscribers;
+
+#include <set>
+
+static SubscriptionManager<LuaBinding*> m_Subscribers;
 
 namespace
 {

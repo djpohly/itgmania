@@ -4,7 +4,7 @@
 #include "RageUtil.h"
 #include "SubscriptionManager.h"
 
-static SubscriptionManager<LocalizedString> m_Subscribers;
+static SubscriptionManager<LocalizedString*> m_Subscribers;
 
 class LocalizedStringImplDefault: public ILocalizedStringImpl
 {
