@@ -2,6 +2,9 @@
 *.o
 *.obj
 *.a
+.ccls-cache/
+/.zig-cache/
+/.zig-cache-deps/
 
 # CMake Files/Directories
 CMakeFiles/
