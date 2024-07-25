@@ -121,7 +121,7 @@ const Helper = struct {
             inline for (std.meta.fields(@TypeOf(libconfig.config))) |f| {
                 const dest = f.name;
                 const src = @field(libconfig.config, f.name);
-                const hdr = b.addConfigHeader(std.Build.Step.ConfigHeader.Options{
+                const hdr = b.addConfigHeader(.{
                     .style = .{ .cmake = b.path(src) },
                     .include_path = dest
                 }, global_config);
@@ -242,10 +242,18 @@ pub fn build(b: *std.Build) !void {
         .nasm = nasm,
     };
 
-    const ffmpeg_config_hdr = b.addConfigHeader(std.Build.Step.ConfigHeader.Options{
+    const ffversion_hdr = b.addConfigHeader(.{
+        .style = .blank,
+        .include_path = "libavutil/ffversion.h",
+    }, .{ .FFMPEG_VERSION = "n5.1.4" });
+    const ffmpeg_config_hdr = b.addConfigHeader(.{
         .style = .blank,
         .include_path = "config.h",
     }, ffmpeg_config);
+    const avutil_config_hdr = b.addConfigHeader(.{
+        .style = .blank,
+        .include_path = "libavutil/avconfig.h",
+    }, global_config);
     const ffmpeg_components_hdr = b.addWriteFile("config_components.h",
         \\#include "config.h"
         \\
@@ -270,7 +278,9 @@ pub fn build(b: *std.Build) !void {
         @import("extern/swscale-build.zig"),
     }) |config| {
         const lib = helper.makeLib(config);
+        lib.addConfigHeader(ffversion_hdr);
         lib.addConfigHeader(ffmpeg_config_hdr);
+        lib.addConfigHeader(avutil_config_hdr);
         lib.addIncludePath(ffmpeg_components_hdr.getDirectory());
         lib.addIncludePath(avformat_protocols.getDirectory());
         lib.addIncludePath(avformat_muxers.getDirectory());

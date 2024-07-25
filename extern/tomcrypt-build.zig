@@ -413,6 +413,7 @@ pub const src = .{
 };
 pub const include = .{
     "extern/libtomcrypt/src/headers",
+    "extern/libtommath",
     "extern/mbedtls/include",
 };
 pub const define_public = .{

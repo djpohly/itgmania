@@ -1,8 +1,8 @@
 pub const name = "avformat";
 pub const config = .{
-    .@"avformat/demuxer_list.c" = "extern/avformat_demuxers.c",
-    .@"avformat/muxer_list.c" = "extern/avformat_muxers.c",
-    .@"avformat/protocol_list.c" = "extern/avformat_protocols.c",
+    .@"libavformat/demuxer_list.c" = "extern/avformat_demuxers.c",
+    .@"libavformat/muxer_list.c" = "extern/avformat_muxers.c",
+    .@"libavformat/protocol_list.c" = "extern/avformat_protocols.c",
 };
 pub const src = .{
     "extern/ffmpeg/libavformat/3dostr.c",
