@@ -250,6 +250,17 @@ pub fn build(b: *std.Build) !void {
         \\#include "config.h"
         \\
     );
+    const avformat_protocols = b.addWriteFile("libavformat/protocol_list.c",
+        \\static const URLProtocol * const url_protocols[] = {
+        \\    &ff_file_protocol,
+        \\    NULL };
+        \\
+    );
+    const avformat_muxers = b.addWriteFile("libavformat/protocol_list.c",
+        \\static const AVOutputFormat * const muxer_list[] = {
+        \\    NULL };
+        \\
+    );
 
     // FFmpeg libraries
     inline for (.{
@@ -261,6 +272,8 @@ pub fn build(b: *std.Build) !void {
         const lib = helper.makeLib(config);
         lib.addConfigHeader(ffmpeg_config_hdr);
         lib.addIncludePath(ffmpeg_components_hdr.getDirectory());
+        lib.addIncludePath(avformat_protocols.getDirectory());
+        lib.addIncludePath(avformat_muxers.getDirectory());
     }
 
     exe.addIncludePath(b.path("src"));
