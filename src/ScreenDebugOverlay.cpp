@@ -30,6 +30,7 @@
 #include "ScreenSyncOverlay.h"
 #include "ThemeMetric.h"
 #include "XmlToLua.h"
+#include "SubscriptionManager.h"
 
 #include <vector>
 
@@ -52,23 +53,19 @@ static const ThemeMetric<float>		LINE_FUNCTION_X	("ScreenDebugOverlay", "LineFun
 static const ThemeMetric<float>		PAGE_START_X	("ScreenDebugOverlay", "PageStartX");
 static const ThemeMetric<float>		PAGE_SPACING_X	("ScreenDebugOverlay", "PageSpacingX");
 
-// self-registering debug lines
-// We don't use SubscriptionManager, because we want to keep the line order.
 static LocalizedString ON			( "ScreenDebugOverlay", "on" );
 static LocalizedString OFF			( "ScreenDebugOverlay", "off" );
 static LocalizedString MUTE_ACTIONS_ON ("ScreenDebugOverlay", "Mute actions on");
 static LocalizedString MUTE_ACTIONS_OFF ("ScreenDebugOverlay", "Mute actions off");
 
-class IDebugLine;
-static std::vector<IDebugLine*> *g_pvpSubscribers = nullptr;
+// self-registering debug lines
 class IDebugLine
 {
 public:
+	inline static SubscriptionManager<IDebugLine*> s_subs;
 	IDebugLine()
 	{
-		if( g_pvpSubscribers == nullptr )
-			g_pvpSubscribers = new std::vector<IDebugLine*>;
-		g_pvpSubscribers->push_back( this );
+		s_subs.Subscribe( this );
 	}
 	virtual ~IDebugLine() { }
 	enum Type { all_screens, gameplay_only };
@@ -232,7 +229,7 @@ void ScreenDebugOverlay::Init()
 
 	std::map<RString, int> iNextDebugButton;
 	int iNextGameplayButton = 0;
-	for (IDebugLine *p : *g_pvpSubscribers)
+	for (auto p : IDebugLine::s_subs.Get())
 	{
 		RString sPageName = p->GetPageName();
 
@@ -289,7 +286,7 @@ void ScreenDebugOverlay::Init()
 		this->AddChild( p );
 	}
 
-	for (auto p = g_pvpSubscribers->begin(); p != g_pvpSubscribers->end(); ++p)
+	for (auto p : IDebugLine::s_subs.Get())
 	{
 		{
 			BitmapText *bt = new BitmapText;
@@ -370,13 +367,13 @@ void ScreenDebugOverlay::UpdateText()
 	}
 
 	// todo: allow changing of various spacing/location things -aj
+	int txtIndex = 0;
 	int iOffset = 0;
-	auto subStart = g_pvpSubscribers->begin();
-	for (std::vector<IDebugLine*>::const_iterator p = subStart; p != g_pvpSubscribers->end(); ++p)
+	for (auto p : IDebugLine::s_subs.Get())
 	{
-		RString sPageName = (*p)->GetPageName();
+		RString sPageName = p->GetPageName();
 
-		int i = p - subStart;
+		int i = txtIndex++;
 
 		float fY = LINE_START_Y + iOffset * LINE_SPACING;
 
@@ -398,15 +395,15 @@ void ScreenDebugOverlay::UpdateText()
 		txt2.SetX( LINE_FUNCTION_X );
 		txt2.SetY( fY );
 
-		RString s1 = (*p)->GetDisplayTitle();
-		RString s2 = (*p)->GetDisplayValue();
+		RString s1 = p->GetDisplayTitle();
+		RString s2 = p->GetDisplayValue();
 
-		bool bOn = (*p)->IsEnabled();
+		bool bOn = p->IsEnabled();
 
 		txt1.SetDiffuse( bOn ? LINE_ON_COLOR:LINE_OFF_COLOR );
 		txt2.SetDiffuse( bOn ? LINE_ON_COLOR:LINE_OFF_COLOR );
 
-		RString sButton = GetDebugButtonName( *p );
+		RString sButton = GetDebugButtonName( p );
 		if( !sButton.empty() )
 			sButton += ": ";
 		txt1.SetText( sButton );
@@ -472,16 +469,16 @@ bool ScreenDebugOverlay::Input( const InputEventPlus &input )
 		return true;
 	}
 
-	auto start = g_pvpSubscribers->begin();
-	for (std::vector<IDebugLine*>::const_iterator p = start; p != g_pvpSubscribers->end(); ++p)
+	int txtIndex = 0;
+	for (auto p : IDebugLine::s_subs.Get())
 	{
-		RString sPageName = (*p)->GetPageName();
+		RString sPageName = p->GetPageName();
 
-		int i = p - start;
+		int i = txtIndex++;
 
 		// Gameplay buttons are available only in gameplay. Non-gameplay buttons
 		// are only available when the screen is displayed.
-		IDebugLine::Type type = (*p)->GetType();
+		IDebugLine::Type type = p->GetType();
 		switch( type )
 		{
 		case IDebugLine::all_screens:
@@ -498,17 +495,17 @@ bool ScreenDebugOverlay::Input( const InputEventPlus &input )
 			FAIL_M(ssprintf("Invalid debug line type: %i", type));
 		}
 
-		if( input.DeviceI == (*p)->m_Button )
+		if( input.DeviceI == p->m_Button )
 		{
 			if( input.type != IET_FIRST_PRESS )
 				return true; // eat the input but do nothing
 
 			// do the action
 			RString sMessage;
-			(*p)->DoAndLog( sMessage );
+			p->DoAndLog( sMessage );
 			if( !sMessage.empty() )
 				LOG->Trace("DEBUG: %s", sMessage.c_str() );
-			if( (*p)->ForceOffAfterUse() )
+			if( p->ForceOffAfterUse() )
 				m_bForcedHidden = true;
 
 			// update text to show the effect of what changed above
